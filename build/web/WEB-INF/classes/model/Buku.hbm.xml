@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 21, 2024 5:34:08 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Buku" table="buku" catalog="tereliyebook" optimistic-lock="version">
+        <id name="idBuku" type="java.lang.Integer">
+            <column name="id_buku" />
+            <generator class="identity" />
+        </id>
+        <property name="gambarBuku" type="binary">
+            <column name="gambar_buku" />
+        </property>
+        <property name="namaBuku" type="string">
+            <column name="nama_buku" length="100" />
+        </property>
+        <property name="hargaBuku" type="java.lang.Double">
+            <column name="harga_buku" precision="22" scale="0" />
+        </property>
+        <property name="genreBuku" type="string">
+            <column name="genre_buku" length="100" />
+        </property>
+        <property name="seriesBuku" type="string">
+            <column name="series_buku" />
+        </property>
+        <property name="deskripsiBuku" type="string">
+            <column name="deskripsi_buku" length="65535" />
+        </property>
+        <property name="stockBuku" type="java.lang.Integer">
+            <column name="stock_buku" />
+        </property>
+        <set name="orderitemses" table="orderitems" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="book_id" />
+            </key>
+            <one-to-many class="model.Orderitems" />
+        </set>
+        <set name="keranjangs" table="keranjang" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="book_id" />
+            </key>
+            <one-to-many class="model.Keranjang" />
+        </set>
+    </class>
+</hibernate-mapping>

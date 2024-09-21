@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 21, 2024 5:34:08 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.UserAddress" table="user_address" catalog="tereliyebook" optimistic-lock="version">
+        <id name="idAddress" type="java.lang.Integer">
+            <column name="id_address" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="userDb" class="model.UserDb" fetch="select">
+            <column name="user_id" />
+        </many-to-one>
+        <property name="address" type="string">
+            <column name="address" />
+        </property>
+        <property name="city" type="string">
+            <column name="city" />
+        </property>
+        <property name="postalCode" type="string">
+            <column name="postal_code" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

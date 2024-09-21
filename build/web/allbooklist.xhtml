@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="https://fonts.googleapis.com/css?family=Montserrat"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <h:outputScript name="https://code.jquery.com/jquery-3.7.1.min.js"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&amp;display=swap');
+        html, body {
+            font-family: 'Zen Maru Gothic', sans-serif;
+            background-color: #FFFFEF;
+        }
+        .book-item img {
+            width: 180px;
+        }
+        #modal-img {
+            width: 180px;
+        }
+        .out-of-stock {
+            background-color: gray;
+            pointer-events: none;
+            cursor: not-allowed;
+            position: relative;
+            opacity: 0.6;
+        }
+        .out-of-stock::after {
+            content: "SOLD OUT";
+            color: red;
+            font-size: 20px;
+            font-weight: bold;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+        }
+    </style>
+    <title>Tere Liye Bookstore</title>
+</head>
+<body>
+    <h:form id="bookstoreForm">
+        <!-- Action Section -->
+        <section class="best-seller" id="best-seller">
+            <h1 class="heading"><span>Action</span></h1>
+            <div class="carousel-container" id="carousel-action">
+                <button class="carousel-button prev" onclick="plusSlidesAllBook('carousel-action', -1)">‹</button>
+                <div class="carousel-slide">
+                    <div class="book-list">
+                        <a href="#" class="book-item" onclick="openModal(event, '', '', '', '', '', '', '')">
+                            <img src="" alt="Lorem Ipsum"/>
+                            <h2>Lorem Ipsum</h2>
+                            <p>Rp Lorem Ipsum</p>
+                            <p class="genre">Genre: Lorem Ipsum</p>
+                            <p>Stock: Lorem Ipsum items</p>
+                        </a>
+                    </div>
+                </div>
+                <button class="carousel-button next" onclick="plusSlidesAllBook('carousel-action', 1)">›</button>
+            </div>
+
+            <!-- Adventure Section -->
+            <h1 class="heading"><span>Adventure</span></h1>
+            <div class="carousel-container" id="carousel-adventure">
+                <button class="carousel-button prev" onclick="plusSlidesAllBook('carousel-adventure', -1)">‹</button>
+                <div class="carousel-slide">
+                    <div class="book-list">
+                        <a href="#" class="book-item" onclick="openModal(event, '', '', '', '', '', '', '')">
+                            <img src="" alt="Lorem Ipsum"/>
+                            <h2>Lorem Ipsum</h2>
+                            <p>Rp Lorem Ipsum</p>
+                            <p class="genre">Genre: Lorem Ipsum</p>
+                            <p>Stock: Lorem Ipsum items</p>
+                        </a>
+                    </div>
+                </div>
+                <button class="carousel-button next" onclick="plusSlidesAllBook('carousel-adventure', 1)">›</button>
+            </div>
+        </section>
+        
+        <!-- Modal Dialog -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()"></span>
+                <img id="modal-img" src="" alt="Book Image"/>
+                <h2 id="modal-title">Book Title</h2>
+                <p id="modal-author">Author</p>
+                <p id="modal-price">Price</p>
+                <p id="modal-genre">Genre</p>
+                <p id="modal-synopsis">Synopsis</p>
+                <p id="modal-stock">Stock buku: </p>
+
+                <!-- Form to add item to cart -->
+                <h:form id="modal-form">
+                    <h:inputHidden id="modal-book-id" value="#{cartBean.bookId}"/>
+                    <h:inputHidden id="modal-book-name" value="#{cartBean.bookName}"/>
+                    <h:inputHidden id="modal-book-price" value="#{cartBean.bookPrice}"/>
+                    <h:commandButton id="modal-add-to-cart" value="Add to Cart" disabled="#{cartBean.stock == 0}"/>
+                </h:form>
+            </div>
+        </div>
+    </h:form>
+
+    <!-- JavaScript -->
+    <h:outputScript name="javascript/script.js"/>
+    <script>
+        function openModal(event, id, title, price, genre, synopsis, imgSrc, stock) {
+            event.preventDefault();
+
+            const modal = document.getElementById('modal');
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-price').innerText = 'Rp ' + price;
+            document.getElementById('modal-genre').innerText = genre;
+            document.getElementById('modal-synopsis').innerText = synopsis;
+            document.getElementById('modal-img').src = imgSrc;
+            document.getElementById('modal-book-id').value = id;
+            document.getElementById('modal-book-name').value = title;
+            document.getElementById('modal-book-price').value = price;
+            document.getElementById('modal-stock').innerText = 'Stock buku: ' + stock + ' item';
+            document.getElementById('modal-add-to-cart').disabled;
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>JSF Page</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&amp;display=swap');
+            html, body {
+                font-family: Zen Maru Gothic;
+            }
+            .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .search-container {
+                position: relative;
+                display: flex;
+                align-items: center;
+                width: 800px; /* Make the search bar longer */
+                margin: 0 auto; /* Center align the search bar */
+            }
+            .search-container input[type="search"] {
+                width: 100%; /* Make the input take the full width of the container */
+                padding: 10px 40px 10px 20px; /* Adjust padding to make space for the icon */
+                border-radius: 20px;
+                border: 1px solid #ccc;
+                outline: none;
+            }
+            .search-container button {
+                background: none;
+                border: none;
+                position: absolute;
+                right: 10px;
+                cursor: pointer;
+            }
+            .search-container button img {
+                width: 20px;
+                height: 20px;
+            }
+            .suggestions-container {
+                position: absolute;
+                background-color: white;
+                width: 800px; /* Make the suggestions box smaller than the search bar */
+                max-height: 300px;
+                overflow-y: auto;
+                z-index: 1000;
+                top: 50px; /* Adjust top position */
+                border-radius: 15px;
+                left: 23%; /* Adjust position to center it under the search bar */
+                border: 1px;
+            }
+            .suggestion-item {
+                padding: 10px;
+                cursor: pointer;
+            }
+            .suggestion-item:hover {
+                background-color: #f0f0f0;
+            }
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1001;
+                padding-top: 100px;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgb(0,0,0);
+                background-color: rgba(0,0,0,0.4);
+            }
+            .modal-content {
+                background-color: #fefefe;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+            }
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            .author-link {
+                display: block; /* Pastikan elemen tersebut dapat menampung padding/margin */
+                text-decoration: none; /* Hapus garis bawah dari hyperlink */
+                color: inherit; /* Warna teks mengikuti warna dari elemen induk */
+                font-size: 24px; /* Ukuran font mirip dengan <h3/> */
+                font-weight: bold; /* Tebal seperti <h3/> */
+                cursor: pointer; /* Mengubah cursor menjadi pointer saat hover */
+                color: white;
+            }
+            .author-link:hover {
+                color: white; /* Warna teks saat hover, sesuaikan dengan desain */
+                text-decoration: none; /* Garis bawah saat hover */
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <header>
+            <div class="top-bar">
+                <h:link value="Tere Liye" outcome="index.xhtml" styleClass="author-link" />
+                <div class="navbar">
+                    <nav>
+                        <!-- Search Form -->
+                        <h:form id="searchForm" class="search-container" onsubmit="performSearch(event)">
+                            <h:inputText id="search-input" value="#{searchBean.query}" label="Cari Produk, Judul Buku, Penulis" onkeyup="getSearchSuggestions(this.value)" styleClass="form-control" />
+                            <button type="submit">
+                                <img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/search-512.png" alt="Search" />
+                            </button>
+                        </h:form>
+
+                        <div id="suggestionsContainer" class="suggestions-container"></div>
+
+                        <!-- Display Home, All Book, Cart, etc. -->
+                        <h:link outcome="index.xhtml" value="Home" styleClass="navtext" />
+                        <h:link outcome="allbooklist.xhtml" value="All Book" styleClass="navtext" />
+                        <h:link outcome="cart.xhtml" value="Cart" styleClass="navtext" />
+                        <h:link outcome="transhistory.xhtml" value="Pesanan" styleClass="navtext" />
+
+                        <!-- Conditionally display either 'Login' or the user's name -->
+                        <h:panelGroup rendered="#{empty sessionScope.user}">
+                            <h:link outcome="login.xhtml" value="Login" styleClass="navtext" />
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{not empty sessionScope.user}">
+                            <h:outputLink value="accountSettings.xhtml" styleClass="navtext">
+                                #{sessionScope.user} <!-- Display the logged-in user's name -->
+                            </h:outputLink>
+                        </h:panelGroup>
+                        
+                                                    <h:panelGroup rendered="#{not empty sessionScope.user}">
+                            <h:outputLink value="accountSettings.xhtml" styleClass="navtext">
+                                #{sessionScope.user} <!-- Display the logged-in user's name -->
+                            </h:outputLink>
+                           <h:form>
+                            <h:commandLink value="Logout" action="#{loginBean.logout}" />
+                                                    </h:form>
+
+                        </h:panelGroup>
+                    </nav>
+                </div>
+            </div>
+        </header>
+    </h:body>
+</html>

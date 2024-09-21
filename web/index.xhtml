@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/style.css"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/index.css"/>
+        <title>Tere Liye Bookstore</title>
+    </h:head>
+
+    <h:body>
+        <ui:include src="header.xhtml" />
+        <h:form>
+            <!-- Slideshow container -->
+            <div class="slider">
+                <div class="slides">
+                    <input type="radio" name="radio-btn" id="radio1" checked="checked"/>
+                    <input type="radio" name="radio-btn" id="radio2"/>
+                    <input type="radio" name="radio-btn" id="radio3"/>
+
+                    <div class="slide first">
+                        <img src="#{facesContext.externalContext.requestContextPath}/image/BEST OF TERE LIYE1.png" alt="Slide 1"/>
+                    </div>
+
+                    <div class="slide">
+                        <img src="#{facesContext.externalContext.requestContextPath}/image/BEST OF TERE LIYE 2.png" alt="Slide 2"/>
+                    </div>
+
+                    <div class="slide">
+                        <img src="#{facesContext.externalContext.requestContextPath}/image/BEST OF TERE LIYE 3.png" alt="Slide 3"/>
+                    </div>
+
+                    <div class="navigation-auto">
+                        <div class="auto-btn1"></div>
+                        <div class="auto-btn2"></div>
+                        <div class="auto-btn3"></div>
+                    </div>
+                </div>
+
+                <div class="navigation-manual">
+                    <label for="radio1" class="manual-btn"></label>
+                    <label for="radio2" class="manual-btn"></label>
+                    <label for="radio3" class="manual-btn"></label>
+                </div>
+            </div>
+
+            <!-- Section genre-icon -->
+            <section class="genre-icon">
+                <a href="aksiSeries.xhtml">
+                    <div class="icons">
+                        <img src="#{facesContext.externalContext.requestContextPath}/image/Serial Aksi/pulang.jpeg" alt="Book Icon"/>
+                        <div>
+                            <h3>Serial Aksi</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="duniaParalelSeries.xhtml">
+                    <div class="icons">
+                        <img src="#{facesContext.externalContext.requestContextPath}/image/dunia paralel/bumi.jpg" alt="Book Icon"/>
+                        <div>
+                            <h3>Serial Dunia Paralel</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="anakSeries.xhtml">
+                    <div class="icons">
+                        <img src="#{facesContext.externalContext.requestContextPath}/image/serial anak/anak spesial.jpeg" alt="Book Icon"/>
+                        <div>
+                            <h3>Serial Anak Nusantara</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="gogonSeries.xhtml">
+                    <div class="icons">
+                        <img src="#{facesContext.externalContext.requestContextPath}/image/gogons/1.jpg" alt="Book Icon"/>
+                        <div>
+                            <h3>Serial The Gogons</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="nonSeries.xhtml">
+                    <div class="icons">
+                        <img src="#{facesContext.externalContext.requestContextPath}/image/non seri/teruslahbodoh.jpg" alt="Book Icon"/>
+                        <div>
+                            <h3>Novel non-serial</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="cerpen.xhtml">
+                    <div class="icons">
+                        <img src="#{facesContext.externalContext.requestContextPath}/image/cerpen/berjutarasa.jpg" alt="Book Icon"/>
+                        <div>
+                            <h3>Kumpulan Cerpen</h3>
+                        </div>
+                    </div>
+                </a>
+            </section>
+
+            <!-- Best Seller Section -->
+            <h1 class="heading"> <span>Best Seller</span> </h1>
+<div styleClass="carousel-main-div1" id="carousel1">
+    <h:form>
+        <p:carousel value="#{bukuBean.bukuList}" var="buku" numVisible="8" circular="true" autoplayInterval="3000" styleClass="carousel-main">
+            <p:panel styleClass="card-new">
+                <!-- Display book image -->
+                <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}" alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
+
+                <!-- Book Name -->
+                <h3>#{buku.namaBuku}</h3>
+                <!-- Book Genre -->
+                <p>Genre: #{buku.genreBuku}</p>
+                <!-- Stock Info -->
+                <p>Stock: #{buku.stockBuku} item</p>
+                <!-- Price -->
+                <h4>Price: Rp #{buku.hargaBuku}</h4>
+
+                <!-- Command link to load details of the selected book -->
+                <h:commandLink action="#{bukuBean.loadBuku(buku.idBuku)}" value="View Details" />
+            </p:panel>
+        </p:carousel>
+    </h:form>
+</div>
+
+            <!-- New Release Section -->
+<div styleClass="carousel-main-div1" id="carousel1">
+    <h:form>
+        <p:carousel value="#{bukuBean.bukuList}" var="buku" numVisible="8" circular="true" autoplayInterval="3000" styleClass="carousel-main">
+            <p:panel styleClass="card-new">
+                <!-- Display book image -->
+                <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}" alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
+
+                <!-- Book Name -->
+                <h3>#{buku.namaBuku}</h3>
+                <!-- Book Genre -->
+                <p>Genre: #{buku.genreBuku}</p>
+                <!-- Stock Info -->
+                <p>Stock: #{buku.stockBuku} item</p>
+                <!-- Price -->
+                <h4>Price: Rp #{buku.hargaBuku}</h4>
+
+                <!-- Command link to load details of the selected book -->
+                <h:commandLink action="#{bukuBean.loadBuku(buku.idBuku)}" value="View Details" />
+            </p:panel>
+        </p:carousel>
+    </h:form>
+</div>
+
+            <!-- Modal -->
+<!--            <h:panelGroup id="modal" styleClass="modal">
+                <div class="modal-content">
+                                    <span class="close" onclick="closeModal()">&times;</span>
+                    <img id="modal-img" src="" alt="Book Image"/>
+                    <h2 id="modal-title">Book Title</h2>
+                    <p id="modal-author">Author</p>
+                    <p id="modal-price">Price</p>
+                    <p id="modal-genre">Genre</p>
+                    <p id="modal-synopsis">Synopsis</p>
+                    <p id="modal-stock">Stock buku: </p>
+
+                    <h:form id="modal-form">
+                        <h:inputHidden id="modal-book-id" value=""/>
+                        <h:inputHidden id="modal-book-name" value=""/>
+                        <h:inputHidden id="modal-book-price" value=""/>
+                        <h:commandButton id="modal-add-to-cart" value="Add to Cart"/>
+                    </h:form>
+                </div>
+            </h:panelGroup>-->
+        </h:form>
+
+        <script type="text/javascript" src="javascript/script.js"></script>
+        <ui:include src="footer.xhtml" />
+    </h:body>
+</html>

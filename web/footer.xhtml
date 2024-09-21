@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Footer</title>
+    <style>
+        footer {
+            background-color: #FF7D29;
+            color: white;
+            padding: 20px 0;
+        }
+        .footer-container .logo {
+            width: 50px;
+            height: auto;
+        }
+    </style>
+</h:head>
+<h:body>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Payment Methods</h4>
+                <div class="payment-method">
+                    <img class="logo" src="#{facesContext.externalContext.requestContextPath}/image/footer/bca logo.png" alt="BCA Logo"/>
+                    <img class="logo" src="#{facesContext.externalContext.requestContextPath}/image/footer/mandiri logo.png" alt="Mandiri Logo"/>
+                    <img class="logo" src="#{facesContext.externalContext.requestContextPath}/image/footer/bni logo.png" alt="BNI Logo"/>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Shipping Methods</h4>
+                <div class="shipping-method">
+                    <img class="logo" src="#{facesContext.externalContext.requestContextPath}/image/footer/idexpress logo.png" alt="JNE Logo"/>
+                    <br/>
+                    <img class="logo" src="#{facesContext.externalContext.requestContextPath}/image/footer/anteraja logo.png" alt="jnt Logo"/>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Social Media</h4>
+                <div class="social-media">
+                    <a href="https://www.instagram.com" target="_blank"/>
+                    <img src="#{facesContext.externalContext.requestContextPath}/image/footer/instagram logo.png" alt="Instagram"/>
+                  
+                  <a href="https://www.facebook.com" target="_blank"/>
+                    <img src="#{facesContext.externalContext.requestContextPath}/image/footer/facebook logo.png" alt="Facebook"/>
+                  <a href="https://www.twitter.com" target="_blank"/>
+                    <img src="#{facesContext.externalContext.requestContextPath}/image/footer/x logo.png" alt="Twitter"/>
+                </div>
+            </div>
+        </div>
+    </footer>
+</h:body>
+</html>
