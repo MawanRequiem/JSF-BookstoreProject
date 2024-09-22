@@ -10,6 +10,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/style.css"/>
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
         <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/index.css"/>
@@ -18,7 +26,6 @@
 
     <h:body>
         <ui:include src="header.xhtml" />
-        <h:form>
             <!-- Slideshow container -->
             <div class="slider">
                 <div class="slides">
@@ -105,77 +112,84 @@
             </section>
 
             <!-- Best Seller Section -->
-            <h1 class="heading"> <span>Best Seller</span> </h1>
-<div styleClass="carousel-main-div1" id="carousel1">
-    <h:form>
-        <p:carousel value="#{bukuBean.bukuList}" var="buku" numVisible="8" circular="true" autoplayInterval="3000" styleClass="carousel-main">
-            <p:panel styleClass="card-new">
-                <!-- Display book image -->
-                <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}" alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
+<h:form id="bookForm">
 
-                <!-- Book Name -->
-                <h3>#{buku.namaBuku}</h3>
-                <!-- Book Genre -->
-                <p>Genre: #{buku.genreBuku}</p>
-                <!-- Stock Info -->
-                <p>Stock: #{buku.stockBuku} item</p>
-                <!-- Price -->
-                <h4>Price: Rp #{buku.hargaBuku}</h4>
+            <!-- Section Best Seller -->
+            <div styleClass="carousel-main-div1" id="carousel1">
+                <h:form>
+                    <div class="carousel-main-div1" id="carousel1">
+                        <p:carousel value="#{bukuBean.bukuList}" var="buku" numVisible="8" circular="true" autoplayInterval="3000" styleClass="carousel-main">
+                            <p:panel styleClass="card-new">
+                                <!-- Display book image -->
+                                <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}"
+                                                alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
+                                <h3>#{buku.namaBuku}</h3>
+                                <p>Genre: #{buku.genreBuku}</p>
+                                <p>Stock: #{buku.stockBuku} item</p>
+                                <h4>Price: Rp #{buku.hargaBuku}</h4>
 
-                <!-- Command link to load details of the selected book -->
-                <h:commandLink action="#{bukuBean.loadBuku(buku.idBuku)}" value="View Details" />
-            </p:panel>
-        </p:carousel>
-    </h:form>
-</div>
+                                <!-- Updated commandLink to open jQuery UI modal -->
+                               <p:commandLink value="View Details" 
+                                  actionListener="#{bukuBean.loadBuku(buku.idBuku)}"
+                                  oncomplete="initDialog();"/>
+                            </p:panel>
+                        </p:carousel>
+                    </div>
+                </h:form>
+            </div>
 
-            <!-- New Release Section -->
-<div styleClass="carousel-main-div1" id="carousel1">
-    <h:form>
-        <p:carousel value="#{bukuBean.bukuList}" var="buku" numVisible="8" circular="true" autoplayInterval="3000" styleClass="carousel-main">
-            <p:panel styleClass="card-new">
-                <!-- Display book image -->
-                <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}" alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
-
-                <!-- Book Name -->
-                <h3>#{buku.namaBuku}</h3>
-                <!-- Book Genre -->
-                <p>Genre: #{buku.genreBuku}</p>
-                <!-- Stock Info -->
-                <p>Stock: #{buku.stockBuku} item</p>
-                <!-- Price -->
-                <h4>Price: Rp #{buku.hargaBuku}</h4>
-
-                <!-- Command link to load details of the selected book -->
-                <h:commandLink action="#{bukuBean.loadBuku(buku.idBuku)}" value="View Details" />
-            </p:panel>
-        </p:carousel>
-    </h:form>
-</div>
-
-            <!-- Modal -->
-<!--            <h:panelGroup id="modal" styleClass="modal">
-                <div class="modal-content">
-                                    <span class="close" onclick="closeModal()">&times;</span>
-                    <img id="modal-img" src="" alt="Book Image"/>
-                    <h2 id="modal-title">Book Title</h2>
-                    <p id="modal-author">Author</p>
-                    <p id="modal-price">Price</p>
-                    <p id="modal-genre">Genre</p>
-                    <p id="modal-synopsis">Synopsis</p>
-                    <p id="modal-stock">Stock buku: </p>
-
-                    <h:form id="modal-form">
-                        <h:inputHidden id="modal-book-id" value=""/>
-                        <h:inputHidden id="modal-book-name" value=""/>
-                        <h:inputHidden id="modal-book-price" value=""/>
-                        <h:commandButton id="modal-add-to-cart" value="Add to Cart"/>
-                    </h:form>
-                </div>
-            </h:panelGroup>-->
+            <!-- jQuery UI Modal -->
+            <div id="bookModal" title="Book Details" style="display:none;">
+                <h3 id="modalBookTitle"></h3>
+                <p><strong>Genre:</strong> <span id="modalBookGenre"></span></p>
+                <p><strong>Series:</strong> <span id="modalBookSeries"></span></p>
+                <p><strong>Price:</strong> Rp <span id="modalBookPrice"></span></p>
+                <p><strong>Stock:</strong> <span id="modalBookStock"></span> items</p>
+                <p><strong>Description:</strong> <span id="modalBookDescription"></span></p>
+                <img id="modalBookImage" style="width:100%;height:200px;object-fit:cover;" alt="Book Image" />
+            </div>
         </h:form>
 
-        <script type="text/javascript" src="javascript/script.js"></script>
+            <script type="text/javascript" src=""></script>
+    <script type="text/javascript">
+            // Initialize the modal using jQuery UI
+            function initDialog() {
+                // Updating modal content
+                var title = '#{bukuBean.selectedBook.namaBuku}';
+                var genre = '#{bukuBean.selectedBook.genreBuku}';
+                var series = '#{bukuBean.selectedBook.seriesBuku}';
+                var price = '#{bukuBean.selectedBook.hargaBuku}';
+                var stock = '#{bukuBean.selectedBook.stockBuku}';
+                var description = '#{bukuBean.selectedBook.deskripsiBuku}';
+                var imageBase64 = '#{bukuBean.convertToBase64(bukuBean.selectedBook.gambarBuku)}';
+
+                // Update modal content with JSF-managed bean data
+                $("#modalBookTitle").text(title);
+                $("#modalBookGenre").text(genre);
+                $("#modalBookSeries").text(series);
+                $("#modalBookPrice").text(price);
+                $("#modalBookStock").text(stock);
+                $("#modalBookDescription").text(description);
+                $("#modalBookImage").attr("src", "data:image/jpeg;base64," + imageBase64);
+
+                // Show modal
+                $("#bookModal").dialog({
+                    modal: true,
+                    width: 600,
+                    buttons: {
+                        "Add to Cart": function () {
+                            // You can add your JSF addToCart action here
+                            // Example: #{cartBean.addToCart(bukuBean.selectedBook)}
+                            $(this).dialog("close");
+                        },
+                        Close: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            }
+        </script>
+
         <ui:include src="footer.xhtml" />
     </h:body>
 </html>

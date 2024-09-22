@@ -4,12 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/Skibidi/src/java/com/dao/RegisterDAO.java</file>
+            <file>file:/E:/Skibidi/src/java/util/HibernateUtil.java</file>
             <file>file:/E:/Skibidi/web/header.xhtml</file>
             <file>file:/E:/Skibidi/web/register.xhtml</file>
             <file>file:/E:/Skibidi/web/login.xhtml</file>
             <file>file:/E:/Skibidi/src/java/model/UserDb.hbm.xml</file>
             <file>file:/E:/Skibidi/src/java/com/bean/RegisterBean.java</file>
             <file>file:/E:/Skibidi/src/java/model/UserDb.java</file>
+            <file>file:/E:/Skibidi/src/java/com/dao/BukuDAO.java</file>
         </group>
     </open-files>
 </project-private>
