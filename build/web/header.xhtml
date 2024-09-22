@@ -133,11 +133,6 @@
                             <h:link outcome="login.xhtml" value="Login" styleClass="navtext" />
                         </h:panelGroup>
 
-                        <h:panelGroup rendered="#{not empty sessionScope.user}">
-                            <h:outputLink value="accountSettings.xhtml" styleClass="navtext">
-                                #{sessionScope.user} <!-- Display the logged-in user's name -->
-                            </h:outputLink>
-                        </h:panelGroup>
                         
                                                     <h:panelGroup rendered="#{not empty sessionScope.user}">
                             <h:outputLink value="accountSettings.xhtml" styleClass="navtext">
