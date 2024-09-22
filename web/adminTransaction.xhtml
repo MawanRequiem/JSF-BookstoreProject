@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pesanan</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/admin.css"/>
+        <style>
+            body {
+                background-color: #FAF4DB;
+            }
+            .navbar-brand, .nav-link, .btn-outline-warning {
+                color: #FF7D29 !important;
+            }
+            .table img {
+                width: 100px;
+                height: auto;
+            }
+            .content {
+                margin: 20px;
+            }
+            .btn-back {
+                background-color: #EB6611;
+                color: white;
+                font-weight: bold;
+                border: none;
+                border-radius: 15px;
+                padding: 10px 20px;
+            }
+            .btn-back:hover {
+                background-color: #FF4500;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form>
+            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FF7D29;">
+                <span class="navbar-text mr-3">
+                    <span class="welcome-text">Welcome</span>
+                    <span class="username-text">#{loginBean.username}</span>
+                </span>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle custom-dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Menu
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right custom-dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <h:link outcome="index.xhtml" class="dropdown-item custom-dropdown-item">Home User</h:link>
+                                <h:link outcome="adminDashboard.xhtml" class="dropdown-item custom-dropdown-item">Home Admin</h:link>
+                                <h:link outcome="adminTransaction.xhtml" class="dropdown-item custom-dropdown-item">Pesanan</h:link>
+                                <h:commandLink value="Logout" action="#{loginBean.logout}" class="dropdown-item custom-dropdown-item"/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </h:form>
+        
+        <div class="content">
+            <h1 class="title">Pesanan</h1>
+            <h:form>
+                <p:dataTable var="order" value="#{ordersBean.ordersList}" 
+                             styleClass="table table-bordered" rowKey="#{order.orderId}">
+
+                    <p:column headerText="Order ID">
+                        <h:outputText value="#{order.orderId}" />
+                    </p:column>
+                    
+                    <p:column headerText="User ID">
+                        <h:outputText value="#{order.userDb}" /> <!-- Assuming userDb has a userId property -->
+                    </p:column>
+                    
+                    <p:column headerText="Payment Method">
+                        <h:outputText value="#{order.paymentMethod}" />
+                    </p:column>
+
+                    <p:column headerText="Total Price">
+                        <h:outputText value="#{order.totalPrice}" />
+                    </p:column>
+                    
+                    <p:column headerText="Order Date">
+                        <h:outputText value="#{order.orderDate}" />
+                    </p:column>
+                    
+                    <p:column headerText="Payment Status">
+                        <h:selectOneMenu value="#{order.status}">
+                            <f:selectItem itemValue="belum_bayar" itemLabel="Belum Bayar" />
+                            <f:selectItem itemValue="sudah_bayar" itemLabel="Sudah Bayar" />
+                            <f:selectItem itemValue="diantar" itemLabel="Diantar" />
+                            <f:selectItem itemValue="diterima" itemLabel="Diterima" />
+                            <f:selectItem itemValue="gagal" itemLabel="Gagal" />
+                        </h:selectOneMenu>
+                    </p:column>
+                    
+                    <p:column headerText="Payment Proof">
+                        <h:outputText value="#{order.kodepembayaran}" 
+                                      rendered="#{not empty order.kodepembayaran}" />
+                        <h:outputText value="No Proof Available" 
+                                      rendered="#{empty order.kodepembayaran}" />
+                    </p:column>
+
+                    <!-- Additional Columns for Order Items -->
+                    <p:column headerText="Books">
+                        <ui:repeat var="item" value="#{order.orderitemses}">
+                            <h:outputText value="#{item.bookName}" /><br/> <!-- Assuming item has a bookName property -->
+                        </ui:repeat>
+                    </p:column>
+
+                    <p:column headerText="Quantities">
+                        <ui:repeat var="item" value="#{order.orderitemses}">
+                            <h:outputText value="#{item.quantity}" /><br/> <!-- Assuming item has a quantity property -->
+                        </ui:repeat>
+                    </p:column>
+                </p:dataTable>
+
+                <h:commandButton value="Back to Home" action="admin.xhtml" class="btn-back" />
+            </h:form>
+        </div> 
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    </h:body>
+</html>
