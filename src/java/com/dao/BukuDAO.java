@@ -55,21 +55,23 @@ public class BukuDAO {
     }
 
     // Menyimpan atau memperbarui data buku
-    public void saveOrUpdateBook(Buku book) {
+    public void saveOrUpdateBook(Buku buku) {
         Session session = sessionFactory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.saveOrUpdate(book);  // Menyimpan atau memperbarui data buku
-            tx.commit();
-        } catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
+    Transaction tx = null;
+    try {
+        tx = session.beginTransaction();
+        session.saveOrUpdate(buku);  // Simpan atau update buku
+        System.out.println("Saving or updating book: " + buku.getIdBuku()); // Log ID buku
+        tx.commit();
+    } catch (Exception e) {
+        if (tx != null) {
+            tx.rollback();
         }
+        e.printStackTrace();
+        System.out.println("Error during saveOrUpdate: " + e.getMessage()); // Log error
+    } finally {
+        session.close();
+    }
     }
 
     // Menghapus buku berdasarkan ID
