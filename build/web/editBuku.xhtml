@@ -234,6 +234,12 @@ textarea.ui-inputtext {
                 <h:inputText id="idBuku" value="#{bukuBean.selectedBook.idBuku}" readonly="true" />
             </h:panelGrid>
 
+            <!-- Gambar Buku -->
+            <h:panelGrid columns="2">
+                <h:outputLabel for="gambarBuku" value="Gambar Buku" />
+                <h:inputFile id="gambarBuku" value="#{bukuBean.selectedBook.gambarBuku}" />
+            </h:panelGrid>
+
             <!-- Nama Buku -->
             <h:panelGrid columns="2">
                 <h:outputLabel for="namaBuku" value="Nama Buku" />
