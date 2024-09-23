@@ -15,134 +15,134 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
         <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/index.css"/>
+        <style>
+            .ui-dialog {
+                z-index: 1050 !important; /* Pastikan lebih tinggi dari elemen lain */
+            }
+            .ui-carousel {
+                z-index: 1000; /* Pastikan lebih tinggi dari elemen lain */
+            }
+        </style>
         <title>Tere Liye Bookstore</title>
     </h:head>
 
     <h:body>
         <ui:include src="header.xhtml" />
-            <!-- Slideshow container -->
-            <div class="slider">
-                <div class="slides">
-                    <input type="radio" name="radio-btn" id="radio1" checked="checked"/>
-                    <input type="radio" name="radio-btn" id="radio2"/>
-                    <input type="radio" name="radio-btn" id="radio3"/>
+        <!-- Slideshow container -->
+        <div class="slider">
+            <div class="slides">
+                <input type="radio" name="radio-btn" id="radio1" checked="checked"/>
+                <input type="radio" name="radio-btn" id="radio2"/>
+                <input type="radio" name="radio-btn" id="radio3"/>
 
-                    <div class="slide first">
-                        <img src="#{facesContext.externalContext.requestContextPath}/image/BEST OF TERE LIYE1.png" alt="Slide 1"/>
-                    </div>
-
-                    <div class="slide">
-                        <img src="#{facesContext.externalContext.requestContextPath}/image/BEST OF TERE LIYE 2.png" alt="Slide 2"/>
-                    </div>
-
-                    <div class="slide">
-                        <img src="#{facesContext.externalContext.requestContextPath}/image/BEST OF TERE LIYE 3.png" alt="Slide 3"/>
-                    </div>
-
-                    <div class="navigation-auto">
-                        <div class="auto-btn1"></div>
-                        <div class="auto-btn2"></div>
-                        <div class="auto-btn3"></div>
-                    </div>
+                <div class="slide first">
+                    <img src="#{facesContext.externalContext.requestContextPath}/image/BEST OF TERE LIYE1.png" alt="Slide 1"/>
                 </div>
 
-                <div class="navigation-manual">
-                    <label for="radio1" class="manual-btn"></label>
-                    <label for="radio2" class="manual-btn"></label>
-                    <label for="radio3" class="manual-btn"></label>
+                <div class="slide">
+                    <img src="#{facesContext.externalContext.requestContextPath}/image/BEST OF TERE LIYE 2.png" alt="Slide 2"/>
+                </div>
+
+                <div class="slide">
+                    <img src="#{facesContext.externalContext.requestContextPath}/image/BEST OF TERE LIYE 3.png" alt="Slide 3"/>
+                </div>
+
+                <div class="navigation-auto">
+                    <div class="auto-btn1"></div>
+                    <div class="auto-btn2"></div>
+                    <div class="auto-btn3"></div>
                 </div>
             </div>
 
-            <!-- Section genre-icon -->
-            <section class="genre-icon">
-                <a href="aksiSeries.xhtml">
-                    <div class="icons">
-                        <img src="#{facesContext.externalContext.requestContextPath}/image/Serial Aksi/pulang.jpeg" alt="Book Icon"/>
-                        <div>
-                            <h3>Serial Aksi</h3>
-                        </div>
-                    </div>
-                </a>
-                <a href="duniaParalelSeries.xhtml">
-                    <div class="icons">
-                        <img src="#{facesContext.externalContext.requestContextPath}/image/dunia paralel/bumi.jpg" alt="Book Icon"/>
-                        <div>
-                            <h3>Serial Dunia Paralel</h3>
-                        </div>
-                    </div>
-                </a>
-                <a href="anakSeries.xhtml">
-                    <div class="icons">
-                        <img src="#{facesContext.externalContext.requestContextPath}/image/serial anak/anak spesial.jpeg" alt="Book Icon"/>
-                        <div>
-                            <h3>Serial Anak Nusantara</h3>
-                        </div>
-                    </div>
-                </a>
-                <a href="gogonSeries.xhtml">
-                    <div class="icons">
-                        <img src="#{facesContext.externalContext.requestContextPath}/image/gogons/1.jpg" alt="Book Icon"/>
-                        <div>
-                            <h3>Serial The Gogons</h3>
-                        </div>
-                    </div>
-                </a>
-                <a href="nonSeries.xhtml">
-                    <div class="icons">
-                        <img src="#{facesContext.externalContext.requestContextPath}/image/non seri/teruslahbodoh.jpg" alt="Book Icon"/>
-                        <div>
-                            <h3>Novel non-serial</h3>
-                        </div>
-                    </div>
-                </a>
-                <a href="cerpen.xhtml">
-                    <div class="icons">
-                        <img src="#{facesContext.externalContext.requestContextPath}/image/cerpen/berjutarasa.jpg" alt="Book Icon"/>
-                        <div>
-                            <h3>Kumpulan Cerpen</h3>
-                        </div>
-                    </div>
-                </a>
-            </section>
+            <div class="navigation-manual">
+                <label for="radio1" class="manual-btn"></label>
+                <label for="radio2" class="manual-btn"></label>
+                <label for="radio3" class="manual-btn"></label>
+            </div>
+        </div>
 
-<h:form id="bookForm">
-    <div styleClass="carousel-main-div1" id="carousel1">
-        <p:carousel value="#{bukuBean.bukuList}" var="buku" numVisible="6" circular="true" autoplayInterval="3000" styleClass="carousel-main">
-            <p:panel styleClass="card-new">
-                <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}"
-                                alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
-                <h3>#{buku.namaBuku}</h3>
-                <p>Genre: #{buku.genreBuku}</p>
-                <p>Stock: #{buku.stockBuku} item</p>
-                <h4>Price: Rp #{buku.hargaBuku}</h4>
+        <!-- Section genre-icon -->
+        <section class="genre-icon">
+            <a href="aksiSeries.xhtml">
+                <div class="icons">
+                    <img src="#{facesContext.externalContext.requestContextPath}/image/Serial Aksi/pulang.jpeg" alt="Book Icon"/>
+                    <div>
+                        <h3>Serial Aksi</h3>
+                    </div>
+                </div>
+            </a>
+            <a href="duniaParalelSeries.xhtml">
+                <div class="icons">
+                    <img src="#{facesContext.externalContext.requestContextPath}/image/dunia paralel/bumi.jpg" alt="Book Icon"/>
+                    <div>
+                        <h3>Serial Dunia Paralel</h3>
+                    </div>
+                </div>
+            </a>
+            <a href="anakSeries.xhtml">
+                <div class="icons">
+                    <img src="#{facesContext.externalContext.requestContextPath}/image/serial anak/anak spesial.jpeg" alt="Book Icon"/>
+                    <div>
+                        <h3>Serial Anak Nusantara</h3>
+                    </div>
+                </div>
+            </a>
+            <a href="gogonSeries.xhtml">
+                <div class="icons">
+                    <img src="#{facesContext.externalContext.requestContextPath}/image/gogons/1.jpg" alt="Book Icon"/>
+                    <div>
+                        <h3>Serial The Gogons</h3>
+                    </div>
+                </div>
+            </a>
+            <a href="nonSeries.xhtml">
+                <div class="icons">
+                    <img src="#{facesContext.externalContext.requestContextPath}/image/non seri/teruslahbodoh.jpg" alt="Book Icon"/>
+                    <div>
+                        <h3>Novel non-serial</h3>
+                    </div>
+                </div>
+            </a>
+            <a href="cerpen.xhtml">
+                <div class="icons">
+                    <img src="#{facesContext.externalContext.requestContextPath}/image/cerpen/berjutarasa.jpg" alt="Book Icon"/>
+                    <div>
+                        <h3>Kumpulan Cerpen</h3>
+                    </div>
+                </div>
+            </a>
+        </section>
 
-                <!-- CommandLink to open PrimeFaces dialog -->
-                <p:commandLink value="View Details"
-                               actionListener="#{bukuBean.loadBuku(buku.idBuku)}"
-                               update=":bookForm:bookDetailsDialog"
-                               oncomplete="PF('bookDialog').show();"/>
-            </p:panel>
-        </p:carousel>
-    </div>
+        <h:form id="bookForm">
+            <div styleClass="carousel-main-div1" id="carousel1">
+                <p:carousel value="#{bukuBean.bukuList}" var="buku" numVisible="6" circular="true" autoplayInterval="3000" styleClass="carousel-main">
+                    <p:panel styleClass="card-new">
+                        <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}"
+                                        alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
+                        <h3>#{buku.namaBuku}</h3>
+                        <p>Genre: #{buku.genreBuku}</p>
+                        <p>Stock: #{buku.stockBuku} item</p>
+                        <h4>Price: Rp #{buku.hargaBuku}</h4>
 
-    <!-- PrimeFaces Dialog for Book Details -->
-    <p:dialog widgetVar="bookDialog" modal="true" header="Book Details" id="bookDetailsDialog" width="600">
-        <h3>#{bukuBean.selectedBook.namaBuku}</h3>
-        <p><strong>Genre:</strong> #{bukuBean.selectedBook.genreBuku}</p>
-        <p><strong>Series:</strong> #{bukuBean.selectedBook.seriesBuku}</p>
-        <p><strong>Price:</strong> Rp #{bukuBean.selectedBook.hargaBuku}</p>
-        <p><strong>Stock:</strong> #{bukuBean.selectedBook.stockBuku} items</p>
-        <p><strong>Description:</strong> #{bukuBean.selectedBook.deskripsiBuku}</p>
-        <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(bukuBean.selectedBook.gambarBuku)}"
-                        alt="Book Image" style="width:100%;height:200px;object-fit:cover;" />
-    </p:dialog>
-</h:form>
+                        <!-- Replace dialog with navigation to book details page -->
+                        <h:commandLink value="View Details" 
+                                       action="#{bukuBean.loadBuku(buku.idBuku)}"
+                                       immediate="true"
+                                       onclick="window.location.href = 'bookDetails.xhtml?idBuku=#{buku.idBuku}';
+                                               return false;" />
+                    </p:panel>
+                </p:carousel>
+            </div>
+
+            <!-- PrimeFaces Dialog for Book Details -->
+
+        </h:form>
         <ui:include src="footer.xhtml" />
     </h:body>
 </html>

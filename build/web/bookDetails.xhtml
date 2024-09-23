@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/style.css"/>
+        <style>
+            /* Example CSS for book details card */
+            .card-new {
+                background-color: #f8f9fa;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                padding: 16px;
+                margin-bottom: 20px;
+            }
+
+            .book-image {
+                width: 150px; /* Set the desired width */
+                height: 200px; /* Set the desired height */
+                border-radius: 8px; /* Rounded corners */
+                margin-bottom: 40px; /* Adjust spacing below the image */
+                object-fit: none;
+            }
+
+            .card-new h2 {
+                font-family: 'Montserrat', sans-serif;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: auto;
+            }
+
+            p {
+                font-size: 1.1em;
+                line-height: 1.6em;
+            }
+
+        </style>
+        <title>Book Details - #{bukuBean.selectedBook.namaBuku}</title>
+    </h:head>
+
+    <h:body>
+        <ui:include src="header.xhtml"/>
+
+        <h:form id="bookDetailForm">
+            <div class="container mt-4">
+                <!-- Book Details Card -->
+                <p:panel header="Book Details" styleClass="card-new p-4">
+                    <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(bukuBean.selectedBook.gambarBuku)}"
+                                    alt="Book Image"
+                                    styleClass="book-image" />
+
+                    <h2>#{bukuBean.selectedBook.namaBuku}</h2>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <p><strong>Genre:</strong> #{bukuBean.selectedBook.genreBuku}</p>
+                            <p><strong>Series:</strong> #{bukuBean.selectedBook.seriesBuku}</p>
+                            <p><strong>Price:</strong> Rp #{bukuBean.selectedBook.hargaBuku}</p>
+                            <p><strong>Stock:</strong> #{bukuBean.selectedBook.stockBuku} items</p>
+                            <p><strong>Description:</strong> #{bukuBean.selectedBook.deskripsiBuku}</p>
+                        </div>
+                    </div>
+                </p:panel>
+            </div>
+        </h:form>
+
+        <h:form>
+            <h:commandButton value="Add to Cart" action="#{cartBean.addToCart(bukuBean.selectedBook.idBuku, 1)}" styleClass="btn btn-primary" />
+        </h:form>
+
+        <ui:include src="footer.xhtml"/>
+    </h:body>
+</html>

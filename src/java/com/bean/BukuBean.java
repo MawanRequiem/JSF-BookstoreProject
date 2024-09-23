@@ -20,19 +20,33 @@ public class BukuBean {
     private List<Buku> bukuList;
     private BukuDAO bukuDAO;
     private Buku selectedBook;
-
+    private int idBuku;  // ID buku yang akan diambil dari URL
     @PostConstruct
     public void init() {
         bukuDAO = new BukuDAO();
         bukuList = bukuDAO.getAllBooks();  // Fetch all books from DAO
-    }
+    
+        
+        String idBukuParam = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idBuku");
 
-    public List<Buku> getBukuList() {
-        return bukuList;
+        if (idBukuParam != null) {
+            try {
+                idBuku = Integer.parseInt(idBukuParam);
+                loadBuku(idBuku);  // Load book by ID
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
     }
-
-    public void setBukuList(List<Buku> bukuList) {
-        this.bukuList = bukuList;
+    
+        // Metode untuk memuat data buku berdasarkan ID
+    public void loadBuku(int idBuku) {
+        selectedBook = bukuDAO.getBookById(idBuku);
+        if (selectedBook != null) {
+            System.out.println("Book loaded: " + selectedBook.getNamaBuku());
+        } else {
+            System.out.println("No book found with idBuku: " + idBuku);
+        }
     }
 
     public Buku getSelectedBook() {
@@ -42,12 +56,17 @@ public class BukuBean {
     public void setSelectedBook(Buku selectedBook) {
         this.selectedBook = selectedBook;
     }
-
-    // This method will be called when user clicks on "View Details"
-    public void loadBuku(int idBuku) {
-        selectedBook = bukuDAO.getBookById(idBuku);  // Fetch book by its ID
-    }
     
+
+    public List<Buku> getBukuList() {
+        return bukuList;
+    }
+
+    public void setBukuList(List<Buku> bukuList) {
+        this.bukuList = bukuList;
+    }
+
+
     // Group books by genre
     public Map<String, List<Buku>> groupBooksByGenre() {
         return bukuList.stream().collect(Collectors.groupingBy(Buku::getGenreBuku));
@@ -58,49 +77,53 @@ public class BukuBean {
         return bukuList.stream().collect(Collectors.groupingBy(Buku::getSeriesBuku));
     }
 
-        // Sets the selected book and stores it in the session
-
+    // Sets the selected book and stores it in the session
     // This method stores the selected book in the session and redirects to the edit page
-public String editBuku(int idBuku) {
-    // Just pass the ID to the edit page, as the data will be loaded in the page's f:viewAction
-    return "editBuku?faces-redirect=true&idBuku=" + idBuku;
-}
-
+    public String editBuku(int idBuku) {
+        // Just pass the ID to the edit page, as the data will be loaded in the page's f:viewAction
+        return "editBuku?faces-redirect=true&idBuku=" + idBuku;
+    }
 
     // Method to save or update the selected book
-public String saveOrUpdateBook(int idBuku) {
-    Buku bookToUpdate = bukuDAO.getBookById(idBuku);  // Fetch the book by ID
-    if (bookToUpdate == null) {
-        System.out.println("No book found with ID: " + idBuku);
-        return "adminDashboard?faces-redirect=true";  // Redirect to the dashboard if no book is found
+    public String saveOrUpdateBook(int idBuku) {
+        Buku bookToUpdate = bukuDAO.getBookById(idBuku);  // Fetch the book by ID
+        if (bookToUpdate == null) {
+            System.out.println("No book found with ID: " + idBuku);
+            return "adminDashboard?faces-redirect=true";  // Redirect to the dashboard if no book is found
+        }
+
+        try {
+            // Update the book details
+            bookToUpdate.setNamaBuku(selectedBook.getNamaBuku());
+            bookToUpdate.setHargaBuku(selectedBook.getHargaBuku());
+            bookToUpdate.setGenreBuku(selectedBook.getGenreBuku());
+            bookToUpdate.setSeriesBuku(selectedBook.getSeriesBuku());
+            bookToUpdate.setDeskripsiBuku(selectedBook.getDeskripsiBuku());
+            bookToUpdate.setStockBuku(selectedBook.getStockBuku());
+
+            // Save the changes
+            bukuDAO.saveOrUpdateBook(bookToUpdate);
+            System.out.println("Book updated with ID: " + idBuku);
+            return "adminDashboard?faces-redirect=true";  // Redirect to the dashboard after saving
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;  // Stay on the same page if an error occurs
+        }
     }
 
-    try {
-        // Update the book details
-        bookToUpdate.setNamaBuku(selectedBook.getNamaBuku());
-        bookToUpdate.setHargaBuku(selectedBook.getHargaBuku());
-        bookToUpdate.setGenreBuku(selectedBook.getGenreBuku());
-        bookToUpdate.setSeriesBuku(selectedBook.getSeriesBuku());
-        bookToUpdate.setDeskripsiBuku(selectedBook.getDeskripsiBuku());
-        bookToUpdate.setStockBuku(selectedBook.getStockBuku());
-        
-        // Save the changes
-        bukuDAO.saveOrUpdateBook(bookToUpdate);
-        System.out.println("Book updated with ID: " + idBuku);
-        return "adminDashboard?faces-redirect=true";  // Redirect to the dashboard after saving
-    } catch (Exception e) {
-        e.printStackTrace();
-        return null;  // Stay on the same page if an error occurs
-    }
-}
-
-    
     // Convert image byte array to Base64 string
     public String convertToBase64(byte[] gambarBuku) {
         if (gambarBuku != null && gambarBuku.length > 0) {
             return Base64.getEncoder().encodeToString(gambarBuku);
         } else {
-            return "image/placeholder.png"; // Placeholder image when no image is available
+            return "https://via.placeholder.com/300x200.png?text=No+Image"; // Placeholder image when no image is available
         }
     }
+
+    // In BukuBean class
+    public String viewBookDetails(int idBuku) {
+        selectedBook = bukuDAO.getBookById(idBuku);  // Fetch book by its ID
+        return "bookDetails?faces-redirect=true";    // Redirect to the new details page
+    }
+
 }

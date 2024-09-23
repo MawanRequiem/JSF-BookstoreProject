@@ -32,6 +32,10 @@ public class UserDb  implements java.io.Serializable {
        this.orderses = orderses;
        this.userAddresses = userAddresses;
     }
+    
+    public UserDb(Integer idUser) {
+    this.idUser = idUser;
+}
    
     public Integer getIdUser() {
         return this.idUser;

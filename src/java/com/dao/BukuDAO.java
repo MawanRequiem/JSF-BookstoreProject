@@ -9,6 +9,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import java.util.List;
+import util.HibernateUtil;
 
 public class BukuDAO {
 
@@ -52,6 +53,19 @@ public class BukuDAO {
             session.close();
         }
         return book;
+    }
+    
+    public static Buku getBukuById(int idBuku) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Buku buku = null;
+
+        try {
+            buku = (Buku) session.get(Buku.class, idBuku); // Retrieve book by ID
+        } finally {
+            session.close();
+        }
+
+        return buku;
     }
 
     // Menyimpan atau memperbarui data buku
