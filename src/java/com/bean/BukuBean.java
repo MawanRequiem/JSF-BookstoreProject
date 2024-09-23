@@ -15,7 +15,7 @@ public class BukuBean {
 
     private List<Buku> bukuList;
     private BukuDAO bukuDAO;
-    private Buku selectedBook;  // Add this to store the selected book details
+    private Buku selectedBook;
 
     @PostConstruct
     public void init() {
@@ -39,21 +39,17 @@ public class BukuBean {
         this.selectedBook = selectedBook;
     }
 
-    // This method will be called when user clicks on "View Details" and it sets the selected book
+    // This method will be called when user clicks on "View Details"
     public void loadBuku(int idBuku) {
         selectedBook = bukuDAO.getBookById(idBuku);  // Fetch book by its ID
     }
 
     // Convert image byte array to Base64 string
-public String convertToBase64(byte[] gambarBuku) {
-    if (gambarBuku != null && gambarBuku.length > 0) {
-        String base64Image = Base64.getEncoder().encodeToString(gambarBuku);
-        System.out.println("Base64 Image: " + base64Image);  // Debugging
-        return base64Image;
-    } else {
-        System.out.println("No image found, returning placeholder.");
-        return "image/1.png";
+    public String convertToBase64(byte[] gambarBuku) {
+        if (gambarBuku != null && gambarBuku.length > 0) {
+            return Base64.getEncoder().encodeToString(gambarBuku);
+        } else {
+            return "image/placeholder.png"; // Placeholder image when no image is available
+        }
     }
-}
-
 }

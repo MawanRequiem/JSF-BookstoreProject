@@ -111,85 +111,38 @@
                 </a>
             </section>
 
-            <!-- Best Seller Section -->
 <h:form id="bookForm">
+    <div styleClass="carousel-main-div1" id="carousel1">
+        <p:carousel value="#{bukuBean.bukuList}" var="buku" numVisible="6" circular="true" autoplayInterval="3000" styleClass="carousel-main">
+            <p:panel styleClass="card-new">
+                <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}"
+                                alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
+                <h3>#{buku.namaBuku}</h3>
+                <p>Genre: #{buku.genreBuku}</p>
+                <p>Stock: #{buku.stockBuku} item</p>
+                <h4>Price: Rp #{buku.hargaBuku}</h4>
 
-            <!-- Section Best Seller -->
-            <div styleClass="carousel-main-div1" id="carousel1">
-                <h:form>
-                    <div class="carousel-main-div1" id="carousel1">
-                        <p:carousel value="#{bukuBean.bukuList}" var="buku" numVisible="8" circular="true" autoplayInterval="3000" styleClass="carousel-main">
-                            <p:panel styleClass="card-new">
-                                <!-- Display book image -->
-                                <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}"
-                                                alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
-                                <h3>#{buku.namaBuku}</h3>
-                                <p>Genre: #{buku.genreBuku}</p>
-                                <p>Stock: #{buku.stockBuku} item</p>
-                                <h4>Price: Rp #{buku.hargaBuku}</h4>
+                <!-- CommandLink to open PrimeFaces dialog -->
+                <p:commandLink value="View Details"
+                               actionListener="#{bukuBean.loadBuku(buku.idBuku)}"
+                               update=":bookForm:bookDetailsDialog"
+                               oncomplete="PF('bookDialog').show();"/>
+            </p:panel>
+        </p:carousel>
+    </div>
 
-                                <!-- Updated commandLink to open jQuery UI modal -->
-                               <p:commandLink value="View Details" 
-                                  actionListener="#{bukuBean.loadBuku(buku.idBuku)}"
-                                  oncomplete="initDialog();"/>
-                            </p:panel>
-                        </p:carousel>
-                    </div>
-                </h:form>
-            </div>
-
-            <!-- jQuery UI Modal -->
-            <div id="bookModal" title="Book Details" style="display:none;">
-                <h3 id="modalBookTitle"></h3>
-                <p><strong>Genre:</strong> <span id="modalBookGenre"></span></p>
-                <p><strong>Series:</strong> <span id="modalBookSeries"></span></p>
-                <p><strong>Price:</strong> Rp <span id="modalBookPrice"></span></p>
-                <p><strong>Stock:</strong> <span id="modalBookStock"></span> items</p>
-                <p><strong>Description:</strong> <span id="modalBookDescription"></span></p>
-                <img id="modalBookImage" style="width:100%;height:200px;object-fit:cover;" alt="Book Image" />
-            </div>
-        </h:form>
-
-            <script type="text/javascript" src=""></script>
-    <script type="text/javascript">
-            // Initialize the modal using jQuery UI
-            function initDialog() {
-                // Updating modal content
-                var title = '#{bukuBean.selectedBook.namaBuku}';
-                var genre = '#{bukuBean.selectedBook.genreBuku}';
-                var series = '#{bukuBean.selectedBook.seriesBuku}';
-                var price = '#{bukuBean.selectedBook.hargaBuku}';
-                var stock = '#{bukuBean.selectedBook.stockBuku}';
-                var description = '#{bukuBean.selectedBook.deskripsiBuku}';
-                var imageBase64 = '#{bukuBean.convertToBase64(bukuBean.selectedBook.gambarBuku)}';
-
-                // Update modal content with JSF-managed bean data
-                $("#modalBookTitle").text(title);
-                $("#modalBookGenre").text(genre);
-                $("#modalBookSeries").text(series);
-                $("#modalBookPrice").text(price);
-                $("#modalBookStock").text(stock);
-                $("#modalBookDescription").text(description);
-                $("#modalBookImage").attr("src", "data:image/jpeg;base64," + imageBase64);
-
-                // Show modal
-                $("#bookModal").dialog({
-                    modal: true,
-                    width: 600,
-                    buttons: {
-                        "Add to Cart": function () {
-                            // You can add your JSF addToCart action here
-                            // Example: #{cartBean.addToCart(bukuBean.selectedBook)}
-                            $(this).dialog("close");
-                        },
-                        Close: function () {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-            }
-        </script>
-
+    <!-- PrimeFaces Dialog for Book Details -->
+    <p:dialog widgetVar="bookDialog" modal="true" header="Book Details" id="bookDetailsDialog" width="600">
+        <h3>#{bukuBean.selectedBook.namaBuku}</h3>
+        <p><strong>Genre:</strong> #{bukuBean.selectedBook.genreBuku}</p>
+        <p><strong>Series:</strong> #{bukuBean.selectedBook.seriesBuku}</p>
+        <p><strong>Price:</strong> Rp #{bukuBean.selectedBook.hargaBuku}</p>
+        <p><strong>Stock:</strong> #{bukuBean.selectedBook.stockBuku} items</p>
+        <p><strong>Description:</strong> #{bukuBean.selectedBook.deskripsiBuku}</p>
+        <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(bukuBean.selectedBook.gambarBuku)}"
+                        alt="Book Image" style="width:100%;height:200px;object-fit:cover;" />
+    </p:dialog>
+</h:form>
         <ui:include src="footer.xhtml" />
     </h:body>
 </html>
