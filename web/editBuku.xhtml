@@ -220,6 +220,11 @@ textarea.ui-inputtext {
     </style>
     </h:head>
     <h:body>
+        <f:metadata>
+            <f:viewAction action="#{bukuBean.loadSelectedBook}" />
+            <f:event type="preRenderView" listener="#{bukuBean.loadSelectedBook}" />
+        </f:metadata>
+        
         <h:form>
             <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FF7D29;">
             <span class="navbar-text mr-3">
@@ -257,57 +262,40 @@ textarea.ui-inputtext {
             </div>
         </nav>
         </h:form>
-        
-        <div class="content">
-        <h:commandButton value="Tambah Buku +" styleClass="add-book-btn" onclick="PF('tambahBukuModal').show()" />
 
-        <p:dataTable value="#{bukuBean.bukuList}" var="buku" styleClass="table table-bordered">
-            <p:column headerText="Gambar Buku">
-                <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}" alt="#{buku.namaBuku}"/>
-            </p:column>
-            <p:column headerText="Nama Buku">
-                <h:outputText value="#{buku.namaBuku}" />
-            </p:column>
-            <p:column headerText="Harga Buku">
-                <h:outputText value="#{buku.hargaBuku}" />
-            </p:column>
-            <p:column headerText="Genre Buku">
-                <h:outputText value="#{buku.genreBuku}" />
-            </p:column>
-            <p:column headerText="Serial">
-                <h:outputText value="#{buku.seriesBuku}" />
-            </p:column>
-            <p:column headerText="Deskripsi Buku">
-                <h:outputText value="#{buku.deskripsiBuku}" />
-            </p:column>
-            <p:column headerText="Stock">
-                <h:outputText value="#{buku.stockBuku}" />
-            </p:column>
-            <p:column headerText="Aksi">
-                <h:form>
-                    <h:commandButton value="Update" action="#{bukuBean.editBuku(buku)}" styleClass="btn btn-warning action-btn" />
-                    <h:commandButton value="Delete" action="#{bukuBean.deleteBuku(buku)}" styleClass="btn btn-danger action-btn" />
-                </h:form>
-            </p:column>
-        </p:dataTable>
-    </div>
-
-    <!-- Modal Tambah Buku -->
-    <p:dialog header="Tambah Buku" widgetVar="tambahBukuModal" modal="true" closable="true" draggable="false">
         <h:form enctype="multipart/form-data">
-            <h:inputHidden value="#{bookBean.action}" />
-            <h:panelGrid columns="2" cellpadding="5">
+            <h1>Edit Book</h1>
+
+            <!-- Hidden Fields -->
+            <h:inputHidden id="idBuku" value="#{bukuBean.selectedBook.idBuku}" />
+
+            <!-- Gambar Buku -->
+            <h:panelGrid columns="2">
+                <h:outputLabel for="idBuku" value="ID " />
+                <h:inputText id="idBuku" value="#{bukuBean.selectedBook.idBuku}" />
+            </h:panelGrid>
+            
+            <h:panelGrid columns="2">
                 <h:outputLabel for="gambarBuku" value="Gambar Buku" />
-                <h:inputFile id="gambarBuku" value="#{bookBean.uploadedFile}" required="true" />
+                <h:inputFile id="gambarBuku" value="#{bukuBean.selectedBook.gambarBuku}" />
+            </h:panelGrid>
 
+            <!-- Nama Buku -->
+            <h:panelGrid columns="2">
                 <h:outputLabel for="namaBuku" value="Nama Buku" />
-                <h:inputText id="namaBuku" value="#{bookBean.newBook.nama}" required="true" />
+                <h:inputText id="namaBuku" value="#{bukuBean.selectedBook.namaBuku}" required="true" class="form-control" />
+            </h:panelGrid>
 
+            <!-- Harga Buku -->
+            <h:panelGrid columns="2">
                 <h:outputLabel for="hargaBuku" value="Harga Buku" />
-                <h:inputText id="hargaBuku" value="#{bookBean.newBook.harga}" required="true" />
+                <h:inputText id="hargaBuku" value="#{bukuBean.selectedBook.hargaBuku}" required="true" class="form-control" />
+            </h:panelGrid>
 
+            <!-- Genre Buku -->
+            <h:panelGrid columns="2">
                 <h:outputLabel for="genreBuku" value="Genre Buku" />
-                <h:selectOneMenu id="genreBuku" value="#{bookBean.newBook.genre}" required="true">
+                <h:selectOneMenu id="genreBuku" value="#{bukuBean.selectedBook.genreBuku}" required="true" class="form-control">
                     <f:selectItem itemLabel="Pilih Genre" itemValue="" />
                     <f:selectItem itemLabel="Action" itemValue="Action" />
                     <f:selectItem itemLabel="Adventure" itemValue="Adventure" />
@@ -315,9 +303,12 @@ textarea.ui-inputtext {
                     <f:selectItem itemLabel="Family" itemValue="Family" />
                     <f:selectItem itemLabel="Fantasy" itemValue="Fantasy" />
                 </h:selectOneMenu>
+            </h:panelGrid>
 
+            <!-- Serial Buku -->
+            <h:panelGrid columns="2">
                 <h:outputLabel for="serialBuku" value="Serial Buku" />
-                <h:selectOneMenu id="serialBuku" value="#{bookBean.newBook.serial}" required="true">
+                <h:selectOneMenu id="serialBuku" value="#{bukuBean.selectedBook.seriesBuku}" required="true" class="form-control">
                     <f:selectItem itemLabel="Pilih Serial" itemValue="" />
                     <f:selectItem itemLabel="Cerpen" itemValue="cerpen" />
                     <f:selectItem itemLabel="Dunia Paralel" itemValue="duniaParalel" />
@@ -326,20 +317,26 @@ textarea.ui-inputtext {
                     <f:selectItem itemLabel="Serial Aksi" itemValue="aksi" />
                     <f:selectItem itemLabel="Serial Anak" itemValue="anak" />
                 </h:selectOneMenu>
-
-                <h:outputLabel for="deskripsiBuku" value="Deskripsi Buku" />
-                <h:inputTextarea id="deskripsiBuku" value="#{bookBean.newBook.deskripsi}" rows="3" required="true" />
-
-                <h:outputLabel for="stockBuku" value="Stock Buku" />
-                <h:inputText id="stockBuku" value="#{bookBean.newBook.stock}" required="true" />
             </h:panelGrid>
 
-            <h:commandButton value="Tambah Buku" action="#{bookBean.addBook()}" styleClass="btn btn-primary" />
+            <!-- Deskripsi Buku -->
+            <h:panelGrid columns="2">
+                <h:outputLabel for="deskripsiBuku" value="Deskripsi Buku" />
+                <h:inputTextarea id="deskripsiBuku" value="#{bukuBean.selectedBook.deskripsiBuku}" rows="3" required="true" class="form-control" />
+            </h:panelGrid>
+
+            <!-- Stock Buku -->
+            <h:panelGrid columns="2">
+                <h:outputLabel for="stockBuku" value="Stock Buku" />
+                <h:inputText id="stockBuku" value="#{bukuBean.selectedBook.stockBuku}" required="true" class="form-control" />
+            </h:panelGrid>
+
+            <!-- Update Button -->
+            <h:commandButton value="Update Book" action="#{bukuBean.saveOrUpdateBook}" class="btn btn-primary" />
         </h:form>
-    </p:dialog>
         
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </h:body>
 </html>
