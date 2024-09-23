@@ -266,7 +266,7 @@ textarea.ui-inputtext {
                 <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}" alt="#{buku.namaBuku}"/>
             </p:column>
             <p:column headerText="Nama Buku">
-                <h:outputText value="#{buku.namaBuku}" />
+                <h:outputText value="#{buku.idBuku}" />
             </p:column>
             <p:column headerText="Harga Buku">
                 <h:outputText value="#{buku.hargaBuku}" />
@@ -283,12 +283,17 @@ textarea.ui-inputtext {
             <p:column headerText="Stock">
                 <h:outputText value="#{buku.stockBuku}" />
             </p:column>
-            <p:column headerText="Aksi">
-                <h:form>
-                    <h:commandButton value="Update" action="#{bukuBean.editBuku(buku)}" styleClass="btn btn-warning action-btn" />
-                    <h:commandButton value="Delete" action="#{bukuBean.deleteBuku(buku)}" styleClass="btn btn-danger action-btn" />
-                </h:form>
-            </p:column>
+<p:column headerText="Aksi">
+    <h:form>
+        <!-- Update Button within a form -->
+        <h:commandLink value="Update" action="#{bukuBean.editBuku(buku.idBuku)}">
+            <f:param name="idBuku" value="#{buku.idBuku}" />
+        </h:commandLink>
+        
+        <!-- Delete Button within the same form -->
+        <h:commandButton value="Delete" action="#{bukuBean.deleteBuku(buku.idBuku)}" styleClass="btn btn-danger action-btn" />
+    </h:form>
+</p:column>
         </p:dataTable>
     </div>
 

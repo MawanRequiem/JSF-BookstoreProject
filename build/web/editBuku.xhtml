@@ -222,8 +222,9 @@ textarea.ui-inputtext {
  <h:body>
         <!-- Ensure the selected book is loaded when the page is accessed -->
 <f:metadata>
-            <f:viewAction action="#{bukuBean.loadSelectedBook}" />
-        </f:metadata>
+    <f:viewParam name="idBuku" value="#{bukuBean.selectedBook.idBuku}" />
+    <f:viewAction action="#{bukuBean.loadBuku}" />
+</f:metadata>
 
         <h:form enctype="multipart/form-data">
             <h1>Edit Book</h1>
@@ -292,7 +293,7 @@ textarea.ui-inputtext {
             </h:panelGrid>
 
             <!-- Update Button -->
-            <h:commandButton value="Update Book" action="#{bukuBean.saveOrUpdateBook}" class="btn btn-primary" />
+            <h:commandButton value="Update Book" action="#{bukuBean.saveOrUpdateBook(bukuBean.selectedBook.idBuku)}" class="btn btn-primary" />
         </h:form>
     </h:body>
 </html>
