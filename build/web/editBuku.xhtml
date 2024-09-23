@@ -219,65 +219,19 @@ textarea.ui-inputtext {
         }
     </style>
     </h:head>
-    <h:body>
-        <f:metadata>
+ <h:body>
+        <!-- Ensure the selected book is loaded when the page is accessed -->
+<f:metadata>
             <f:viewAction action="#{bukuBean.loadSelectedBook}" />
-            <f:event type="preRenderView" listener="#{bukuBean.loadSelectedBook}" />
         </f:metadata>
-        
-        <h:form>
-            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FF7D29;">
-            <span class="navbar-text mr-3">
-                <span class="welcome-text">Welcome</span>
-                <span class="username-text">#{loginBean.username}</span> <!-- Assuming userBean holds the username -->
-            </span>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle custom-dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Menu
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right custom-dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <h:link outcome="index.xhtml" class="dropdown-item custom-dropdown-item"> <!-- Home User Page -->
-                                Home User
-                            </h:link>
-
-                            <h:link outcome="adminDashboard.xhtml" class="dropdown-item custom-dropdown-item"> <!-- Home Admin Page -->
-                                Home Admin
-                            </h:link>
-
-                            <h:link outcome="adminTransaction.xhtml" class="dropdown-item custom-dropdown-item"> <!-- Admin Transactions -->
-                                Pesanan
-                            </h:link>
-
-                            <h:commandLink value="Logout" action="#{loginBean.logout}" class="dropdown-item custom-dropdown-item"/> <!-- Logout action -->
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        </h:form>
 
         <h:form enctype="multipart/form-data">
             <h1>Edit Book</h1>
 
-            <!-- Hidden Fields -->
-            <h:inputHidden id="idBuku" value="#{bukuBean.selectedBook.idBuku}" />
-
-            <!-- Gambar Buku -->
+            <!-- ID Buku -->
             <h:panelGrid columns="2">
-                <h:outputLabel for="idBuku" value="ID " />
-                <h:inputText id="idBuku" value="#{bukuBean.selectedBook.idBuku}" />
-            </h:panelGrid>
-            
-            <h:panelGrid columns="2">
-                <h:outputLabel for="gambarBuku" value="Gambar Buku" />
-                <h:inputFile id="gambarBuku" value="#{bukuBean.selectedBook.gambarBuku}" />
+                <h:outputLabel for="idBuku" value="ID Buku" />
+                <h:inputText id="idBuku" value="#{bukuBean.selectedBook.idBuku}" readonly="true" />
             </h:panelGrid>
 
             <!-- Nama Buku -->
@@ -334,9 +288,5 @@ textarea.ui-inputtext {
             <!-- Update Button -->
             <h:commandButton value="Update Book" action="#{bukuBean.saveOrUpdateBook}" class="btn btn-primary" />
         </h:form>
-        
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </h:body>
 </html>

@@ -59,43 +59,41 @@ public class BukuBean {
     }
 
         // Sets the selected book and stores it in the session
-    public String editBuku(Buku buku) {
-        // Set the selected book
-        this.selectedBook = buku;
-        
-        // Store the selected book in the session
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedBook", selectedBook);
+public void loadSelectedBook() throws IOException {
+    // Retrieve the selected book from the session
+    selectedBook = (Buku) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedBook");
 
-        // Redirect to editBuku.xhtml
-        return "editBuku?faces-redirect=true";
-    }
-
-    // Retrieves the selected book from the session when loading the edit page
-    public void loadSelectedBook() throws IOException {
-        selectedBook = (Buku) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedBook");
+    // If no selected book is found, redirect to the dashboard or handle the error
     if (selectedBook == null) {
-        // Redirect to another page or show an error
-        System.out.println("Selected book is null, redirecting back or showing error.");
+        System.out.println("Selected book is null, redirecting to dashboard.");
         FacesContext.getCurrentInstance().getExternalContext().redirect("adminDashboard.xhtml");
     } else {
         System.out.println("Selected book loaded: " + selectedBook.getIdBuku());
     }
-    }
-    
+}
+
+    // This method stores the selected book in the session and redirects to the edit page
+public String editBuku(Buku buku) {
+    this.selectedBook = buku; // Set the selected book
+    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedBook", selectedBook); // Save to session
+    return "editBuku?faces-redirect=true"; // Redirect to edit page
+}
+
+    // Method to save or update the selected book
     public String saveOrUpdateBook() {
         if (selectedBook == null) {
-        System.out.println("No book selected for update.");
-        return null;  // Stay on the same page if no book is selected
-    }
-    
-    try {
-        System.out.println("Updating book: " + selectedBook.getIdBuku());
-        bukuDAO.saveOrUpdateBook(selectedBook);  // Simpan atau update buku
-        return "adminDashboard?faces-redirect=true";  // Redirect to admin dashboard
-    } catch (Exception e) {
-        e.printStackTrace();
-        return null;  // Tetap di halaman yang sama jika terjadi error
-    }
+            System.out.println("No book selected for update.");
+            return "index?faces-redirect=true";  // Stay on the same page if no book is selected
+        }
+
+        try {
+            System.out.println("Updating book: " + selectedBook.getIdBuku());
+            bukuDAO.saveOrUpdateBook(selectedBook);  // Save or update the book
+            return "adminDashboard?faces-redirect=true";  // Redirect to admin dashboard
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;  // Stay on the same page if an error occurs
+        }
     }
     
     // Convert image byte array to Base64 string
