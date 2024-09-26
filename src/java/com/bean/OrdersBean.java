@@ -2,24 +2,22 @@ package com.bean;
 
 import com.dao.OrdersDAO;
 import model.Orders;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import java.io.Serializable;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name = "ordersBean")
-@RequestScoped
-public class OrdersBean {
+@SessionScoped
+public class OrdersBean implements Serializable {
 
+    private List<AdminTransactionBean> transactions;
     private List<Orders> ordersList;
-    private OrdersDAO ordersDAO;
-    private Orders selectedOrder;  // To store the selected order details
+    private OrdersDAO ordersDAO = new OrdersDAO(); // Assuming you have OrdersDAO implemented
 
-    @PostConstruct
-    public void init() {
-        ordersDAO = new OrdersDAO();
-        ordersList = ordersDAO.getAllOrders();  // Fetch all orders from DAO
+    public OrdersBean() {
+        // Initialize ordersList by fetching from DAO
+        this.ordersList = ordersDAO.getAllOrders();
     }
 
     public List<Orders> getOrdersList() {
@@ -28,18 +26,5 @@ public class OrdersBean {
 
     public void setOrdersList(List<Orders> ordersList) {
         this.ordersList = ordersList;
-    }
-
-    public Orders getSelectedOrder() {
-        return selectedOrder;
-    }
-
-    public void setSelectedOrder(Orders selectedOrder) {
-        this.selectedOrder = selectedOrder;
-    }
-
-    // This method will be called when user clicks on "View Details" to set the selected order
-    public void loadOrder(int orderId) {
-        selectedOrder = ordersDAO.getOrderById(orderId);  // Fetch order by its ID
     }
 }

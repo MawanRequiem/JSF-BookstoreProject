@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 21, 2024 5:34:08 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Sep 26, 2024 8:29:42 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="model.Buku" table="buku" catalog="tereliyebook" optimistic-lock="version">
         <id name="idBuku" type="java.lang.Integer">
@@ -29,17 +29,11 @@
         <property name="stockBuku" type="java.lang.Integer">
             <column name="stock_buku" />
         </property>
-        <set name="orderitemses" table="orderitems" inverse="true" lazy="true" fetch="select">
+        <set name="orderses" table="orders" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="book_id" />
+                <column name="id_buku" not-null="true" />
             </key>
-            <one-to-many class="model.Orderitems" />
-        </set>
-        <set name="keranjangs" table="keranjang" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="book_id" />
-            </key>
-            <one-to-many class="model.Keranjang" />
+            <one-to-many class="model.Orders" />
         </set>
     </class>
 </hibernate-mapping>

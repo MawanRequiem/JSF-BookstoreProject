@@ -1,5 +1,5 @@
 package model;
-// Generated Sep 21, 2024 5:34:07 PM by Hibernate Tools 4.3.1
+// Generated Sep 26, 2024 8:29:42 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -16,26 +16,20 @@ public class UserDb  implements java.io.Serializable {
      private String username;
      private String password;
      private String email;
-     private Set<Keranjang> keranjangs = new HashSet<Keranjang>(0);
-     private Set<Orders> orderses = new HashSet<Orders>(0);
-     private Set<UserAddress> userAddresses = new HashSet<UserAddress>(0);
+     private Set orderses = new HashSet(0);
+     private Set userAddresses = new HashSet(0);
 
     public UserDb() {
     }
 
-    public UserDb(String namaUser, String username, String password, String email, Set<Keranjang> keranjangs, Set<Orders> orderses, Set<UserAddress> userAddresses) {
+    public UserDb(String namaUser, String username, String password, String email, Set orderses, Set userAddresses) {
        this.namaUser = namaUser;
        this.username = username;
        this.password = password;
        this.email = email;
-       this.keranjangs = keranjangs;
        this.orderses = orderses;
        this.userAddresses = userAddresses;
     }
-    
-    public UserDb(Integer idUser) {
-    this.idUser = idUser;
-}
    
     public Integer getIdUser() {
         return this.idUser;
@@ -72,25 +66,18 @@ public class UserDb  implements java.io.Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    public Set<Keranjang> getKeranjangs() {
-        return this.keranjangs;
-    }
-    
-    public void setKeranjangs(Set<Keranjang> keranjangs) {
-        this.keranjangs = keranjangs;
-    }
-    public Set<Orders> getOrderses() {
+    public Set getOrderses() {
         return this.orderses;
     }
     
-    public void setOrderses(Set<Orders> orderses) {
+    public void setOrderses(Set orderses) {
         this.orderses = orderses;
     }
-    public Set<UserAddress> getUserAddresses() {
+    public Set getUserAddresses() {
         return this.userAddresses;
     }
     
-    public void setUserAddresses(Set<UserAddress> userAddresses) {
+    public void setUserAddresses(Set userAddresses) {
         this.userAddresses = userAddresses;
     }
 

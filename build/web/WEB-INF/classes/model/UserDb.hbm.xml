@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 21, 2024 5:34:08 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Sep 26, 2024 8:29:42 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="model.UserDb" table="user_db" catalog="tereliyebook" optimistic-lock="version">
         <id name="idUser" type="java.lang.Integer">
@@ -20,15 +20,9 @@
         <property name="email" type="string">
             <column name="email" length="50" unique="true" />
         </property>
-        <set name="keranjangs" table="keranjang" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="user_id" />
-            </key>
-            <one-to-many class="model.Keranjang" />
-        </set>
         <set name="orderses" table="orders" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="user_id" />
+                <column name="id_user" not-null="true" />
             </key>
             <one-to-many class="model.Orders" />
         </set>

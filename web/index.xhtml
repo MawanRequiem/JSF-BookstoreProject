@@ -132,7 +132,7 @@
 
                         <!-- Replace dialog with navigation to book details page -->
                         <h:commandLink value="View Details" 
-                                       action="#{bukuBean.loadBuku(buku.idBuku)}"
+                                       action="#{viewBookBean.loadBuku(buku.idBuku)}"
                                        immediate="true"
                                        onclick="window.location.href = 'bookDetails.xhtml?idBuku=#{buku.idBuku}';
                                                return false;" />

@@ -41,11 +41,9 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="tereliyebook"/>
-  <table-filter match-name="orders"/>
-  <table-filter match-name="keranjang"/>
-  <table-filter match-name="user_db"/>
   <table-filter match-name="user_address"/>
-  <table-filter match-name="orderitems"/>
   <table-filter match-name="buku"/>
   <table-filter match-name="admin_db"/>
+  <table-filter match-name="user_db"/>
+  <table-filter match-name="orders"/>
 </hibernate-reverse-engineering>

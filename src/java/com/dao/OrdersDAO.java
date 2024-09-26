@@ -1,93 +1,98 @@
 package com.dao;
 
+import com.bean.AdminTransactionBean;
 import model.Orders;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-
+import util.HibernateUtil;
 import java.util.List;
+import org.hibernate.Query;
 
 public class OrdersDAO {
+    
+    // Fetch all orders from the database
+    public List<AdminTransactionBean> getAdminTransactions() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<AdminTransactionBean> transactions = null;
 
-    private SessionFactory sessionFactory;
+        try {
+            session.beginTransaction();
 
-    // Constructor: Initialize Hibernate SessionFactory
-    public OrdersDAO() {
-        Configuration configuration = new Configuration().configure(); // Read config from hibernate.cfg.xml
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                                            .applySettings(configuration.getProperties())
-                                            .build();
-        sessionFactory = configuration.buildSessionFactory(serviceRegistry); // Create sessionFactory
+            // HQL untuk join tabel Orders, UserDb, Orderitems, Buku
+            String hql = "SELECT new model.AdminTransactionBean("
+                    + "o.orderId, o.totalPrice, o.orderDate, o.status, "
+                    + "u.idUser, u.namaUser, "
+                    + "i.buku.idBuku, i.buku.namaBuku, i.kuantitas) "
+                    + "FROM Orders o "
+                    + "JOIN o.userDb u "
+                    + "JOIN o.orderitemses i";
+
+            // Buat query menggunakan Hibernate versi 4.3
+            Query query = session.createQuery(hql);
+            transactions = (List<AdminTransactionBean>) query.list();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return transactions;
     }
-
-    // Method to get all orders from the database
-    @SuppressWarnings("unchecked")  // Suppress unchecked cast warning
+    
     public List<Orders> getAllOrders() {
-        Session session = sessionFactory.openSession();
-        List<Orders> orders = null;
+        Transaction transaction = null;
+        List<Orders> ordersList = null;
+        
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            orders = (List<Orders>) session.createQuery("from Orders").list(); // Manual casting
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return orders;
-    }
+            // Start transaction
+            transaction = session.beginTransaction();
 
-    // Method to get an order by ID
-    public Orders getOrderById(int orderId) {
-        Session session = sessionFactory.openSession();
-        Orders order = null;
-        try {
-            order = (Orders) session.get(Orders.class, orderId); // Manual casting
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return order;
-    }
+            // Use HQL to fetch Orders with UserDb and OrderItems (with Buku entity in OrderItems)
+            String hql = "FROM Orders o LEFT JOIN FETCH o.userDb u LEFT JOIN FETCH o.orderitemses oi LEFT JOIN FETCH oi.buku";
+            Query query = session.createQuery(hql);  // Hibernate 4.3 tidak memiliki tipe generik di Query
 
-    // Method to save or update an order
-    public void saveOrUpdateOrder(Orders order) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            session.saveOrUpdate(order);  // Save or update the order
-            tx.commit();
+            ordersList = (List<Orders>) query.list();  // Casting hasil query ke List<Orders>
+
+            // Commit the transaction
+            transaction.commit();
         } catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
+            if (transaction != null) {
+                transaction.rollback();
             }
             e.printStackTrace();
         } finally {
             session.close();
         }
+        return ordersList;
     }
 
-    // Method to delete an order by ID
-    public void deleteOrder(int orderId) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Orders order = (Orders) session.get(Orders.class, orderId); // Manual casting
-            if (order != null) {
-                session.delete(order);  // Delete order if it exists
-                tx.commit();
-            }
-        } catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-    }
+
 }
+
+
+
+    // Update order in the database
+//    public void updateOrder(Orders order) {
+//        Transaction transaction = null;
+//        
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//            // Start transaction
+//            transaction = session.beginTransaction();
+//            
+//            // Update the order
+//            session.update(order);
+//            
+//            // Commit transaction
+//            transaction.commit();
+//        } catch (Exception e) {
+//            if (transaction != null) {
+//                transaction.rollback();
+//            }
+//            e.printStackTrace();
+//        }
+//    }
+

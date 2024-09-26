@@ -1,5 +1,5 @@
 package model;
-// Generated Sep 21, 2024 5:34:07 PM by Hibernate Tools 4.3.1
+// Generated Sep 26, 2024 8:29:42 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -19,13 +19,12 @@ public class Buku  implements java.io.Serializable {
      private String seriesBuku;
      private String deskripsiBuku;
      private Integer stockBuku;
-     private Set<Orderitems> orderitemses = new HashSet<Orderitems>(0);
-     private Set<Keranjang> keranjangs = new HashSet<Keranjang>(0);
+     private Set orderses = new HashSet(0);
 
     public Buku() {
     }
 
-    public Buku(byte[] gambarBuku, String namaBuku, Double hargaBuku, String genreBuku, String seriesBuku, String deskripsiBuku, Integer stockBuku, Set<Orderitems> orderitemses, Set<Keranjang> keranjangs) {
+    public Buku(byte[] gambarBuku, String namaBuku, Double hargaBuku, String genreBuku, String seriesBuku, String deskripsiBuku, Integer stockBuku, Set orderses) {
        this.gambarBuku = gambarBuku;
        this.namaBuku = namaBuku;
        this.hargaBuku = hargaBuku;
@@ -33,8 +32,7 @@ public class Buku  implements java.io.Serializable {
        this.seriesBuku = seriesBuku;
        this.deskripsiBuku = deskripsiBuku;
        this.stockBuku = stockBuku;
-       this.orderitemses = orderitemses;
-       this.keranjangs = keranjangs;
+       this.orderses = orderses;
     }
    
     public Integer getIdBuku() {
@@ -93,24 +91,15 @@ public class Buku  implements java.io.Serializable {
     public void setStockBuku(Integer stockBuku) {
         this.stockBuku = stockBuku;
     }
-    public Set<Orderitems> getOrderitemses() {
-        return this.orderitemses;
+    public Set getOrderses() {
+        return this.orderses;
     }
     
-    public void setOrderitemses(Set<Orderitems> orderitemses) {
-        this.orderitemses = orderitemses;
-    }
-    public Set<Keranjang> getKeranjangs() {
-        return this.keranjangs;
-    }
-    
-    public void setKeranjangs(Set<Keranjang> keranjangs) {
-        this.keranjangs = keranjangs;
+    public void setOrderses(Set orderses) {
+        this.orderses = orderses;
     }
 
 
 
 
 }
-
-

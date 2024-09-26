@@ -11,10 +11,11 @@ import java.util.List;
 import java.util.Base64;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "bukuBean")
-@RequestScoped
+@ViewScoped
 public class BukuBean {
 
     private List<Buku> bukuList;

@@ -1,45 +1,21 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 21, 2024 5:34:08 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Sep 26, 2024 8:29:42 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="model.Orders" table="orders" catalog="tereliyebook" optimistic-lock="version">
-        <id name="orderId" type="java.lang.Integer">
-            <column name="order_id" />
+        <id name="idOrder" type="java.lang.Integer">
+            <column name="id_order" />
             <generator class="identity" />
         </id>
-        <many-to-one name="userDb" class="model.UserDb" fetch="select">
-            <column name="user_id" />
+        <many-to-one name="buku" class="model.Buku" fetch="select">
+            <column name="id_buku" not-null="true" />
         </many-to-one>
-        <property name="paymentMethod" type="string">
-            <column name="payment_method" length="50" />
+        <many-to-one name="userDb" class="model.UserDb" fetch="select">
+            <column name="id_user" not-null="true" />
+        </many-to-one>
+        <property name="date" type="date">
+            <column name="date" length="10" not-null="true" />
         </property>
-        <property name="totalPrice" type="java.lang.Double">
-            <column name="total_price" precision="22" scale="0" />
-        </property>
-        <property name="orderDate" type="timestamp">
-            <column name="order_date" length="19" not-null="true" />
-        </property>
-        <property name="status" type="string">
-            <column name="status" length="20" />
-        </property>
-        <property name="kodepembayaran" type="string">
-            <column name="kodepembayaran" length="10" />
-        </property>
-        <property name="buktiBayar" type="binary">
-            <column name="bukti_bayar" />
-        </property>
-        <property name="expiryTime" type="timestamp">
-            <column name="expiry_time" length="19" />
-        </property>
-        <property name="isStockReturned" type="java.lang.Boolean">
-            <column name="is_stock_returned" />
-        </property>
-        <set name="orderitemses" table="orderitems" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="order_id" />
-            </key>
-            <one-to-many class="model.Orderitems" />
-        </set>
     </class>
 </hibernate-mapping>

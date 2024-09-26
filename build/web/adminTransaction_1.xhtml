@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pesanan</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+       <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/admin.css"/>
+       
+        <style>
+            body {
+                background-color: #FAF4DB;
+            }
+            .navbar-brand, .nav-link, .btn-outline-warning {
+                color: #FF7D29 !important;
+            }
+
+            .table img {
+                width: 100px;
+                height: auto;
+            }
+            .btn-tambah-buku {
+                position: fixed;
+                bottom: 40px;
+                right: 20px;
+            }
+
+            .custom-dropdown-toggle {
+                color: white;
+                background-color: white;
+                border-radius: 5px;
+                margin-right: 40px;
+                margin-left: 10px;
+                padding: 5px 10px;
+            }
+
+            .custom-dropdown-toggle:hover {
+                color: #ffc107;
+                background-color: #495057;
+            }
+
+            .custom-dropdown-menu {
+                background-color: #343a40;
+                border: none;
+            }
+
+            .custom-dropdown-item {
+                color: #fff;
+            }
+
+            .custom-dropdown-item:hover {
+                color: #ffc107;
+                background-color: #495057;
+            }
+
+            .welcome-message {
+                display: inline-flex;
+                align-items: center;
+                padding-left: 20px;
+                margin-left: auto;
+            }
+
+            .welcome-text {
+                color: white;
+                font-size: 30px;
+                font-weight: bold;
+                margin-left: 30px;
+            }
+
+            .username-text {
+                color: white;
+                font-weight: bold;
+                margin-left: 8px;
+                font-size: 20px;
+            }
+
+            .header {
+                background-color: #FF7D29;
+                padding: 20px;
+                color: white;
+                text-align: center;
+            }
+
+            .menu {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                color: white;
+            }
+
+            .content {
+                margin: 20px;
+            }
+
+            .add-book-btn {
+                background-color: #EB6611;
+                color: white;
+                font-weight: bold;
+                border: none;
+                padding: 10px 20px;
+                margin: 20px 0;
+                cursor: pointer;
+                border-radius: 15px;
+            }
+
+            .add-book-btn:hover {
+                background-color: #FF4500;
+            }
+
+            /* Table styles */
+            .table {
+                width: 100%;
+                margin-bottom: 1rem;
+                background-color: transparent;
+            }
+
+            /*.table td {
+                vertical-align: middle;
+                text-align: center;
+                background-color: #FAF4DB;
+            }
+            
+            .table th {
+                vertical-align: middle;
+                text-align: center;
+            }
+            
+            .table th {
+                background-color: #FF7D29;
+                color: white;
+            }
+            
+            .table-bordered {
+                border: 2px solid black;
+            }
+            
+            .table-bordered th,
+            .table-bordered td {
+                border: 2px solid black;
+            }*/
+
+            .table img {
+                width: 100px;
+                height: auto;
+            }
+
+            .action-btn {
+                margin: 5px;
+            }
+
+            /* Modal (dialog) styles */
+            .ui-dialog .ui-dialog-content {
+                background-color: #fffbe6;
+                border: 2px solid #ff8800;
+                border-radius: 10px;
+            }
+
+            .ui-dialog .ui-dialog-titlebar {
+                background-color: #ff8800;
+                border-radius: 10px 10px 0 0;
+                color: white;
+                border: none;
+            }
+
+            .ui-dialog-titlebar-close {
+                color: white;
+                background: transparent;
+                border: none;
+            }
+
+            .ui-dialog .ui-button {
+                background-color: #ff8800;
+                color: white;
+                font-weight: bold;
+                border-radius: 15px;
+            }
+
+            .ui-button:hover {
+                background-color: #e07b00;
+            }
+
+            /* Input styles inside modal */
+            .ui-inputfile, .ui-inputtext, .ui-selectonemenu, .ui-textarea {
+                border: 2px solid #ff8800;
+                border-radius: 10px;
+                padding: 10px;
+                background-color: #fffbe6;
+                width: 100%;
+            }
+
+            textarea.ui-inputtext {
+                resize: none;
+            }
+
+            /* Primary button styles */
+            .btn-primary {
+                background-color: #ff8800;
+                border: none;
+                border-radius: 20px;
+                padding: 10px 20px;
+                font-weight: bold;
+                color: white;
+                cursor: pointer;
+            }
+
+            .btn-primary:hover {
+                background-color: #e07b00;
+            }
+
+            .btn-primary:focus {
+                outline: none;
+                box-shadow: none;
+            }
+
+            .form-group select {
+                width: 100%;
+            }
+            
+            /* Footer Style */
+footer {
+  background-color: rgb(144, 220, 255);
+  padding: 40px 20px;
+  color: #333;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-section {
+  flex: 1;
+  margin: 10px 20px;
+  min-width: 200px;
+}
+
+.footer-section h4 {
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #222;
+  position: relative;
+  display: inline-block;
+}
+
+.footer-section h4::after {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 2px;
+  background-color: #222;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.payment-method img,
+.shipping-method img {
+
+  margin: 10px;
+  transition: transform 0.3s;
+}
+
+.payment-method img:hover,
+.shipping-method img:hover {
+  transform: scale(1.1);
+}
+
+.social-media a {
+  display: inline-block;
+  margin: 0 10px;
+  transition: transform 0.3s;
+}
+
+.social-media img {
+  width: 40px;
+  vertical-align: middle;
+}
+
+.social-media a:hover img {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .footer-section {
+      margin: 20px 0;
+      text-align: center;
+  }
+
+  .payment-method,
+  .shipping-method {
+      justify-content: center;
+  }
+}
+        </style>
+    </h:head>
+    <h:body>
+        <h:form>
+            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FF7D29;">
+                <span class="navbar-text mr-3">
+                    <span class="welcome-text">Welcome</span>
+                    <span class="username-text">#{loginBean.username}</span>
+                </span>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle custom-dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Menu
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right custom-dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <h:link outcome="index.xhtml" class="dropdown-item custom-dropdown-item">Home User</h:link>
+                                <h:link outcome="adminDashboard.xhtml" class="dropdown-item custom-dropdown-item">Home Admin</h:link>
+                                <h:link outcome="adminTransaction.xhtml" class="dropdown-item custom-dropdown-item">Pesanan</h:link>
+                                <h:commandLink value="Logout" action="#{loginBean.logout}" class="dropdown-item custom-dropdown-item"/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </h:form>
+        
+    <!-- Display the list of orders -->
+    <div class="content">
+    <h1 class="title">Pesanan</h1>
+    
+    <h:dataTable value="#{ordersBean.ordersList}" var="order" class="table table-bordered table-custom">
+        <!-- Order ID from Orders -->
+        <h:column>
+            <f:facet name="header">Order ID</f:facet>
+            <h:outputText value="#{order.orderId}" />
+        </h:column>
+        
+        <!-- User ID and Username from UserDb -->
+        <h:column>
+            <f:facet name="header">User ID</f:facet>
+            <h:outputText value="#{order.userDb.idUser}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">Nama</f:facet>
+            <h:outputText value="#{order.userDb.namaUser}" />
+        </h:column>
+        
+        <!-- Payment Method from Orders -->
+        <h:column>
+            <f:facet name="header">Payment Method</f:facet>
+            <h:outputText value="#{order.paymentMethod}" />
+        </h:column>
+        
+        <!-- Books and Quantities from OrderItems -->
+        <h:column>
+            <f:facet name="header">Book Name</f:facet>
+            <h:dataTable value="#{order.orderitemses}" var="item">
+                <h:column>
+                    <h:outputText value="#{item.buku.namaBuku}" /> <!-- namaBuku is from Buku entity -->
+                </h:column>
+            </h:dataTable>
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Quantity</f:facet>
+            <h:dataTable value="#{order.orderitemses}" var="item">
+                <h:column>
+                    <h:outputText value="#{item.kuantitas}" /> <!-- kuantitas is from OrderItems entity -->
+                </h:column>
+            </h:dataTable>
+        </h:column>
+        
+        <!-- Total Price, Order Date, Status, and Payment Proof from Orders -->
+        <h:column>
+            <f:facet name="header">Total Price</f:facet>
+            <h:outputText value="#{order.totalPrice}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">Order Date</f:facet>
+            <h:outputText value="#{order.orderDate}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">Payment Status</f:facet>
+            <h:selectOneMenu value="#{order.status}">
+                <f:selectItem itemValue="belum_bayar" itemLabel="Belum Bayar" />
+                <f:selectItem itemValue="sudah_bayar" itemLabel="Sudah Bayar" />
+                <f:selectItem itemValue="diantar" itemLabel="Diantar" />
+                <f:selectItem itemValue="diterima" itemLabel="Diterima" />
+                <f:selectItem itemValue="gagal" itemLabel="Gagal" />
+            </h:selectOneMenu>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Payment Proof</f:facet>
+            <h:outputText value="#{order.buktiBayar == null ? 'No Proof Available' : 'Proof Available'}" />
+        </h:column>
+    </h:dataTable>   
+    
+    <!-- Back link to home -->
+    <h:link value="Back to Home" outcome="adminDashboard.xhtml" class="btn btn-back"/>
+</div>
+    
+    <ui:include src="footer.xhtml" />
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    </h:body>
+</html>

@@ -108,4 +108,23 @@ public class BukuDAO {
             session.close();
         }
     }
+    
+    public void updateBookStock(Buku book) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.update(book);  // Update the book stock
+            tx.commit();
+            System.out.println("Stock updated for book ID: " + book.getIdBuku());
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+            System.out.println("Error updating book stock: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+    }
 }

@@ -47,13 +47,13 @@ public class LoginBean {
         if (result instanceof AdminDb) {
             // If AdminDb object is returned, it's an admin login
             AdminDb admin = (AdminDb) result;
-            setSession("user", admin.getNamaAdmin());  // Store admin name
+            setSession("user", admin);  // Store the entire admin object
             setSession("userType", "admin");
             return redirect("adminDashboard.xhtml");
         } else if (result instanceof UserDb) {
             // If UserDb object is returned, it's a regular user login
             UserDb user = (UserDb) result;
-            setSession("user", user.getNamaUser());  // Store user name
+            setSession("user", user);  // Store the entire user object
             setSession("userType", "user");
             return redirect("index.xhtml");
         } else {
@@ -81,13 +81,6 @@ public class LoginBean {
         session.setAttribute(key, value);
     }
 
-    // Close DAO resources when bean is destroyed (optional)
-    @Override
-    protected void finalize() throws Throwable {
-        loginDAO.close();
-        super.finalize();
-    }
-
     // Logout method
     public String logout() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -97,5 +90,4 @@ public class LoginBean {
         }
         return redirect("login.xhtml"); // Redirect to login page
     }
-
 }

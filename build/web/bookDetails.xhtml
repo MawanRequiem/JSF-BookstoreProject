@@ -71,9 +71,11 @@
             </div>
         </h:form>
 
-        <h:form>
-            <h:commandButton value="Add to Cart" action="#{cartBean.addToCart(bukuBean.selectedBook.idBuku, 1)}" styleClass="btn btn-primary" />
-        </h:form>
+<h:form>
+    <h:commandButton value="Checkout" 
+                     action="#{checkoutBean.checkout(bukuBean.selectedBook.idBuku)}" 
+                     styleClass="btn btn-success" />
+</h:form>
 
         <ui:include src="footer.xhtml"/>
     </h:body>
