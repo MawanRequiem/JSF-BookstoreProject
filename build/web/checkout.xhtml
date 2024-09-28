@@ -10,32 +10,156 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/style.css"/>
         <style>
-            /* Example CSS */
-            .card-new {
-                background-color: #f8f9fa;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f7f7f7;
+                margin: 0;
+                padding: 0;
+            }
+
+            .btn-success,
+            .btn-cancel {
+                width: 100%; /* Make buttons full width */
+                margin-top: 20px; /* Maintain margin on top */
+                padding: 12px 0; /* Adjust padding for a more uniform look */
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                text-align: center; /* Center the text */
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 40px auto;
+                padding: 20px;
+                background-color: #ffffff;
                 border-radius: 8px;
-                padding: 16px;
-                margin-bottom: 20px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                display: flex;
+                align-items: flex-start;
+                border: 1px solid #ddd;
             }
 
             .book-image {
                 width: 150px;
                 height: 200px;
                 border-radius: 8px;
-                margin-bottom: 20px;
                 object-fit: cover;
+                margin-right: 30px;
+                border: 1px solid #ddd;
             }
 
-            .container {
-                max-width: 800px;
-                margin: auto;
+            .book-details {
+                flex: 1;
+                padding: 20px;
+                background-color: rgba(255, 255, 255, 0.9);
+                border-radius: 8px;
+            }
+
+            h2 {
+                font-size: 28px;
+                margin-bottom: 15px;
+                color: #333;
             }
 
             p {
                 font-size: 1.1em;
                 line-height: 1.6em;
+                margin: 10px 0;
+                background-color: rgba(255, 255, 255, 0.8);
+                padding: 10px;
+                border-radius: 5px;
             }
+
+            .payment-method {
+                margin-top: 20px;
+            }
+
+            .btn-success {
+                margin-top: 20px;
+                padding: 12px 20px;
+                background-color: #28a745;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .btn-success:hover {
+                background-color: #218838;
+            }
+
+            .btn-cancel {
+                background-color: #ff4d4d; /* Bright red */
+                color: #fff;
+                width: 100%; /* Make buttons full width */
+                margin-top: 20px;
+                padding: 12px 0; /* Adjust padding for a more uniform look */
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                text-align: center; /* Center the text */
+            }
+
+            .btn-cancel:hover {
+                background-color: #c82333; /* Darker red on hover */
+            }
+
+            /* Style for the dialog boxes */
+            .ui-dialog {
+                border: 1px solid #ccc;
+                border-radius: 10px; /* Round the corners */
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Add shadow */
+                background-color: #ffffff; /* Background color */
+            }
+
+            .ui-dialog-titlebar {
+                background-color: #007bff; /* Title bar color */
+                color: white; /* Title color */
+            }
+
+            .ui-dialog-content {
+                padding: 20px; /* Add padding to content */
+                font-size: 1.1em; /* Slightly larger font size */
+            }
+
+            .ui-dialog .ui-dialog-titlebar-close {
+                color: white; /* Close button color */
+            }
+
+.payment-method-container {
+    margin-top: 20px; /* Space above the section */
+    background-color: #f9f9f9; /* Light background for contrast */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Padding inside the section */
+}
+
+.payment-method-container strong {
+    font-size: 1.2em; /* Slightly larger font for the title */
+    color: #333; /* Darker color for better readability */
+}
+
+.payment-select-menu {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding for a better touch area */
+    border: 1px solid #ccc; /* Border for the select box */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1em; /* Adjust font size */
+    background-color: #fff; /* White background */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+}
+
+.payment-select-menu:focus {
+    border-color: #007bff; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Shadow effect on focus */
+}
+
+
+            
         </style>
         <title>Checkout - #{checkoutBean.selectedBook.namaBuku}</title>
     </h:head>
@@ -43,47 +167,58 @@
     <h:body>
         <ui:include src="header.xhtml"/>
 
-<h:form id="checkoutForm">
-    <div class="container mt-4">
-        <!-- Checkout Details Card -->
-        <p:panel header="Checkout Details" styleClass="card-new p-4">
-            <h2>#{checkoutBean.selectedBook.namaBuku}</h2>
-            <h:graphicImage value="data:image/jpeg;base64,#{checkoutBean.convertToBase64(checkoutBean.selectedBook.gambarBuku)}"
-                            alt="Book Image"
-                            styleClass="book-image" />
+        <h:form id="checkoutForm">
+            <div class="container">
+                <h:graphicImage value="data:image/jpeg;base64,#{checkoutBean.convertToBase64(checkoutBean.selectedBook.gambarBuku)}"
+                                alt="Book Image"
+                                styleClass="book-image"/>
 
-            <div class="row">
-                <div class="col-md-6">
+                <div class="book-details">
+                    <h2>#{checkoutBean.selectedBook.namaBuku}</h2>
                     <p><strong>Price:</strong> Rp #{checkoutBean.selectedBook.hargaBuku}</p>
                     <p><strong>Stock Available:</strong> #{checkoutBean.selectedBook.stockBuku} items</p>
-                </div>
-                <div class="col-md-6">
                     <p><strong>User Name:</strong> #{checkoutBean.currentUser.namaUser}</p>
                     <p><strong>Email:</strong> #{checkoutBean.currentUser.email}</p>
                     <p><strong>Address:</strong> #{checkoutBean.userAddress.address}, #{checkoutBean.userAddress.city}, #{checkoutBean.userAddress.postalCode}</p>
 
-                    <!-- Payment Method Dropdown -->
-                    <p><strong>Select Payment Method:</strong></p>
-<h:selectOneMenu value="#{checkoutBean.selectedPaymentMethodId}" required="true">
-    <f:selectItems value="#{checkoutBean.paymentMethods}" var="payment"
-                   itemLabel="#{payment.payment}" itemValue="#{payment.idPayment}" />
-</h:selectOneMenu>
+                    <div class="payment-method-container">
+                        <strong>Select Payment Method:</strong>
+                        <h:selectOneMenu value="#{checkoutBean.selectedPaymentMethodId}" required="true">
+                            <f:selectItems value="#{checkoutBean.paymentMethods}" var="payment"
+                                           itemLabel="#{payment.payment}" itemValue="#{payment.idPayment}"/>
+                        </h:selectOneMenu>
+                    </div>
 
-
+                    <br/>
+                    <br/>
+                    <p:commandButton value="Confirm Checkout"
+                                     action="#{checkoutBean.checkout(checkoutBean.selectedBook.idBuku)}"
+                                     styleClass="btn-success" ajax="false"
+                                     onclick="PF('checkoutConfirmDialog').show(); return false;"/>
+                    <br/>
+                    <br/>
+                    <p:commandButton value="Cancel"
+                                     styleClass="btn-cancel"
+                                     onclick="PF('cancelDialog').show(); return false;"/>
                 </div>
             </div>
-        </p:panel>
+        </h:form>
 
-        <!-- Checkout Button -->
-<p:commandButton value="Confirm Checkout"
-                 action="#{checkoutBean.checkout(checkoutBean.selectedBook.idBuku)}"
-                 onclick="window.location.href = 'checkout.xhtml?idBuku=#{checkoutBean.selectedBook.idBuku}';"
-                 styleClass="btn btn-success" ajax="false"/>
-    </div>
-</h:form>
+        <!-- Cancel Confirmation Dialog -->
+        <p:dialog header="Confirm Cancel" widgetVar="cancelDialog" modal="true" closable="false">
+            <h:outputText value="Are you sure you want to cancel?" />
+            <br/><br/>
+            <p:commandButton value="Yes" onclick="window.location.href = 'index.xhtml';" type="button"/>
+            <p:commandButton value="No" onclick="PF('cancelDialog').hide();" type="button"/>
+        </p:dialog>
 
-
-
+        <!-- Checkout Confirmation Dialog -->
+        <p:dialog header="Confirm Checkout" widgetVar="checkoutConfirmDialog" modal="true" closable="false">
+            <h:outputText value="Are you sure you want to proceed with the checkout?" />
+            <br/><br/>
+            <p:commandButton value="Yes" action="#{checkoutBean.checkout(checkoutBean.selectedBook.idBuku)}" process="@this" />
+            <p:commandButton value="No" onclick="PF('checkoutConfirmDialog').hide();" type="button"/>
+        </p:dialog>
 
         <ui:include src="footer.xhtml"/>
     </h:body>

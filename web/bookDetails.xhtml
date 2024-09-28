@@ -10,37 +10,109 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/style.css"/>
         <style>
-            /* Example CSS for book details card */
-            .card-new {
-                background-color: #f8f9fa;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                border-radius: 8px;
-                padding: 16px;
-                margin-bottom: 20px;
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f7f7f7;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            .content-wrapper {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 50px 0;
+                margin-top: 100px;
+            }
+
+            .book-info {
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                max-width: 1200px;
+                margin: 0 auto;
             }
 
             .book-image {
-                width: 150px; /* Set the desired width */
-                height: 200px; /* Set the desired height */
-                border-radius: 8px; /* Rounded corners */
-                margin-bottom: 40px; /* Adjust spacing below the image */
-                object-fit: none;
+                width: 250px;
+                height: 350px;
+                border-radius: 0;
+                margin-right: 20px;
+                object-fit: cover;
             }
 
-            .card-new h2 {
-                font-family: 'Montserrat', sans-serif;
+            .book-details {
+                text-align: left;
+                max-width: 600px;
             }
 
-            .container {
-                max-width: 800px;
-                margin: auto;
+            h1 {
+                font-size: 32px;
+                margin-bottom: 25px;
+                color: #333;
             }
 
-            p {
-                font-size: 1.1em;
-                line-height: 1.6em;
+            .price {
+                font-size: 26px;
+                color: #ff5757;
+                margin: 30px 0;
             }
 
+            .description {
+                font-size: 16px;
+                line-height: 1.6;
+                color: #555;
+                margin-bottom: 40px;
+            }
+
+            .store-info {
+                font-size: 16px;
+                color: #333;
+                margin-top: 15px;
+            }
+
+            .checkout-btn {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                margin-top: 40px;
+                cursor: pointer;
+            }
+
+            .checkout-btn:hover {
+                background-color: #0056b3;
+            }
+
+            .back-btn {
+                margin-top: 20px;
+                padding: 10px 20px;
+                background-color: #6c757d;
+                color: white;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .back-btn:hover {
+                background-color: #5a6268;
+            }
+
+            footer {
+                background-color: #333;
+                color: white;
+                text-align: center;
+                padding: 20px;
+                position: relative;
+                bottom: 0;
+                width: 100%;
+            }
         </style>
         <title>Book Details - #{bukuBean.selectedBook.namaBuku}</title>
     </h:head>
@@ -49,36 +121,66 @@
         <ui:include src="header.xhtml"/>
 
         <h:form id="bookDetailForm">
-            <div class="container mt-4">
-                <!-- Book Details Card -->
-                <p:panel header="Book Details" styleClass="card-new p-4">
+            <div class="content-wrapper">
+                <div class="book-info">
                     <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(bukuBean.selectedBook.gambarBuku)}"
                                     alt="Book Image"
                                     styleClass="book-image" />
 
-                    <h2>#{bukuBean.selectedBook.namaBuku}</h2>
-                    <div class="row">
+                    <div class="book-details">
+                        <h1>#{bukuBean.selectedBook.namaBuku}</h1>
 
-                        <div class="col-md-6">
-                            <p><strong>Genre:</strong> #{bukuBean.selectedBook.genreBuku}</p>
-                            <p><strong>Series:</strong> #{bukuBean.selectedBook.seriesBuku}</p>
-                            <p><strong>Price:</strong> Rp #{bukuBean.selectedBook.hargaBuku}</p>
-                            <p><strong>Stock:</strong> #{bukuBean.selectedBook.stockBuku} items</p>
-                            <p><strong>Description:</strong> #{bukuBean.selectedBook.deskripsiBuku}</p>
+                        <div class="price">
+                            Rp #{bukuBean.selectedBook.hargaBuku}
                         </div>
+
+                        <div class="genre">
+                            <strong>Genre:</strong> #{bukuBean.selectedBook.genreBuku}
+                        </div>
+                        <div class="series">
+                            <strong>Series:</strong> #{bukuBean.selectedBook.seriesBuku}
+                        </div>
+
+                        <div class="description">
+                            #{bukuBean.selectedBook.deskripsiBuku}
+                        </div>
+
+                        <div class="store-info">
+                            <strong>Stock:</strong> #{bukuBean.selectedBook.stockBuku} items
+                        </div>
+
+                        <h:commandLink value="Checkout"
+                                       styleClass="checkout-btn"
+                                       onclick="PF('checkoutConfirmDialog').show(); return false;" />
+
+                        <h:commandButton value="Back to Home"
+                                         styleClass="back-btn"
+                                         action="index.xhtml" />
                     </div>
-                </p:panel>
+                </div>
+
+                <!-- Checkout Confirmation Dialog -->
+                <p:dialog header="Confirm Checkout" widgetVar="checkoutConfirmDialog" modal="true" closable="false">
+                    <h:outputText value="Are you sure you want to proceed with the checkout?" />
+                    <br/><br/>
+                    <p:commandButton value="Yes" 
+                                     action="#{checkoutBean.forwardToCheckout(bukuBean.selectedBook.idBuku)}" 
+                                     update="@form" process="@this"
+                                     onclick="window.location.href = 'checkout.xhtml?idBuku=#{bukuBean.selectedBook.idBuku}'; return false;"/>
+                    <p:commandButton value="No" style="margin-left: 20px; background-color: red;" onclick="PF('checkoutConfirmDialog').hide();" type="button"/>
+                </p:dialog>
+
+                <!-- Popup Dialog for Stock Out -->
+                <p:dialog header="Out of Stock" widgetVar="stockDialog" modal="true" closable="false">
+                    <h:outputText value="Sorry, this book is currently out of stock."/>
+                    <br/><br/>
+                    <p:commandButton value="Close" onclick="PF('stockDialog').hide();" type="button"/>
+                </p:dialog>
             </div>
-            <h:commandLink value="Checkout"
-               action="#{checkoutBean.forwardToCheckout(bukuBean.selectedBook.idBuku)}"
-               immediate="true"
-               onclick="window.location.href = 'checkout.xhtml?idBuku=#{bukuBean.selectedBook.idBuku}'; return false;" />
         </h:form>
 
-
-
-
-
-        <ui:include src="footer.xhtml"/>
+        <footer>
+            <ui:include src="footer.xhtml"/>
+        </footer>
     </h:body>
 </html>
