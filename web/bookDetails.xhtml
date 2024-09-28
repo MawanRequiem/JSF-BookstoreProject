@@ -69,13 +69,15 @@
                     </div>
                 </p:panel>
             </div>
+            <h:commandLink value="Checkout"
+               action="#{checkoutBean.forwardToCheckout(bukuBean.selectedBook.idBuku)}"
+               immediate="true"
+               onclick="window.location.href = 'checkout.xhtml?idBuku=#{bukuBean.selectedBook.idBuku}'; return false;" />
         </h:form>
 
-<h:form>
-    <h:commandButton value="Checkout" 
-                     action="#{checkoutBean.checkout(bukuBean.selectedBook.idBuku)}" 
-                     styleClass="btn btn-success" />
-</h:form>
+
+
+
 
         <ui:include src="footer.xhtml"/>
     </h:body>

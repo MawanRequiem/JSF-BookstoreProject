@@ -9,11 +9,12 @@ import java.util.List;
 
 public class PaymentMethodDAO {
 
+    // Method to fetch all payment methods from the database
     public List<PaymentMethod> getAllPaymentMethods() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<PaymentMethod> methods = null;
         try {
-            methods = session.createQuery("from PaymentMethod").list();
+            methods = session.createQuery("FROM PaymentMethod").list();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

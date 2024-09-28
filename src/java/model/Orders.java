@@ -1,5 +1,5 @@
 package model;
-// Generated Sep 27, 2024 8:16:42 PM by Hibernate Tools 4.3.1
+// Generated Sep 28, 2024 11:48:54 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -12,17 +12,19 @@ public class Orders  implements java.io.Serializable {
 
      private Integer idOrder;
      private Buku buku;
+     private PaymentMethod paymentMethod;
      private UserDb userDb;
-     private int idPayment;
+     private String paymentCode;
      private Date date;
 
     public Orders() {
     }
 
-    public Orders(Buku buku, UserDb userDb, Date date) {
+    public Orders(Buku buku, PaymentMethod paymentMethod, UserDb userDb, String paymentCode, Date date) {
        this.buku = buku;
+       this.paymentMethod = paymentMethod;
        this.userDb = userDb;
-       this.idPayment = idPayment;
+       this.paymentCode = paymentCode;
        this.date = date;
     }
    
@@ -40,6 +42,13 @@ public class Orders  implements java.io.Serializable {
     public void setBuku(Buku buku) {
         this.buku = buku;
     }
+    public PaymentMethod getPaymentMethod() {
+        return this.paymentMethod;
+    }
+    
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
     public UserDb getUserDb() {
         return this.userDb;
     }
@@ -47,12 +56,12 @@ public class Orders  implements java.io.Serializable {
     public void setUserDb(UserDb userDb) {
         this.userDb = userDb;
     }
-    public int getIdPayment() {
-        return this.idPayment;
+    public String getPaymentCode() {
+        return this.paymentCode;
     }
     
-    public void setIdPayment(int idPayment) {
-        this.idPayment = idPayment;
+    public void setPaymentCode(String paymentCode) {
+        this.paymentCode = paymentCode;
     }
     public Date getDate() {
         return this.date;

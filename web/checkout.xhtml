@@ -2,42 +2,89 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
     <h:head>
-        <title>Checkout</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/style.css"/>
+        <style>
+            /* Example CSS */
+            .card-new {
+                background-color: #f8f9fa;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                padding: 16px;
+                margin-bottom: 20px;
+            }
+
+            .book-image {
+                width: 150px;
+                height: 200px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                object-fit: cover;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: auto;
+            }
+
+            p {
+                font-size: 1.1em;
+                line-height: 1.6em;
+            }
+        </style>
+        <title>Checkout - #{checkoutBean.selectedBook.namaBuku}</title>
     </h:head>
 
     <h:body>
-        <h:form id="checkoutForm">
-            <div class="container mt-4">
-                <!-- Display User Details -->
-                <h2>Confirm Shipping Information</h2>
-                <p><strong>Name:</strong> #{checkoutBean.currentUser.namaUser}</p>
-                <p><strong>Email:</strong> #{checkoutBean.currentUser.email}</p>
+        <ui:include src="header.xhtml"/>
 
-                <!-- Display User Address -->
-                <h3>Shipping Address</h3>
-                <ui:repeat value="#{checkoutBean.currentUser.userAddresses}" var="address">
-<p><strong>Address:</strong> #{checkoutBean.firstUserAddress.address}</p>
-<p><strong>City:</strong> #{checkoutBean.firstUserAddress.city}</p>
-<p><strong>Postal Code:</strong> #{checkoutBean.firstUserAddress.postalCode}</p>
+<h:form id="checkoutForm">
+    <div class="container mt-4">
+        <!-- Checkout Details Card -->
+        <p:panel header="Checkout Details" styleClass="card-new p-4">
+            <h2>#{checkoutBean.selectedBook.namaBuku}</h2>
+            <h:graphicImage value="data:image/jpeg;base64,#{checkoutBean.convertToBase64(checkoutBean.selectedBook.gambarBuku)}"
+                            alt="Book Image"
+                            styleClass="book-image" />
 
-                </ui:repeat>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Price:</strong> Rp #{checkoutBean.selectedBook.hargaBuku}</p>
+                    <p><strong>Stock Available:</strong> #{checkoutBean.selectedBook.stockBuku} items</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>User Name:</strong> #{checkoutBean.currentUser.namaUser}</p>
+                    <p><strong>Email:</strong> #{checkoutBean.currentUser.email}</p>
+                    <p><strong>Address:</strong> #{checkoutBean.userAddress.address}, #{checkoutBean.userAddress.city}, #{checkoutBean.userAddress.postalCode}</p>
 
-                <!-- Allow user to confirm shipping address -->
-                <p:commandButton value="Edit Address" action="editAddress.xhtml?faces-redirect=true" styleClass="btn btn-warning"/>
+                    <!-- Payment Method Dropdown -->
+                    <p><strong>Select Payment Method:</strong></p>
+<h:selectOneMenu value="#{checkoutBean.selectedPaymentMethodId}" required="true">
+    <f:selectItems value="#{checkoutBean.paymentMethods}" var="payment"
+                   itemLabel="#{payment.payment}" itemValue="#{payment.idPayment}" />
+</h:selectOneMenu>
 
-                <!-- Select Payment Method -->
-                <h3>Select Payment Method</h3>
-                <p:selectOneMenu value="#{checkoutBean.selectedPaymentMethod}">
-                    <f:selectItems value="#{checkoutBean.paymentMethods}" var="method" itemLabel="#{method.payment}" itemValue="#{method.idPayment}" />
-                </p:selectOneMenu>
 
-                <!-- Confirm Order -->
-                <p:commandButton value="Place Order" action="#{checkoutBean.checkout(checkoutBean.selectedBook.idBuku)}" styleClass="btn btn-success" />
+                </div>
             </div>
-        </h:form>
+        </p:panel>
+
+        <!-- Checkout Button -->
+<p:commandButton value="Confirm Checkout"
+                 action="#{checkoutBean.checkout(checkoutBean.selectedBook.idBuku)}"
+                 onclick="window.location.href = 'checkout.xhtml?idBuku=#{checkoutBean.selectedBook.idBuku}';"
+                 styleClass="btn btn-success" ajax="false"/>
+    </div>
+</h:form>
+
+
+
+
+        <ui:include src="footer.xhtml"/>
     </h:body>
 </html>

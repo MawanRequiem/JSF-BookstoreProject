@@ -1,6 +1,9 @@
 package com.dao;
 
+import java.util.ArrayList;
+import java.util.List;
 import model.Orders;
+import model.PaymentMethod;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -31,5 +34,21 @@ public class CheckoutDAO {
                 session.close();
             }
         }
+    }
+    
+    public List<PaymentMethod> getAllPaymentMethods() {
+        Session session = null;
+        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            paymentMethods = session.createQuery("from PaymentMethod").list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return paymentMethods;
     }
 }
