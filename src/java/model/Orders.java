@@ -1,5 +1,5 @@
 package model;
-// Generated Sep 26, 2024 8:29:42 PM by Hibernate Tools 4.3.1
+// Generated Sep 27, 2024 8:16:42 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,6 +13,7 @@ public class Orders  implements java.io.Serializable {
      private Integer idOrder;
      private Buku buku;
      private UserDb userDb;
+     private int idPayment;
      private Date date;
 
     public Orders() {
@@ -21,6 +22,7 @@ public class Orders  implements java.io.Serializable {
     public Orders(Buku buku, UserDb userDb, Date date) {
        this.buku = buku;
        this.userDb = userDb;
+       this.idPayment = idPayment;
        this.date = date;
     }
    
@@ -44,6 +46,13 @@ public class Orders  implements java.io.Serializable {
     
     public void setUserDb(UserDb userDb) {
         this.userDb = userDb;
+    }
+    public int getIdPayment() {
+        return this.idPayment;
+    }
+    
+    public void setIdPayment(int idPayment) {
+        this.idPayment = idPayment;
     }
     public Date getDate() {
         return this.date;

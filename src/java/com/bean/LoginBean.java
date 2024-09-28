@@ -55,6 +55,7 @@ public class LoginBean {
             UserDb user = (UserDb) result;
             setSession("user", user);  // Store the entire user object
             setSession("userType", "user");
+            
             return redirect("index.xhtml");
         } else {
             // Invalid credentials

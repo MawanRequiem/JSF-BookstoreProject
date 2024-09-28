@@ -315,7 +315,7 @@ and open the template in the editor.
             <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FF7D29;">
                 <span class="navbar-text mr-3">
                     <span class="welcome-text">Welcome</span>
-                    <span class="username-text">#{loginBean.username}</span> <!-- Assuming userBean holds the username -->
+                    <span class="username-text">#{sessionScope.user.username}</span> <!-- Assuming userBean holds the username -->
                 </span>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

@@ -18,10 +18,6 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 import model.Buku;
 
-/**
- *
- * @author Raka
- */
 
 @ManagedBean
 @SessionScoped

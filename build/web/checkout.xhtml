@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Checkout</title>
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/style.css"/>
+    </h:head>
+
+    <h:body>
+        <h:form id="checkoutForm">
+            <div class="container mt-4">
+                <!-- Display User Details -->
+                <h2>Confirm Shipping Information</h2>
+                <p><strong>Name:</strong> #{checkoutBean.currentUser.namaUser}</p>
+                <p><strong>Email:</strong> #{checkoutBean.currentUser.email}</p>
+
+                <!-- Display User Address -->
+                <h3>Shipping Address</h3>
+                <ui:repeat value="#{checkoutBean.currentUser.userAddresses}" var="address">
+<p><strong>Address:</strong> #{checkoutBean.firstUserAddress.address}</p>
+<p><strong>City:</strong> #{checkoutBean.firstUserAddress.city}</p>
+<p><strong>Postal Code:</strong> #{checkoutBean.firstUserAddress.postalCode}</p>
+
+                </ui:repeat>
+
+                <!-- Allow user to confirm shipping address -->
+                <p:commandButton value="Edit Address" action="editAddress.xhtml?faces-redirect=true" styleClass="btn btn-warning"/>
+
+                <!-- Select Payment Method -->
+                <h3>Select Payment Method</h3>
+                <p:selectOneMenu value="#{checkoutBean.selectedPaymentMethod}">
+                    <f:selectItems value="#{checkoutBean.paymentMethods}" var="method" itemLabel="#{method.payment}" itemValue="#{method.idPayment}" />
+                </p:selectOneMenu>
+
+                <!-- Confirm Order -->
+                <p:commandButton value="Place Order" action="#{checkoutBean.checkout(checkoutBean.selectedBook.idBuku)}" styleClass="btn btn-success" />
+            </div>
+        </h:form>
+    </h:body>
+</html>
