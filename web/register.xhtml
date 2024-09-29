@@ -3,179 +3,233 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>User Registration</title>
-    <!-- External CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&amp;display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-    <!-- External JS (JQuery and Bootstrap) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            font-family: 'Zen Maru Gothic', sans-serif;
-            background: url('#{facesContext.externalContext.requestContextPath}/image/gambar-register.png') no-repeat center center fixed;
-            background-size: cover;
-        }
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>User Registration</title>
+        <!-- External CSS -->
+        <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&amp;display=swap" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+        <!-- External JS (JQuery and Bootstrap) -->
 
-        .container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                font-family: 'Zen Maru Gothic', sans-serif;
+                background: url('#{facesContext.externalContext.requestContextPath}/image/gambar-register.png') no-repeat center center fixed;
+                background-size: cover;
+            }
 
-        .frame {
-            height: 650px;
-            width: 400px;
-            background: rgba(255, 255, 229, 0.8);
-            padding: 20px;
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
-            border-top: solid 1px rgba(255, 255, 255, .5);
-            border-radius: 8px;
-            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
-            transition: all .5s ease;
-        }
+            .nav ul {
+                list-style: none;
+                padding: 0;
+            }
 
-        .form-signin {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            margin-top: 10px;
-            padding-left: 30px;
-            padding-right: 30px;
-            padding-top: 25px;
-            background: transparent;
-        }
+            .nav ul li {
+                display: inline;
+                margin: 0 5px;
+            }
 
-        .form-styling {
-            width: 100%;
-            height: 35px;
-            padding: 10px;
-            padding-left: 15px;
-            border: 1px solid #ccc;
-            border-radius: 20px;
-            margin-bottom: 15px;
-            background: rgba(255, 255, 255, .2);
-            color: black;
-        }
+            .nav ul li a {
+                text-decoration: none;
+                font-size: 16px;
+                color: #333;
+                transition: color 0.3s ease;
+            }
 
-        label {
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 13px;
-            padding-left: 5px;
-            margin-bottom: 5px;
-            color: #EB6611;
-            display: block;
-            text-align: left;
-        }
+            .container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
 
-        .btn-signin, .btn-cancel {
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 16px;
-            color: white;
-            cursor: pointer;
-            padding-top: 8px;
-            width: 100%;
-            height: 35px;
-            border: none;
-            border-radius: 4px;
-            margin-top: 15px;
-            transition: background 0.3s ease;
-        }
+            .frame {
+                height: 850px;
+                width: 400px;
+                background: rgba(255, 255, 229, 0.8);
+                padding: 20px;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+                border-top: solid 1px rgba(255, 255, 255, .5);
+                border-radius: 8px;
+                box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+                transition: all .5s ease;
+            }
 
-        .btn-signin {
-            background: #EB6611;
-        }
+            .form-signin {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 10px;
+                padding-left: 30px;
+                padding-right: 30px;
+                padding-top: 25px;
+                background: transparent;
+            }
 
-        .btn-signin:hover {
-            background: #B64E00;
-        }
+            .form-styling {
+                width: 100%;
+                height: 35px;
+                padding: 10px;
+                padding-left: 15px;
+                border: 1px solid #ccc;
+                border-radius: 20px;
+                margin-bottom: 15px;
+                background: rgba(255, 255, 255, .2);
+                color: black;
+            }
 
-        .btn-cancel {
-            background: #EB6611;
-            margin-top: 10px;
-        }
+            label {
+                font-weight: bold;
+                text-transform: uppercase;
+                font-size: 13px;
+                padding-left: 5px;
+                margin-bottom: 5px;
+                color: #EB6611;
+                display: block;
+                text-align: left;
+            }
 
-        .btn-cancel:hover {
-            background: #B64E00;
-        }
+            .btn-signin, .btn-cancel {
+                font-weight: 700;
+                text-transform: uppercase;
+                font-size: 16px;
+                color: white;
+                cursor: pointer;
+                padding-top: 8px;
+                width: 100%;
+                height: 35px;
+                border: none;
+                border-radius: 4px;
+                margin-top: 15px;
+                transition: background 0.3s ease;
+            }
 
-        .sign-up {
-            text-align: center;
-            margin-top: 10px;
-            color: black;
-        }
+            .btn-signin {
+                background: #EB6611;
+            }
 
-        .sign-up a {
-            color: #EB6611;
-            text-decoration: none;
-            font-weight: bold;
-        }
+            .btn-signin:hover {
+                background: #B64E00;
+            }
 
-        /* Mengurangi jarak antara Register dan form input pertama */
-        .nav {
-            margin-bottom: 10px;
-        }
-    </style>
-</h:head>
-<h:body>
+            .btn-cancel {
+                background: #EB6611;
+                margin-top: 10px;
+            }
 
-    <div class="container">
-        <div class="frame">
-            <div class="nav">
-                <ul class="links text-center">
-                    <li class="signin-active">
-                        <span style="color: #FF7D29; font-weight: bold; text-transform: uppercase; font-size: 18px;">Register</span>
-                    </li>
-                </ul>
-            </div>
+            .btn-cancel:hover {
+                background: #B64E00;
+            }
 
-            <!-- JSF Form -->
-            <h:form class="form-signin">
-                <label for="name">Name</label>
-                <h:inputText id="name" value="#{registerBean.user.namaUser}" required="true" styleClass="form-styling" />
+            .sign-up {
+                text-align: center;
+                margin-top: 10px;
+                color: black;
+            }
 
-                <label for="username">Username</label>
-                <h:inputText id="username" value="#{registerBean.user.username}" required="true" styleClass="form-styling" />
+            .sign-up a {
+                color: #EB6611;
+                text-decoration: none;
+                font-weight: bold;
+            }
 
-                <label for="email">Email</label>
-                <h:inputText id="email" value="#{registerBean.user.email}" required="true" styleClass="form-styling" />
+            /* Mengurangi jarak antara Register dan form input pertama */
+            .nav {
+                margin-bottom: 10px;
+            }
+        </style>
+    </h:head>
+    <h:body>
 
-                <label for="password">Password</label>
-                <h:inputSecret id="password" value="#{registerBean.user.password}" required="true" styleClass="form-styling" />
+        <div class="container">
+            <div class="frame">
+                <div class="nav">
+                    <ul class="links text-center">
+                        <li class="signin-active">
+                            <span style="color: #FF7D29; font-weight: bold; text-transform: uppercase; font-size: 18px;">Register</span>
+                        </li>
+                    </ul>
+                </div>
 
-                <label for="confirmPassword">Confirm Password</label>
-                <h:inputSecret id="confirmPassword" value="#{registerBean.confirmPassword}" required="true" styleClass="form-styling" />
+                <!-- JSF Form -->
+                <h:form class="form-signin">
+                    <label for="name">Name</label>
+                    <h:inputText id="name" value="#{registerBean.user.namaUser}" required="true" styleClass="form-styling" />
 
-                <!-- Submit Button -->
-                <h:commandButton value="Register" action="#{registerBean.register}" styleClass="btn-signin" />
+                    <label for="username">Username</label>
+                    <h:inputText id="username" value="#{registerBean.user.username}" required="true" styleClass="form-styling" />
 
-                <!-- Cancel Button -->
-                <h:commandButton value="Cancel" immediate="true" action="login.xhtml" styleClass="btn-cancel" />
-            </h:form>
+                    <label for="email">Email</label>
+                    <h:inputText id="email" value="#{registerBean.user.email}" required="true" styleClass="form-styling"/>
 
-            <div class="sign-up">Sudah punya akun? 
-                <h:link value="Login" outcome="login.xhtml" />
+                    <label for="password">Password</label>
+                    <h:inputSecret id="password" value="#{registerBean.user.password}" required="true" styleClass="form-styling" />
+
+                    <label for="confirmPassword">Confirm Password</label>
+                    <h:inputSecret id="confirmPassword" value="#{registerBean.confirmPassword}" required="true" styleClass="form-styling" />
+
+                    <!-- New Fields for Address, City, Postal Code -->
+                    <label for="address">Address</label>
+                    <h:inputText id="address" value="#{registerBean.address}" required="true" styleClass="form-styling" />
+
+                    <label for="city">City</label>
+                    <h:inputText id="city" value="#{registerBean.city}" required="true" styleClass="form-styling" />
+
+                    <label for="postalCode">Postal Code</label>
+                    <h:inputText id="postalCode" value="#{registerBean.postalCode}" required="true" styleClass="form-styling" />
+
+                    <!-- Submit Button -->
+                    <h:commandButton value="Register" action="#{registerBean.register}" styleClass="btn-signin" />
+
+                    <!-- Cancel Button -->
+                    <h:commandButton value="Cancel" immediate="true" action="login.xhtml" styleClass="btn-cancel" />
+                </h:form>
+
+
+                <div class="sign-up">Sudah punya akun? 
+                    <h:link value="Login" outcome="login.xhtml" />
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modals for Success and Error messages -->
-    <p:dialog header="Registration Successful" widgetVar="successDialog" modal="true">
-        <h:outputText value="You have successfully registered." />
-    </p:dialog>
+        <!-- Modals for Success and Error messages -->
+        <p:dialog header="Registration Successful" widgetVar="successDialog" modal="true">
+            <h:outputText value="You have successfully registered." />
+        </p:dialog>
 
-    <p:dialog header="Registration Failed" widgetVar="errorDialog" modal="true">
-        <h:outputText value="An error occurred. Please try again." />
-    </p:dialog>
+        <p:dialog header="Registration Failed" widgetVar="errorDialog" modal="true">
+            <h:outputText value="An error occurred. Please try again." />
+        </p:dialog>
 
-</h:body>
+        <!-- Modal untuk Error Password Tidak Sama -->
+        <p:dialog header="Error" widgetVar="passwordMismatchDialog" modal="true">
+            <h:outputText value="Password dan konfirmasi password tidak cocok!" />
+        </p:dialog>
+
+        <!-- Modal untuk Error Email Sudah Digunakan -->
+        <p:dialog header="Error" widgetVar="emailTakenDialog" modal="true">
+            <h:outputText value="Email sudah digunakan!" />
+        </p:dialog>
+
+        <!-- Modal untuk Error Username Sudah Digunakan -->
+        <p:dialog header="Error" widgetVar="usernameTakenDialog" modal="true">
+            <h:outputText value="Username sudah digunakan, silakan pilih username lain." />
+        </p:dialog>
+
+        <!-- Modal untuk Error Format Email Salah -->
+        <p:dialog header="Error" widgetVar="invalidEmailFormatDialog" modal="true">
+            <h:outputText value="Format email tidak valid!" />
+        </p:dialog>
+        
+        <!-- PLIS ni masih ga jelas -->
+<p:dialog header="Error" widgetVar="emptyFieldsDialog" modal="true">
+    <h:outputText value="Please fill out all required fields." />
+</p:dialog>
+
+
+    </h:body>
 </html>

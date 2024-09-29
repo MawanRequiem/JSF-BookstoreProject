@@ -1,20 +1,22 @@
 package com.dao;
 
+import model.UserAddress;
 import model.UserDb;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.Query;
 import util.HibernateUtil;
 
 public class RegisterDAO {
 
-    // Simpan user ke database
-    public void registerUser(UserDb user) {
+    // Simpan user dan alamat ke database
+    public void registerUser(UserDb user, UserAddress userAddress) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            session.save(user);  // Menyimpan user ke database
+            session.save(user);  // Simpan user
+            userAddress.setUserDb(user);  // Set user relationship in address
+            session.save(userAddress);  // Simpan alamat user
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
@@ -29,9 +31,9 @@ public class RegisterDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             String hql = "SELECT COUNT(*) FROM UserDb WHERE username = :username";
-            Query query = session.createQuery(hql);
-            query.setParameter("username", username);
-            Long count = (Long) query.uniqueResult();
+            Long count = (Long) session.createQuery(hql)
+                                       .setParameter("username", username)
+                                       .uniqueResult();
             return count != null && count > 0;
         } finally {
             session.close();
@@ -43,9 +45,9 @@ public class RegisterDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             String hql = "SELECT COUNT(*) FROM UserDb WHERE email = :email";
-            Query query = session.createQuery(hql);
-            query.setParameter("email", email);
-            Long count = (Long) query.uniqueResult();
+            Long count = (Long) session.createQuery(hql)
+                                       .setParameter("email", email)
+                                       .uniqueResult();
             return count != null && count > 0;
         } finally {
             session.close();

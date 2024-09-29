@@ -15,25 +15,46 @@
             padding: 0;
             background-color: #FFFFEF;
         }
-        
+
         /* Book container styling */
         .book-details-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 20px;
+            flex-direction: column;
             gap: 20px;
+            padding: 20px;
         }
 
         .book-detail {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start; /* Align items at the top */
+    padding: 20px; /* Increase padding for more space */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%;
+    min-height: 250px; /* Set a minimum height to accommodate content */
+}
+
+.book-info {
+    text-align: left;
+    flex-grow: 1;
+    word-wrap: break-word; /* Ensure text wraps correctly */
+    overflow: hidden; /* Prevent overflow of text */
+    padding-right: 20px; /* Add right padding for spacing */
+}
+
+.book-detail img {
+    width: 140px;
+    height: auto; /* Adjust height to auto */
+    object-fit: contain; /* Ensure image fits within the container */
+    margin-right: 20px;
+}
+
+        .content {
+            margin: 10px;
             padding: 10px;
-            width: 220px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .book-detail:hover {
@@ -41,40 +62,71 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .book-detail img {
-            width: 140px;
-            height: 200px;
-            object-fit: cover;
-            margin-bottom: 10px;
+
+        .book-info p {
+            margin: 5px 0; /* Adjust spacing for better layout */
+        }
+
+        .view-button {
+            margin-left: auto;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .view-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Prevent text overflow in description */
+        .book-info p {
+            word-wrap: break-word; /* Ensure long words wrap */
+            white-space: pre-wrap; /* Preserve whitespace and ensure line breaks work */
+        }
+        
+        h3{
+            color: #ef8838;
         }
     </style>
     <title>Books in Series</title>
 </head>
 
 <h:body>
+    <ui:include src="header.xhtml"/>
+    <div class="content">
     <h:form>
         <h2>Books in Series: #{param.series}</h2>
-        
-        <!-- Panel grid with 4 columns -->
-        <h:panelGrid columns="4" styleClass="book-details-container">
+
+        <!-- Book details container -->
+        <div class="book-details-container">
             <ui:repeat value="#{bukuBean.getBooksBySeries(param.series)}" var="book">
                 <div class="book-detail">
                     <!-- Book image -->
                     <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(book.gambarBuku)}"
-                                    alt="#{book.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;"/>
+                                    alt="#{book.namaBuku}" styleClass="book-image" />
+                    
                     <!-- Book info -->
-                    <h3>#{book.namaBuku}</h3>
-                    <p>Genre: #{book.genreBuku}</p>
-                    <p>Stock: #{book.stockBuku} items</p>
-                    <h4>Price: Rp #{book.hargaBuku}</h4>
+                    <div class="book-info">
+                        <h3>#{book.namaBuku}</h3>
+                        <p><span style="font-weight: bold;">Genre:</span> #{book.genreBuku}</p>
+                        <p><span style="font-weight: bold;">Stock:</span> #{book.stockBuku} items</p>
+                        <p><span style="font-weight: bold;">Deskripsi:</span> <br/> #{book.deskripsiBuku}</p>
+                        <h4>Price: Rp #{book.hargaBuku}</h4>
+                    </div>
                     
                     <!-- View details link -->
                     <h:commandLink value="View Details" action="#{viewBookBean.loadBuku(book.idBuku)}"
                                    onclick="window.location.href='bookDetails.xhtml?idBuku=#{book.idBuku}'; return false;"/>
                 </div>
             </ui:repeat>
-        </h:panelGrid>
+        </div>
     </h:form>
+    </div>
+    <ui:include src="footer.xhtml"/>
 </h:body>
 
 </html>
