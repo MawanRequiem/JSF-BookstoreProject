@@ -1,0 +1,175 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Account Details</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&amp;display=swap');
+            body, html {
+                font-family: 'Zen Maru Gothic', sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #FFFFEF;
+            }
+            .card-body {
+                font-family: 'Zen Maru Gothic', sans-serif;
+                flex: 1 1 auto;
+                padding: 1.25rem;
+            }
+            .card {
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                background-color: #FFFFEF;
+            }
+            .btn-custom-red {
+                background-color: red;
+                color: white;
+            }
+            .btn-custom-red:hover {
+                background-color: darkred;
+            }
+            .cancel-btn {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                background-color: red;
+                color: white;
+            }
+            .btn-group-custom {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                font-weight: bold;
+            }
+            .btn-group-custom .btn {
+                flex: 1;
+                margin: 0 5px;
+            }
+            .info-group {
+                border: 1px solid #dee2e6;
+                border-radius: .25rem;
+                padding: .75rem;
+                margin-bottom: .75rem;
+            }
+            .info-group label {
+                font-weight: bold;
+            }
+            .info-group {
+                position: relative;
+            }
+            #togglePassword {
+                cursor: pointer;
+            }
+            .update-btn-group {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .update-btn-group button {
+                flex: 1;
+                margin: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h:link outcome="index" styleClass="btn btn-danger cancel-btn">Cancel</h:link>
+
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            Account Details
+                        </div>
+                        <div class="card-body">
+                            <h:form>
+                                <h:inputHidden value="#{accountSettingsBean.user.idUser}"/>
+
+                                <div class="info-group">
+                                    <label for="name">Name</label>
+                                    <h:inputText id="name" value="#{accountSettingsBean.user.namaUser}" class="form-control" label="Enter your name"/>
+                                </div>
+
+                                <div class="info-group">
+                                    <label for="username">Username</label>
+                                    <p class="form-control-plaintext" id="username">
+                                        #{accountSettingsBean.user.username}
+                                    </p>
+                                </div>
+
+                                <div class="info-group">
+                                    <label for="email">Email</label>
+                                    <h:inputText id="email" value="#{accountSettingsBean.user.email}" class="form-control" label="Enter your email"/>
+                                </div>
+
+                                <div class="info-group">
+                                    <label for="address">Address</label>
+                                    <h:inputText id="address" value="#{accountSettingsBean.userAddress.address}" class="form-control" label="Enter your address"/>
+                                </div>
+
+                                <div class="info-group">
+                                    <label for="city">City</label>
+                                    <h:inputText id="city" value="#{accountSettingsBean.userAddress.city}" class="form-control" label="Enter your City"/>
+                                </div>
+
+                                <div class="info-group">
+                                    <label for="postCode">Post Code</label>
+                                    <h:inputText id="postCode" value="#{accountSettingsBean.userAddress.postalCode}" class="form-control" label="Enter your post code"/>
+                                </div>
+
+                                <div class="info-group">
+                                    <label for="password">Password</label>
+                                    <div class="input-group">
+                                        <h:inputText id="password" value="#{accountSettingsBean.user.password}" class="form-control" label="Enter your password"/>
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="togglePassword">
+                                                <i class="fas fa-eye"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="update-btn-group">
+                                    <h:commandButton value="Update" action="#{accountSettingsBean.updateAccount()}" class="btn btn-primary"/>
+                                    <h:commandButton value="Delete" class="btn btn-warning" onclick="$('#deleteAccountModal').modal('show'); return false;" />
+
+                                    <h:commandButton value="Logout" action="#{loginBean.logout}" class="btn btn-custom-red"/>
+                                </div>
+        <div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteAccountModalLabel">Confirm Account Deletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&#215;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete your account? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <h:commandButton value="Delete" action="#{accountSettingsBean.deleteAccount}" class="btn btn-danger" 
+                                 onclick="closeModalAndRedirect(); return false;"/>
+            </div>
+        </div>
+    </div>
+</div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>

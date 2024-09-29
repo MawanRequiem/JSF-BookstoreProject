@@ -6,28 +6,25 @@ import java.util.Date;
 public class AdminTransactionBean implements Serializable {
 
     private Integer orderId;
-    private Double totalPrice;
     private Date orderDate;
-    private String status;
     private Integer userId;
     private String userName;
     private Integer bookId;
     private String bookName;
-    private Integer quantity;
 
     // Constructor untuk HQL
-    public AdminTransactionBean(Integer orderId, Double totalPrice, Date orderDate, String status, 
+    public AdminTransactionBean(Integer orderId, Date orderDate,  
                                 Integer userId, String userName, 
-                                Integer bookId, String bookName, Integer quantity) {
+                                Integer bookId, String bookName) {
         this.orderId = orderId;
-        this.totalPrice = totalPrice;
+        
         this.orderDate = orderDate;
-        this.status = status;
+        
         this.userId = userId;
         this.userName = userName;
         this.bookId = bookId;
         this.bookName = bookName;
-        this.quantity = quantity;
+        
     }
 
     // Getter dan Setter
@@ -39,13 +36,7 @@ public class AdminTransactionBean implements Serializable {
         this.orderId = orderId;
     }
 
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+    
 
     public Date getOrderDate() {
         return orderDate;
@@ -55,13 +46,7 @@ public class AdminTransactionBean implements Serializable {
         this.orderDate = orderDate;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    
 
     public Integer getUserId() {
         return userId;
@@ -95,11 +80,5 @@ public class AdminTransactionBean implements Serializable {
         this.bookName = bookName;
     }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
+   
 }

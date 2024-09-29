@@ -50,13 +50,16 @@ public class LoginBean {
             AdminDb admin = (AdminDb) result;
             setSession("user", admin);  // Store the entire admin object
             setSession("userType", "admin");
+            
             return redirect("adminDashboard.xhtml");
         } else if (result instanceof UserDb) {
             // If UserDb object is returned, it's a regular user login
             UserDb user = (UserDb) result;
             setSession("user", user);  // Store the entire user object
             setSession("userType", "user");
-            
+
+            // New addition: Store userId in session so accountSettings.xhtml can access it
+            setSession("userId", user.getIdUser());  // Store the user ID
             return redirect("index.xhtml");
         } else {
             // Invalid credentials

@@ -223,6 +223,8 @@ and open the template in the editor.
             .form-group select {
                 width: 100%;
             }
+            
+            
 
             /* Footer Style */
             footer {
@@ -379,6 +381,7 @@ and open the template in the editor.
             <!-- Update Button -->
             <h:commandButton value="Update" action="#{adminBean.editBuku(buku)}" styleClass="btn btn-warning action-btn" />
 
+
             <!-- Delete Button -->
             <p:commandButton value="Hapus" 
                              actionListener="#{adminBean.setSelectedBuku(buku)}"
@@ -387,11 +390,22 @@ and open the template in the editor.
         </p:column>
                 </p:dataTable>
 
-        <p:confirmDialog id="deleteConfirmDialog" widgetVar="deleteConfirmDialog" header="Konfirmasi Hapus" severity="alert" closable="false">
-        <h:outputText value="Apakah Anda yakin ingin menghapus buku #{adminBean.selectedBuku.namaBuku}?" />
-        <p:commandButton value="Ya" action="#{adminBean.deleteBuku}" oncomplete="PF('deleteConfirmDialog').hide();" update="bookForm" styleClass="btn btn-danger" />
-        <p:commandButton value="Tidak" onclick="PF('deleteConfirmDialog').hide();" actionListener="#{adminBean.resetSelectedBuku}" update="bookForm" styleClass="btn btn-secondary" />
-    </p:confirmDialog>
+        <p:confirmDialog id="deleteConfirmDialog" widgetVar="deleteConfirmDialog" 
+                 header="Konfirmasi Hapus" severity="alert" 
+                 closable="false" appendTo="@(body)" 
+                 style="border-radius: 10px;">
+    <div class="text-center" style="background-color: #fffbe6; padding: 20px;">
+        <h5 class="font-weight-bold">Apakah Anda yakin ingin menghapus buku <span style="color: #ff8800;">#{adminBean.selectedBuku.namaBuku}</span>?</h5>
+    </div>
+    <div class="text-center" style="padding: 10px;">
+        <p:commandButton value="Ya" action="#{adminBean.deleteBuku}" 
+                         oncomplete="PF('deleteConfirmDialog').hide();" 
+                         update="bookForm" styleClass="btn btn-danger mr-2" />
+        <p:commandButton value="Tidak" onclick="PF('deleteConfirmDialog').hide();" 
+                         actionListener="#{adminBean.resetSelectedBuku}" 
+                         update="bookForm" styleClass="btn btn-secondary" />
+    </div>
+</p:confirmDialog>
             </h:form>
         </div>
 

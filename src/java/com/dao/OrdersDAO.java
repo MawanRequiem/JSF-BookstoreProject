@@ -20,12 +20,12 @@ public class OrdersDAO {
 
             // HQL untuk join tabel Orders, UserDb, Orderitems, Buku
             String hql = "SELECT new model.AdminTransactionBean("
-                    + "o.orderId, o.totalPrice, o.orderDate, o.status, "
+                    + "o.orderId, o.orderDate, "
                     + "u.idUser, u.namaUser, "
-                    + "i.buku.idBuku, i.buku.namaBuku, i.kuantitas) "
+                    + "b.idBuku, b.namaBuku) "
                     + "FROM Orders o "
                     + "JOIN o.userDb u "
-                    + "JOIN o.orderitemses i";
+                    + "JOIN o.buku b";
 
             // Buat query menggunakan Hibernate versi 4.3
             Query query = session.createQuery(hql);
@@ -52,7 +52,7 @@ public class OrdersDAO {
             transaction = session.beginTransaction();
 
             // Use HQL to fetch Orders with UserDb and OrderItems (with Buku entity in OrderItems)
-            String hql = "FROM Orders o LEFT JOIN FETCH o.userDb u LEFT JOIN FETCH o.orderitemses oi LEFT JOIN FETCH oi.buku";
+            String hql = "FROM Orders o LEFT JOIN FETCH o.userDb u LEFT JOIN FETCH o.buku b";
             Query query = session.createQuery(hql);  // Hibernate 4.3 tidak memiliki tipe generik di Query
 
             ordersList = (List<Orders>) query.list();  // Casting hasil query ke List<Orders>

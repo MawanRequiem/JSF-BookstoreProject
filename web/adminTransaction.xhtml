@@ -343,68 +343,33 @@ footer {
     <h:dataTable value="#{ordersBean.ordersList}" var="order" class="table table-bordered table-custom">
         <!-- Order ID from Orders -->
         <h:column>
-            <f:facet name="header">Order ID</f:facet>
-            <h:outputText value="#{order.orderId}" />
+            <f:facet name="header">Id Order</f:facet>
+            <h:outputText value="#{order.idOrder}" />
         </h:column>
         
         <!-- User ID and Username from UserDb -->
         <h:column>
-            <f:facet name="header">User ID</f:facet>
+            <f:facet name="header">Id User</f:facet>
             <h:outputText value="#{order.userDb.idUser}" />
         </h:column>
         <h:column>
             <f:facet name="header">Nama</f:facet>
             <h:outputText value="#{order.userDb.namaUser}" />
         </h:column>
-        
-        <!-- Payment Method from Orders -->
         <h:column>
-            <f:facet name="header">Payment Method</f:facet>
-            <h:outputText value="#{order.paymentMethod}" />
+            <f:facet name="header">Id Buku</f:facet>
+            <h:outputText value="#{order.buku.idBuku}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">Nama Buku</f:facet>
+            <h:outputText value="#{order.buku.namaBuku}" />
         </h:column>
         
-        <!-- Books and Quantities from OrderItems -->
-        <h:column>
-            <f:facet name="header">Book Name</f:facet>
-            <h:dataTable value="#{order.orderitemses}" var="item">
-                <h:column>
-                    <h:outputText value="#{item.buku.namaBuku}" /> <!-- namaBuku is from Buku entity -->
-                </h:column>
-            </h:dataTable>
-        </h:column>
-
-        <h:column>
-            <f:facet name="header">Quantity</f:facet>
-            <h:dataTable value="#{order.orderitemses}" var="item">
-                <h:column>
-                    <h:outputText value="#{item.kuantitas}" /> <!-- kuantitas is from OrderItems entity -->
-                </h:column>
-            </h:dataTable>
-        </h:column>
-        
-        <!-- Total Price, Order Date, Status, and Payment Proof from Orders -->
-        <h:column>
-            <f:facet name="header">Total Price</f:facet>
-            <h:outputText value="#{order.totalPrice}" />
-        </h:column>
         <h:column>
             <f:facet name="header">Order Date</f:facet>
-            <h:outputText value="#{order.orderDate}" />
+            <h:outputText value="#{order.date}" />
         </h:column>
-        <h:column>
-            <f:facet name="header">Payment Status</f:facet>
-            <h:selectOneMenu value="#{order.status}">
-                <f:selectItem itemValue="belum_bayar" itemLabel="Belum Bayar" />
-                <f:selectItem itemValue="sudah_bayar" itemLabel="Sudah Bayar" />
-                <f:selectItem itemValue="diantar" itemLabel="Diantar" />
-                <f:selectItem itemValue="diterima" itemLabel="Diterima" />
-                <f:selectItem itemValue="gagal" itemLabel="Gagal" />
-            </h:selectOneMenu>
-        </h:column>
-        <h:column>
-            <f:facet name="header">Payment Proof</f:facet>
-            <h:outputText value="#{order.buktiBayar == null ? 'No Proof Available' : 'Proof Available'}" />
-        </h:column>
+        
     </h:dataTable>   
     
     <!-- Back link to home -->

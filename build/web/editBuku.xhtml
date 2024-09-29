@@ -287,6 +287,11 @@ footer {
     </h:head>
  <h:body>
      
+     <f:metadata>
+    <f:viewParam name="id" value="#{adminBean.id}" />
+    <f:event type="preRenderView" listener="#{adminBean.init}" />
+</f:metadata>
+     
      <h:form id="form">
             <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FF7D29;">
                 <span class="navbar-text mr-3">
@@ -328,11 +333,11 @@ footer {
         <div class="container mt-4">
     <h1>Edit Book</h1>
     <h:form enctype="multipart/form-data">
-        <h:inputText value="#{adminBean.selectedBuku.idBuku}" />
+        <h:inputHidden value="#{adminBean.selectedBuku.idBuku}" />
         
         <div class="form-group">
             <h:panelGroup rendered="#{adminBean.selectedBuku.gambarBuku != null}">
-                <h:graphicImage value="data:image/jpeg;base64,#{adminBean.convertToBase64(adminBean.selectedBuku.gambarBuku)}" />
+                <h:graphicImage value="data:image/jpeg;base64,#{adminBean.convertToBase64(adminBean.selectedBuku.gambarBuku)}" width="200px" height="auto"/>
             </h:panelGroup>
         </div>
 

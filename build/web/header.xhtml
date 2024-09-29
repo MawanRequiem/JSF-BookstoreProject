@@ -133,13 +133,14 @@
                     </h:panelGroup>
 
                     <h:panelGroup rendered="#{not empty sessionScope.user}">
-                        <h:outputLink value="accountSettings.xhtml" styleClass="navtext">
-                            #{sessionScope.user.username} <!-- Display the logged-in user's name -->
-                        </h:outputLink>
-                        <h:form>
-                            <h:commandLink value="Logout" action="#{loginBean.logout}" />
-                        </h:form>
-                    </h:panelGroup>
+    <h:outputLink value="accountSettings.xhtml" styleClass="navtext">
+        #{sessionScope.user.username} <!-- Display the logged-in user's updated name -->
+    </h:outputLink>
+    <h:form>
+        <h:commandLink value="Logout" action="#{loginBean.logout}" />
+    </h:form>
+</h:panelGroup>
+
                 </nav>
             </div>
         </div>

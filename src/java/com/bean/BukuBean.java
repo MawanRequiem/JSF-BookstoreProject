@@ -126,13 +126,9 @@ public class BukuBean {
         selectedBook = bukuDAO.getBookById(idBuku);  // Fetch book by its ID
         return "bookDetails?faces-redirect=true";    // Redirect to the new details page
     }
-
-    // BukuBean.java
-
 public List<Buku> getBooksBySeries(String series) {
     return bukuList.stream()
         .filter(b -> b.getSeriesBuku().equalsIgnoreCase(series))
         .collect(Collectors.toList());
 }
-
 }

@@ -27,4 +27,50 @@ public class UserAddressDAO {
 
         return userAddress;
     }
+    
+    public void deleteAddressByUserId(int userId) {
+        Transaction transaction = null;
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+
+            // Delete the address associated with the user
+            session.createQuery("DELETE FROM UserAddress WHERE userDb.idUser = :userId")
+                   .setParameter("userId", userId)
+                   .executeUpdate();
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    // Function to update address
+    public void updateAddress(UserAddress userAddress) {
+        Transaction transaction = null;
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.update(userAddress);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 }
