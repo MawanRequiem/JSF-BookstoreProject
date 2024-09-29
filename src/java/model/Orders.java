@@ -96,10 +96,4 @@ public class Orders  implements java.io.Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
-
-
-
-
 }
-
-

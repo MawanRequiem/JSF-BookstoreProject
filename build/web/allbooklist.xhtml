@@ -54,9 +54,21 @@
 <h:body>
     <ui:include src="header.xhtml"/>  
     <h:form id="bookForm">
-            <div styleClass="carousel-main-div1" id="carousel1">
-                <h1 class="heading"><span>Action</span></h1>
-                <p:carousel value="#{bukuBean.bukuList}" var="buku" numVisible="6" circular="true" autoplayInterval="3000" styleClass="carousel-main">
+                <div styleClass="carousel-main-div1" id="carousel1">
+        <h1 class="heading"><span>Action</span></h1>
+        <p:carousel value="#{bukuBean.getBooksByGenre('Action')}" var="buku" numVisible="6" circular="true" autoplayInterval="3000" styleClass="carousel-main">
+            <p:panel styleClass="card-new">
+                <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}"
+                                alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
+                <h3>#{buku.namaBuku}</h3>
+                <p>Genre: #{buku.genreBuku}</p>
+                <p>Stock: #{buku.stockBuku} item</p>
+                <h4>Price: Rp #{buku.hargaBuku}</h4>
+            </p:panel>
+        </p:carousel>
+                
+                <h1 class="heading"><span>Adventure</span></h1>
+                <p:carousel value="#{bukuBean.getBooksByGenre('Adventure')}" var="buku" numVisible="6" circular="true" autoplayInterval="3000" styleClass="carousel-main">
                     <p:panel styleClass="card-new">
                         <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}"
                                         alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
@@ -66,6 +78,44 @@
                         <h4>Price: Rp #{buku.hargaBuku}</h4>
                     </p:panel>
                 </p:carousel>
+                
+                <h1 class="heading"><span>Fantasy</span></h1>
+                <p:carousel value="#{bukuBean.getBooksByGenre('Fantasy')}" var="buku" numVisible="6" circular="true" autoplayInterval="3000" styleClass="carousel-main">
+                    <p:panel styleClass="card-new">
+                        <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}"
+                                        alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
+                        <h3>#{buku.namaBuku}</h3>
+                        <p>Genre: #{buku.genreBuku}</p>
+                        <p>Stock: #{buku.stockBuku} item</p>
+                        <h4>Price: Rp #{buku.hargaBuku}</h4>
+                    </p:panel>
+                </p:carousel>
+                
+                <h1 class="heading"><span>Family</span></h1>
+                <p:carousel value="#{bukuBean.getBooksByGenre('Family')}" var="buku" numVisible="6" circular="true" autoplayInterval="3000" styleClass="carousel-main">
+                    <p:panel styleClass="card-new">
+                        <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}"
+                                        alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
+                        <h3>#{buku.namaBuku}</h3>
+                        <p>Genre: #{buku.genreBuku}</p>
+                        <p>Stock: #{buku.stockBuku} item</p>
+                        <h4>Price: Rp #{buku.hargaBuku}</h4>
+                    </p:panel>
+                </p:carousel>
+                
+                <h1 class="heading"><span>Romance</span></h1>
+                <p:carousel value="#{bukuBean.getBooksByGenre('Romance')}" var="buku" numVisible="6" circular="true" autoplayInterval="3000" styleClass="carousel-main">
+                    <p:panel styleClass="card-new">
+                        <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}"
+                                        alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
+                        <h3>#{buku.namaBuku}</h3>
+                        <p>Genre: #{buku.genreBuku}</p>
+                        <p>Stock: #{buku.stockBuku} item</p>
+                        <h4>Price: Rp #{buku.hargaBuku}</h4>
+                    </p:panel>
+                </p:carousel>
+                
+                
             </div>
 
             <!-- PrimeFaces Dialog for Book Details -->

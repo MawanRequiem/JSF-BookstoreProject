@@ -56,142 +56,67 @@ and open the template in the editor.
     </h:head>
     <h:body>
     <div class="container mt-5">
-        <h2>Transaction</h2>
+        <h2>Transaction History</h2>
 
-        <!-- Table for displaying transactions -->
-        <h:dataTable value="#{transactionBean.transactions}" var="transaction" class="table table-custom">
-            <h:column>
-                <f:facet name="header">
-                    Order ID
-                </f:facet>
-                <h:outputText value="#{transaction.orderId}" />
-            </h:column>
+        <!-- Jika tidak ada transaksi -->
+        <h:panelGroup rendered="#{!ordersBean.hasTransactions()}">
+            <p>Tidak ada transaksi di akun ini</p>
+        </h:panelGroup>
 
-            <h:column>
-                <f:facet name="header">
-                    Book Name
-                </f:facet>
-                <ui:repeat value="#{transaction.books}" var="book">
-                    <h:outputText value="#{book.name}"/>
-                    <br/>
-                </ui:repeat>
-            </h:column>
+        <!-- Jika ada transaksi, tampilkan tabel -->
+        <h:panelGroup rendered="#{ordersBean.hasTransactions()}">
+            <h:dataTable value="#{ordersBean.transhistory}" var="transaction" class="table table-custom">
+                <h:column>
+                    <f:facet name="header">
+                        Order ID
+                    </f:facet>
+                    <h:outputText value="#{transaction.orderId}" />
+                </h:column>
 
-            <h:column>
-                <f:facet name="header">
-                    Quantity
-                </f:facet>
-                <ui:repeat value="#{transaction.books}" var="book">
-                    <h:outputText value="#{book.quantity}"/>
-                    <br/>
-                </ui:repeat>
-            </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Nama Buku
+                    </f:facet>
+                    <h:outputText value="#{transaction.bookName}" />
+                </h:column>
 
-            <h:column>
-                <f:facet name="header">
-                    Total Price
-                </f:facet>
-                <h:outputText value="#{transaction.totalPrice}"/>
-            </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Kuantitas
+                    </f:facet>
+                    <h:outputText value="#{transaction.quantity}" />
+                </h:column>
 
-            <h:column>
-                <f:facet name="header">
-                    Order Date
-                </f:facet>
-                <h:outputText value="#{transaction.orderDate}">
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                </h:outputText>
-            </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Harga Total
+                    </f:facet>
+                    <h:outputText value="#{transaction.totalPrice}" />
+                </h:column>
 
-            <h:column>
-                <f:facet name="header">
-                    Payment Method
-                </f:facet>
-                <h:outputText value="#{transaction.paymentMethod}"/>
-            </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Payment Method
+                    </f:facet>
+                    <h:outputText value="#{transaction.paymentMethod}" />
+                </h:column>
 
-            <h:column>
-                <f:facet name="header">
-                    Status
-                </f:facet>
-                <h:outputText id="status-#{transaction.orderId}" value="#{transaction.status}" />
-            </h:column>
-
-            <h:column>
-                <f:facet name="header">
-                    Expiry Time
-                </f:facet>
-                <h:panelGroup id="expiry-#{transaction.orderId}">
-                    <h:outputText value="#{transaction.expiryTime}">
-                        <f:convertDateTime pattern="HH:mm:ss" />
+                <h:column>
+                    <f:facet name="header">
+                        Order Date
+                    </f:facet>
+                    <h:outputText value="#{transaction.orderDate}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:outputText>
-                    <div class="countdown-timer" id="countdown-#{transaction.orderId}"></div>
-                    <script>
-                        // Countdown logic (you may keep your existing JS logic here)
-                    </script>
-                </h:panelGroup>
-            </h:column>
-        </h:dataTable>
+                </h:column>
+            </h:dataTable>
+        </h:panelGroup>
 
         <h:link outcome="index.xhtml" value="Back to Home" styleClass="btn btn-primary" />
     </div>
-
-    <!-- Payment Modal -->
-    <h:form id="paymentForm" enctype="multipart/form-data">
-        <h:panelGroup id="paymentModal">
-            <h:panelGrid columns="1" class="modal-content">
-                <h:outputText value="Pembayaran" styleClass="modal-title" />
-                <h:commandButton value="×" styleClass="close" action="#{transactionBean.closePaymentModal}"/>
-
-                <h:outputText value="Kode Pembayaran: " />
-                <h:outputText value="#{transactionBean.paymentCode}" id="paymentKodePembayaran"/>
-
-                <h:outputText value="Total: #{transactionBean.paymentTotalPrice}" id="paymentTotalPrice"/>
-
-                <h:panelGrid columns="1" class="form-group">
-                    <h:outputLabel for="paymentProof" value="Upload Bukti Pembayaran" />
-                    <h:inputFile id="paymentProof" value="#{transactionBean.paymentProof}" required="true"/>
-                </h:panelGrid>
-
-                <h:commandButton value="Submit" styleClass="btn btn-primary"
-                                 action="#{transactionBean.submitPayment}" 
-                                 onclick="submitPaymentForm(event)" />
-            </h:panelGrid>
-        </h:panelGroup>
-    </h:form>
-
-    <!-- Success Modal -->
-    <h:panelGroup id="successModal" class="modal fade">
-        <h:panelGrid class="modal-content" columns="1">
-            <h:outputText value="Pembayaran Berhasil" styleClass="modal-title"/>
-            <h:commandButton value="×" styleClass="close" action="#{transactionBean.closeSuccessModal}"/>
-
-            <h:outputText value="Pembayaran Anda telah berhasil. Terima kasih!" />
-            
-            <h:commandButton value="Tutup" styleClass="btn btn-secondary" 
-                             action="#{transactionBean.handleSuccessModalClose}"/>
-        </h:panelGrid>
-    </h:panelGroup>
-
-    <!-- Failure Modal -->
-    <h:panelGroup id="failureModal" class="modal fade">
-        <h:panelGrid class="modal-content" columns="1">
-            <h:outputText value="Pembayaran Gagal" styleClass="modal-title"/>
-            <h:commandButton value="×" styleClass="close" action="#{transactionBean.closeFailureModal}"/>
-
-            <h:outputText value="Waktu untuk melakukan pembayaran telah habis. Silakan melakukan pemesanan ulang." />
-            
-            <h:commandButton value="Tutup" styleClass="btn btn-secondary" 
-                             action="#{transactionBean.handleFailureModalClose}"/>
-        </h:panelGrid>
-    </h:panelGroup>
 </h:body>
-    
+
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        function handleSuccessModalClose() {
-            $('#successModal').modal('hide');
-        }
-    </script>
 </html>

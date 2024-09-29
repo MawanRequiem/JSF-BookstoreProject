@@ -69,9 +69,11 @@ public class BukuBean {
 
 
     // Group books by genre
-    public Map<String, List<Buku>> groupBooksByGenre() {
-        return bukuList.stream().collect(Collectors.groupingBy(Buku::getGenreBuku));
-    }
+    public List<Buku> getBooksByGenre(String genre) {
+    return bukuList.stream()
+        .filter(buku -> buku.getGenreBuku().equalsIgnoreCase(genre))
+        .collect(Collectors.toList());
+}
 
     // Group books by series
     public Map<String, List<Buku>> groupBooksBySeries() {

@@ -364,6 +364,18 @@ footer {
             <f:facet name="header">Nama Buku</f:facet>
             <h:outputText value="#{order.buku.namaBuku}" />
         </h:column>
+        <h:column>
+            <f:facet name="header">Payment Method</f:facet>
+            <h:outputText value="#{order.paymentMethod.payment}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">Kuantitas</f:facet>
+            <h:outputText value="#{order.kuantitas}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">Total Harga</f:facet>
+            <h:outputText value="#{order.totalHarga}" />
+        </h:column>
         
         <h:column>
             <f:facet name="header">Order Date</f:facet>

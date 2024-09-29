@@ -98,10 +98,4 @@ public class Buku  implements java.io.Serializable {
     public void setOrderses(Set orderses) {
         this.orderses = orderses;
     }
-
-
-
-
 }
-
-
