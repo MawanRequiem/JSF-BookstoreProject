@@ -129,37 +129,37 @@
                 color: white; /* Close button color */
             }
 
-.payment-method-container {
-    margin-top: 20px; /* Space above the section */
-    background-color: #f9f9f9; /* Light background for contrast */
-    border: 1px solid #ddd; /* Light border */
-    border-radius: 8px; /* Rounded corners */
-    padding: 15px; /* Padding inside the section */
-}
+            .payment-method-container {
+                margin-top: 20px; /* Space above the section */
+                background-color: #f9f9f9; /* Light background for contrast */
+                border: 1px solid #ddd; /* Light border */
+                border-radius: 8px; /* Rounded corners */
+                padding: 15px; /* Padding inside the section */
+            }
 
-.payment-method-container strong {
-    font-size: 1.2em; /* Slightly larger font for the title */
-    color: #333; /* Darker color for better readability */
-}
+            .payment-method-container strong {
+                font-size: 1.2em; /* Slightly larger font for the title */
+                color: #333; /* Darker color for better readability */
+            }
 
-.payment-select-menu {
-    width: 100%; /* Full width */
-    padding: 10px; /* Padding for a better touch area */
-    border: 1px solid #ccc; /* Border for the select box */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 1em; /* Adjust font size */
-    background-color: #fff; /* White background */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
-}
+            .payment-select-menu {
+                width: 100%; /* Full width */
+                padding: 10px; /* Padding for a better touch area */
+                border: 1px solid #ccc; /* Border for the select box */
+                border-radius: 5px; /* Rounded corners */
+                font-size: 1em; /* Adjust font size */
+                background-color: #fff; /* White background */
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+            }
 
-.payment-select-menu:focus {
-    border-color: #007bff; /* Change border color on focus */
-    outline: none; /* Remove default outline */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Shadow effect on focus */
-}
+            .payment-select-menu:focus {
+                border-color: #007bff; /* Change border color on focus */
+                outline: none; /* Remove default outline */
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Shadow effect on focus */
+            }
 
 
-            
+
         </style>
         <title>Checkout - #{checkoutBean.selectedBook.namaBuku}</title>
     </h:head>
@@ -175,12 +175,25 @@
 
                 <div class="book-details">
                     <h2>#{checkoutBean.selectedBook.namaBuku}</h2>
-                    <p><strong>Price:</strong> Rp #{checkoutBean.selectedBook.hargaBuku}</p>
+                    <p><strong>Price per unit:</strong> Rp #{checkoutBean.selectedBook.hargaBuku}</p>
                     <p><strong>Stock Available:</strong> #{checkoutBean.selectedBook.stockBuku} items</p>
+
+                    <!-- Quantity Selection -->
+                    <p><strong>Quantity:</strong></p>
+                    <p:inputText value="#{checkoutBean.quantity}" 
+                                 size="3" style="width: 50px;">
+                        <f:validateLongRange minimum="1" maximum="#{checkoutBean.selectedBook.stockBuku}"/>
+                        <p:ajax event="change" update="totalPrice"/>
+                    </p:inputText>
+
+                    <!-- Total Price -->
+                    <p><strong>Total Price:</strong> Rp <p:outputLabel id="totalPrice" value="#{checkoutBean.totalPrice}" /></p>
+
                     <p><strong>User Name:</strong> #{checkoutBean.currentUser.namaUser}</p>
                     <p><strong>Email:</strong> #{checkoutBean.currentUser.email}</p>
                     <p><strong>Address:</strong> #{checkoutBean.userAddress.address}, #{checkoutBean.userAddress.city}, #{checkoutBean.userAddress.postalCode}</p>
 
+                    <!-- Payment Method Selection -->
                     <div class="payment-method-container">
                         <strong>Select Payment Method:</strong>
                         <h:selectOneMenu value="#{checkoutBean.selectedPaymentMethodId}" required="true">
@@ -189,38 +202,28 @@
                         </h:selectOneMenu>
                     </div>
 
-                    <br/>
-                    <br/>
+                    <!-- Confirm Checkout -->
+                    <br/><br/>
                     <p:commandButton value="Confirm Checkout"
                                      action="#{checkoutBean.checkout(checkoutBean.selectedBook.idBuku)}"
-                                     styleClass="btn-success" ajax="false"
-                                     onclick="PF('checkoutConfirmDialog').show(); return false;"/>
-                    <br/>
-                    <br/>
+                                     styleClass="btn-success" ajax="false"/>
+                    <br/><br/>
+                    <!-- Cancel Checkout -->
                     <p:commandButton value="Cancel"
                                      styleClass="btn-cancel"
                                      onclick="PF('cancelDialog').show(); return false;"/>
                 </div>
             </div>
-                    <!-- Checkout Confirmation Dialog -->
-        <p:dialog header="Confirm Checkout" widgetVar="checkoutConfirmDialog" modal="true" closable="false">
-            <h:outputText value="Are you sure you want to proceed with the checkout?" />
-            <br/><br/>
-            <p:commandButton value="Yes" action="#{checkoutBean.checkout(checkoutBean.selectedBook.idBuku)}" process="@this" ajax="false"/>
-            <p:commandButton value="No" onclick="PF('checkoutConfirmDialog').hide();" type="button"/>
-        </p:dialog>
+
+            <!-- Cancel Confirmation Dialog -->
+            <p:dialog header="Confirm Cancel" widgetVar="cancelDialog" modal="true" closable="false">
+                <h:outputText value="Are you sure you want to cancel?" />
+                <br/><br/>
+                <p:commandButton value="Yes" onclick="window.location.href = 'index.xhtml';" type="button"/>
+                <p:commandButton value="No" onclick="PF('cancelDialog').hide();" type="button"/>
+            </p:dialog>
+
+            <ui:include src="footer.xhtml"/>
         </h:form>
-
-        <!-- Cancel Confirmation Dialog -->
-        <p:dialog header="Confirm Cancel" widgetVar="cancelDialog" modal="true" closable="false">
-            <h:outputText value="Are you sure you want to cancel?" />
-            <br/><br/>
-            <p:commandButton value="Yes" onclick="window.location.href = 'index.xhtml';" type="button"/>
-            <p:commandButton value="No" onclick="PF('cancelDialog').hide();" type="button"/>
-        </p:dialog>
-
-
-
-        <ui:include src="footer.xhtml"/>
     </h:body>
 </html>

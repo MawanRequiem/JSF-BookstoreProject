@@ -1,5 +1,5 @@
 package model;
-// Generated Sep 28, 2024 11:48:54 AM by Hibernate Tools 4.3.1
+// Generated Sep 29, 2024 3:45:29 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -15,16 +15,28 @@ public class Orders  implements java.io.Serializable {
      private PaymentMethod paymentMethod;
      private UserDb userDb;
      private String paymentCode;
+     private Integer kuantitas;
+     private Double totalHarga;
      private Date date;
 
     public Orders() {
     }
 
+	
     public Orders(Buku buku, PaymentMethod paymentMethod, UserDb userDb, String paymentCode, Date date) {
+        this.buku = buku;
+        this.paymentMethod = paymentMethod;
+        this.userDb = userDb;
+        this.paymentCode = paymentCode;
+        this.date = date;
+    }
+    public Orders(Buku buku, PaymentMethod paymentMethod, UserDb userDb, String paymentCode, Integer kuantitas, Double totalHarga, Date date) {
        this.buku = buku;
        this.paymentMethod = paymentMethod;
        this.userDb = userDb;
        this.paymentCode = paymentCode;
+       this.kuantitas = kuantitas;
+       this.totalHarga = totalHarga;
        this.date = date;
     }
    
@@ -62,6 +74,20 @@ public class Orders  implements java.io.Serializable {
     
     public void setPaymentCode(String paymentCode) {
         this.paymentCode = paymentCode;
+    }
+    public Integer getKuantitas() {
+        return this.kuantitas;
+    }
+    
+    public void setKuantitas(Integer kuantitas) {
+        this.kuantitas = kuantitas;
+    }
+    public Double getTotalHarga() {
+        return this.totalHarga;
+    }
+    
+    public void setTotalHarga(Double totalHarga) {
+        this.totalHarga = totalHarga;
     }
     public Date getDate() {
         return this.date;

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 28, 2024 11:48:54 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Sep 29, 2024 3:45:30 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="model.Orders" table="orders" catalog="tereliyebook" optimistic-lock="version">
         <id name="idOrder" type="java.lang.Integer">
@@ -19,6 +19,12 @@
         </many-to-one>
         <property name="paymentCode" type="string">
             <column name="payment_code" length="10" not-null="true" />
+        </property>
+        <property name="kuantitas" type="java.lang.Integer">
+            <column name="kuantitas" />
+        </property>
+        <property name="totalHarga" type="java.lang.Double">
+            <column name="total_harga" precision="22" scale="0" />
         </property>
         <property name="date" type="date">
             <column name="date" length="10" not-null="true" />
