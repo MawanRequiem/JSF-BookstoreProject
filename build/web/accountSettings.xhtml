@@ -139,33 +139,33 @@
 
                                     <h:commandButton value="Logout" action="#{loginBean.logout}" class="btn btn-custom-red"/>
                                 </div>
-        <div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteAccountModalLabel">Confirm Account Deletion</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&#215;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete your account? This action cannot be undone.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <h:commandButton value="Delete" action="#{accountSettingsBean.deleteAccount}" class="btn btn-danger" 
-                                 onclick="closeModalAndRedirect(); return false;"/>
-            </div>
-        </div>
-    </div>
-</div>
+                                <div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteAccountModalLabel">Confirm Account Deletion</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&#215;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to delete your account? This action cannot be undone.
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                <h:commandButton value="Delete" action="#{accountSettingsBean.deleteAccount}" class="btn btn-danger" 
+                                                                 onclick="closeModalAndRedirect(); return false;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </h:form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
 
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

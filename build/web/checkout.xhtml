@@ -181,10 +181,13 @@
                     <!-- Quantity Selection -->
                     <p><strong>Quantity:</strong></p>
                     <p:inputText value="#{checkoutBean.quantity}" 
-                                 size="3" style="width: 50px;">
-                        <f:validateLongRange minimum="1" maximum="#{checkoutBean.selectedBook.stockBuku}"/>
-                        <p:ajax event="change" update="totalPrice"/>
-                    </p:inputText>
+             size="3" style="width: 50px;">
+    <f:validateLongRange minimum="1" maximum="#{checkoutBean.selectedBook.stockBuku}"/>
+    <p:ajax event="change" 
+             update="totalPrice" 
+             onerror="PF('stockWarningDialog').show();" 
+             listener="#{checkoutBean.validateStock}"/>
+</p:inputText>
 
                     <!-- Total Price -->
                     <p><strong>Total Price:</strong> Rp <p:outputLabel id="totalPrice" value="#{checkoutBean.totalPrice}" /></p>
@@ -222,6 +225,12 @@
                 <p:commandButton value="Yes" onclick="window.location.href = 'index.xhtml';" type="button"/>
                 <p:commandButton value="No" onclick="PF('cancelDialog').hide();" type="button"/>
             </p:dialog>
+            
+            <p:dialog header="Checkout Error" widgetVar="stockWarningDialog" modal="true" closable="false">
+    <h:outputText value="Checkout error, stok yang ada hanya tinggal #{checkoutBean.selectedBook.stockBuku}." />
+    <br/><br/>
+    <p:commandButton value="Close" onclick="PF('stockWarningDialog').hide();" type="button"/>
+</p:dialog>
 
             <ui:include src="footer.xhtml"/>
         </h:form>

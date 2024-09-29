@@ -7,9 +7,17 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
 import java.util.List;
+import javax.persistence.criteria.Order;
 import org.hibernate.Query;
+import org.hibernate.SessionFactory;
 
 public class OrdersDAO {
+    
+    private SessionFactory sessionFactory;
+
+    public OrdersDAO() {
+        this.sessionFactory = HibernateUtil.getSessionFactory();
+    }
     
     // Fetch all orders from the database
     public List<AdminTransactionBean> getAdminTransactions() {
@@ -45,26 +53,25 @@ public class OrdersDAO {
         return transactions;
     }
     
-    public List<UserTransactionBean> getUserTransactionsByUserId(Integer userId) {
+     // Method baru untuk mengambil UserTransactionBean
+    public List<UserTransactionBean> getUserTransactions() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<UserTransactionBean> transactions = null;
+        List<UserTransactionBean> transhistory = null;
 
         try {
             session.beginTransaction();
 
-            // HQL untuk join tabel Orders, Buku, PaymentMethod, dan mengambil data berdasarkan userId
+            // HQL untuk join tabel Orders, Buku, PaymentMethod, dan mengambil data yang relevan
             String hql = "SELECT new com.bean.UserTransactionBean(" +
                     "o.idOrder, b.namaBuku, o.kuantitas, o.totalHarga, " +
                     "pm.payment, o.date) " +
                     "FROM Orders o " +
                     "JOIN o.buku b " +
                     "JOIN o.paymentMethod pm " +
-                    "JOIN o.userDb u " +
-                    "WHERE u.idUser = :userId"; // filter berdasarkan userId
+                    "JOIN o.userDb u";
 
             Query query = session.createQuery(hql);
-            query.setParameter("userId", userId);  // Set parameter userId
-            transactions = (List<UserTransactionBean>) query.list();
+            transhistory = (List<UserTransactionBean>) query.list();
 
             session.getTransaction().commit();
         } catch (Exception e) {
@@ -74,7 +81,43 @@ public class OrdersDAO {
             session.close();
         }
 
-        return transactions;
+        return transhistory;
+    }
+    
+    // Method untuk mengambil pesanan berdasarkan userId
+    public List<Orders> getOrdersByUserId(Long userId) {
+        Session session = null;
+        Transaction transaction = null;
+        List<Orders> orders = null;
+
+        try {
+            // Membuka session baru
+            session = sessionFactory.openSession();
+            // Memulai transaksi
+            transaction = session.beginTransaction();
+
+            // Membuat HQL query
+            String hql = "FROM Orders o WHERE o.userDb.idUser = :userId";
+            Query query = session.createQuery(hql);
+            query.setParameter("userId", userId);
+
+            // Mendapatkan hasil list
+            orders = (List<Orders>) query.list();
+
+            // Commit transaksi
+            transaction.commit();
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();  // Rollback jika ada error
+            }
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();  // Tutup sesi
+            }
+        }
+        return orders;
     }
     
     public List<Orders> getAllOrders() {

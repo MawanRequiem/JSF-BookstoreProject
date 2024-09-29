@@ -166,9 +166,19 @@ public class CheckoutBean implements Serializable {
     }
 
     public void setQuantity(int quantity) {
+    if (quantity > selectedBook.getStockBuku()) {
+        // Show an error message
+        FacesContext.getCurrentInstance().addMessage(null,
+            new FacesMessage(FacesMessage.SEVERITY_ERROR, "Checkout error", 
+            "Stock available: " + selectedBook.getStockBuku() + " items"));
+        
+        // Reset the quantity to the maximum available
+        this.quantity = selectedBook.getStockBuku();
+    } else {
         this.quantity = quantity;
-        calculateTotalPrice();  // Recalculate total price when quantity changes
     }
+    calculateTotalPrice();  // Recalculate total price when quantity changes
+}
 
     // Getter for totalPrice
     public double getTotalPrice() {

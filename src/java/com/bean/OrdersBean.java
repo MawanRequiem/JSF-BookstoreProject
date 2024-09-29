@@ -26,7 +26,7 @@ public class OrdersBean implements Serializable {
         loadUserTransactions();
 
         // Inisialisasi transaksi user
-        this.transhistory = ordersDAO.getUserTransactionsByUserId(Integer.SIZE);
+        this.transhistory = ordersDAO.getUserTransactions();
     }
 
     private Integer getLoggedInUserId() {
@@ -39,7 +39,7 @@ public class OrdersBean implements Serializable {
     public void loadUserTransactions() {
         Integer userId = getLoggedInUserId();
         if (userId != null) {
-            this.transhistory = ordersDAO.getUserTransactionsByUserId(userId);
+            this.transhistory = ordersDAO.getUserTransactions();
         } else {
             this.transhistory = null;  // Jika userId tidak ada
         }

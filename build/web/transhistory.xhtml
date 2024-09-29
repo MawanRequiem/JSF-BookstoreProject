@@ -58,59 +58,52 @@ and open the template in the editor.
     <div class="container mt-5">
         <h2>Transaction History</h2>
 
-        <!-- Jika tidak ada transaksi -->
-        <h:panelGroup rendered="#{!ordersBean.hasTransactions()}">
-            <p>Tidak ada transaksi di akun ini</p>
-        </h:panelGroup>
+        <!-- Table untuk menampilkan data transaksi user -->
+        <h:dataTable value="#{ordersBean.transhistory}" var="transaction" class="table table-custom">
+            <h:column>
+                <f:facet name="header">
+                    Order ID
+                </f:facet>
+                <h:outputText value="#{transaction.orderId}" />
+            </h:column>
 
-        <!-- Jika ada transaksi, tampilkan tabel -->
-        <h:panelGroup rendered="#{ordersBean.hasTransactions()}">
-            <h:dataTable value="#{ordersBean.transhistory}" var="transaction" class="table table-custom">
-                <h:column>
-                    <f:facet name="header">
-                        Order ID
-                    </f:facet>
-                    <h:outputText value="#{transaction.orderId}" />
-                </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Nama Buku
+                </f:facet>
+                <h:outputText value="#{transaction.bookName}" />
+            </h:column>
 
-                <h:column>
-                    <f:facet name="header">
-                        Nama Buku
-                    </f:facet>
-                    <h:outputText value="#{transaction.bookName}" />
-                </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Kuantitas
+                </f:facet>
+                <h:outputText value="#{transaction.quantity}" />
+            </h:column>
 
-                <h:column>
-                    <f:facet name="header">
-                        Kuantitas
-                    </f:facet>
-                    <h:outputText value="#{transaction.quantity}" />
-                </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Harga Total
+                </f:facet>
+                <h:outputText value="#{transaction.totalPrice}" />
+            </h:column>
 
-                <h:column>
-                    <f:facet name="header">
-                        Harga Total
-                    </f:facet>
-                    <h:outputText value="#{transaction.totalPrice}" />
-                </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Payment Method
+                </f:facet>
+                <h:outputText value="#{transaction.paymentMethod}" />
+            </h:column>
 
-                <h:column>
-                    <f:facet name="header">
-                        Payment Method
-                    </f:facet>
-                    <h:outputText value="#{transaction.paymentMethod}" />
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">
-                        Order Date
-                    </f:facet>
-                    <h:outputText value="#{transaction.orderDate}">
-                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                    </h:outputText>
-                </h:column>
-            </h:dataTable>
-        </h:panelGroup>
+            <h:column>
+                <f:facet name="header">
+                    Order Date
+                </f:facet>
+                <h:outputText value="#{transaction.orderDate}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </h:column>
+        </h:dataTable>
 
         <h:link outcome="index.xhtml" value="Back to Home" styleClass="btn btn-primary" />
     </div>

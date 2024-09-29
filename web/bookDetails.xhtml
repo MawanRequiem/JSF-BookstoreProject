@@ -150,8 +150,11 @@
                         </div>
 
                         <h:commandLink value="Checkout"
-                                       styleClass="checkout-btn"
-                                       onclick="PF('checkoutConfirmDialog').show(); return false;" />
+               styleClass="checkout-btn"
+               disabled="#{bukuBean.selectedBook.stockBuku == 0}"
+               style="#{bukuBean.selectedBook.stockBuku == 0 ? 'background-color: red; cursor: not-allowed;' : ''}"
+               onclick="if (#{bukuBean.selectedBook.stockBuku > 0}) { PF('checkoutConfirmDialog').show(); } return false;" />
+
 
                         <h:commandButton value="Back to Home"
                                          styleClass="back-btn"
