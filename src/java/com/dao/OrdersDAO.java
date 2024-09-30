@@ -38,6 +38,8 @@ public class OrdersDAO {
                     + "JOIN o.buku b"
                     + "JOIN o.paymentMethod pm";
 
+            
+
             // Buat query menggunakan Hibernate versi 4.3
             Query query = session.createQuery(hql);
             transactions = (List<AdminTransactionBean>) query.list();
@@ -54,6 +56,41 @@ public class OrdersDAO {
     }
     
      // Method baru untuk mengambil UserTransactionBean
+public List<UserTransactionBean> getUserTransactions(Integer userId) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    List<UserTransactionBean> transhistory = null;
+
+    try {
+        session.beginTransaction();
+
+        // Modified HQL to filter by logged-in user ID and sort by orderId (ascending order)
+        String hql = "SELECT new com.bean.UserTransactionBean(" +
+                "o.idOrder, b.namaBuku, o.kuantitas, o.totalHarga, " +
+                "pm.payment, o.date) " +
+                "FROM Orders o " +
+                "JOIN o.buku b " +
+                "JOIN o.paymentMethod pm " +
+                "JOIN o.userDb u " +
+                "WHERE u.idUser = :userId " +  // Filter orders by the user ID
+                "ORDER BY o.idOrder ASC";  // Sort by orderId in ascending order
+
+        Query query = session.createQuery(hql);
+        query.setParameter("userId", userId);  // Set the userId parameter
+
+        transhistory = (List<UserTransactionBean>) query.list();
+
+        session.getTransaction().commit();
+    } catch (Exception e) {
+        if (session.getTransaction() != null) session.getTransaction().rollback();
+        e.printStackTrace();
+    } finally {
+        session.close();
+    }
+
+    return transhistory;
+}
+
+
     public List<UserTransactionBean> getUserTransactions() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<UserTransactionBean> transhistory = null;
@@ -85,66 +122,61 @@ public class OrdersDAO {
     }
     
     // Method untuk mengambil pesanan berdasarkan userId
-    public List<Orders> getOrdersByUserId(Long userId) {
-        Session session = null;
-        Transaction transaction = null;
-        List<Orders> orders = null;
+public List<Orders> getOrdersByUserId(Long userId) {
+    Session session = null;
+    Transaction transaction = null;
+    List<Orders> orders = null;
 
-        try {
-            // Membuka session baru
-            session = sessionFactory.openSession();
-            // Memulai transaksi
-            transaction = session.beginTransaction();
+    try {
+        session = sessionFactory.openSession();
+        transaction = session.beginTransaction();
 
-            // Membuat HQL query
-            String hql = "FROM Orders o WHERE o.userDb.idUser = :userId";
-            Query query = session.createQuery(hql);
-            query.setParameter("userId", userId);
+        String hql = "FROM Orders o WHERE o.userDb.idUser = :userId";
+        Query query = session.createQuery(hql);
+        query.setParameter("userId", userId);
 
-            // Mendapatkan hasil list
-            orders = (List<Orders>) query.list();
+        orders = (List<Orders>) query.list();
+        transaction.commit();
 
-            // Commit transaksi
-            transaction.commit();
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();  // Rollback jika ada error
-            }
-            e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();  // Tutup sesi
-            }
+    } catch (Exception e) {
+        if (transaction != null) {
+            transaction.rollback();
         }
-        return orders;
+        e.printStackTrace();
+    } finally {
+        if (session != null) {
+            session.close();
+        }
     }
+    return orders;
+}
+
     
     public List<Orders> getAllOrders() {
         Transaction transaction = null;
-        List<Orders> ordersList = null;
-        
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            // Start transaction
-            transaction = session.beginTransaction();
+    List<Orders> ordersList = null;
 
-            // Use HQL to fetch Orders with UserDb and OrderItems (with Buku entity in OrderItems)
-            String hql = "FROM Orders o LEFT JOIN FETCH o.userDb u LEFT JOIN FETCH o.buku b LEFT JOIN FETCH o.paymentMethod pm";
-            Query query = session.createQuery(hql);  // Hibernate 4.3 tidak memiliki tipe generik di Query
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    try {
+        // Start transaction
+        transaction = session.beginTransaction();
 
-            ordersList = (List<Orders>) query.list();  // Casting hasil query ke List<Orders>
+        // Fetch all orders, users, and payment methods
+        String hql = "FROM Orders o LEFT JOIN FETCH o.userDb u LEFT JOIN FETCH o.buku b LEFT JOIN FETCH o.paymentMethod pm";
+        Query query = session.createQuery(hql); 
 
-            // Commit the transaction
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
+        ordersList = (List<Orders>) query.list();  // Casting the result to List<Orders>
+
+        // Commit the transaction
+        transaction.commit();
+    } catch (Exception e) {
+        if (transaction != null) {
+            transaction.rollback();
         }
-        return ordersList;
+        e.printStackTrace();
+    } finally {
+        session.close();
     }
+    return ordersList;
+}
 }

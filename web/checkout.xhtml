@@ -158,8 +158,6 @@
                 box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Shadow effect on focus */
             }
 
-
-
         </style>
         <title>Checkout - #{checkoutBean.selectedBook.namaBuku}</title>
     </h:head>
@@ -208,8 +206,10 @@
                     <!-- Confirm Checkout -->
                     <br/><br/>
                     <p:commandButton value="Confirm Checkout"
-                                     action="#{checkoutBean.checkout(checkoutBean.selectedBook.idBuku)}"
-                                     styleClass="btn-success" ajax="false"/>
+                                     styleClass="btn-success"
+                                     type="button"
+                                     onclick="PF('confirmCheckoutDialog').show();"/>
+
                     <br/><br/>
                     <!-- Cancel Checkout -->
                     <p:commandButton value="Cancel"
@@ -218,19 +218,32 @@
                 </div>
             </div>
 
+            <!-- Checkout Confirmation Dialog -->
+            <p:dialog header="Confirm Checkout" widgetVar="confirmCheckoutDialog" modal="true" closable="false">
+                <h:outputText value="Are you sure you want to confirm the checkout?" />
+                <p><strong>Book:</strong> #{checkoutBean.selectedBook.namaBuku}</p>
+                <p><strong>Quantity:</strong> #{checkoutBean.quantity}</p>
+                <p><strong>Total Price:</strong> Rp #{checkoutBean.totalPrice}</p>
+
+                <br/><br/>
+                <p:commandButton value="Yes" action="#{checkoutBean.checkout(checkoutBean.selectedBook.idBuku)}" ajax="false"/>
+                <p:commandButton value="No" onclick="PF('confirmCheckoutDialog').hide();" type="button"/>
+            </p:dialog>
+
             <!-- Cancel Confirmation Dialog -->
             <p:dialog header="Confirm Cancel" widgetVar="cancelDialog" modal="true" closable="false">
                 <h:outputText value="Are you sure you want to cancel?" />
                 <br/><br/>
-                <p:commandButton value="Yes" onclick="window.location.href = 'index.xhtml';" type="button"/>
+                <p:commandButton value="Yes" onclick="window.location.href = 'index.xhtml';" type="button" ajax="false"/>
                 <p:commandButton value="No" onclick="PF('cancelDialog').hide();" type="button"/>
             </p:dialog>
             
+            <!-- Stock Warning Dialog -->
             <p:dialog header="Checkout Error" widgetVar="stockWarningDialog" modal="true" closable="false">
-    <h:outputText value="Checkout error, stok yang ada hanya tinggal #{checkoutBean.selectedBook.stockBuku}." />
-    <br/><br/>
-    <p:commandButton value="Close" onclick="PF('stockWarningDialog').hide();" type="button"/>
-</p:dialog>
+                <h:outputText value="Checkout error, stok yang ada hanya tinggal #{checkoutBean.selectedBook.stockBuku}." />
+                <br/><br/>
+                <p:commandButton value="Close" onclick="PF('stockWarningDialog').hide();" type="button"/>
+            </p:dialog>
 
             <ui:include src="footer.xhtml"/>
         </h:form>
