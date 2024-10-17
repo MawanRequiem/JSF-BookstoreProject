@@ -221,10 +221,6 @@
             <!-- Checkout Confirmation Dialog -->
             <p:dialog header="Confirm Checkout" widgetVar="confirmCheckoutDialog" modal="true" closable="false">
                 <h:outputText value="Are you sure you want to confirm the checkout?" />
-                <p><strong>Book:</strong> #{checkoutBean.selectedBook.namaBuku}</p>
-                <p><strong>Quantity:</strong> #{checkoutBean.quantity}</p>
-                <p><strong>Total Price:</strong> Rp #{checkoutBean.totalPrice}</p>
-
                 <br/><br/>
                 <p:commandButton value="Yes" action="#{checkoutBean.checkout(checkoutBean.selectedBook.idBuku)}" ajax="false"/>
                 <p:commandButton value="No" onclick="PF('confirmCheckoutDialog').hide();" type="button"/>

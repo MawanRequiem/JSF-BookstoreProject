@@ -14,6 +14,7 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/style.css"/>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&amp;display=swap');
         body, html {
@@ -55,6 +56,7 @@ and open the template in the editor.
     
     </h:head>
     <h:body>
+        <ui:include src="header.xhtml" />
     <div class="container mt-5">
         <h2>Transaction History</h2>
 
@@ -107,6 +109,7 @@ and open the template in the editor.
 
         <h:link outcome="index.xhtml" value="Back to Home" styleClass="btn btn-primary" />
     </div>
+        <ui:include src="footer.xhtml" />
 </h:body>
 
 

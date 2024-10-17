@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import model.UserDb;
 
 @ManagedBean(name = "ordersBean")
-@SessionScoped
+@ViewScoped
 public class OrdersBean implements Serializable {
 
     private List<AdminTransactionBean> transactions;

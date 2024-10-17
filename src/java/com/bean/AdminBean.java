@@ -19,10 +19,10 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 import model.Buku;
 
-
 @ManagedBean
 @ViewScoped
 public class AdminBean implements Serializable {
+
     private AdminDAO adminDAO = new AdminDAO();
     private List<Buku> bukuList;
     private Buku selectedBuku;
@@ -30,20 +30,20 @@ public class AdminBean implements Serializable {
     private byte[] oldImage; // To store the old image
     private Part uploadedFile; // For file upload
     private Integer id;
-    
+
     @PostConstruct
-public void init() {
-    if (id != null) {
-        selectedBuku = adminDAO.getBukuById(id);
-        if (selectedBuku != null) {
-            oldImage = selectedBuku.getGambarBuku();
-        } else {
-            // Handle case when no book is found with the given id
-            FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Buku tidak ditemukan."));
+    public void init() {
+        if (id != null) {
+            selectedBuku = adminDAO.getBukuById(id);
+            if (selectedBuku != null) {
+                oldImage = selectedBuku.getGambarBuku();
+            } else {
+                // Handle case when no book is found with the given id
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Buku tidak ditemukan."));
+            }
         }
     }
-}
 
     // Getter and Setter methods
     public Part getUploadedFile() {
@@ -51,12 +51,12 @@ public void init() {
     }
 
     public Integer getId() {
-    return id;
-}
+        return id;
+    }
 
-public void setId(Integer id) {
-    this.id = id;
-}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public void setUploadedFile(Part uploadedFile) {
         this.uploadedFile = uploadedFile;
@@ -93,26 +93,26 @@ public void setId(Integer id) {
 
     // Edit Buku logic
     public String editBuku(Buku buku) {
-    this.selectedBuku = buku;
-    System.out.println("Selected Buku: " + this.selectedBuku.getNamaBuku());  // Debug log
-    this.oldImage = buku.getGambarBuku();
-    return "editBuku.xhtml?faces-redirect=true&id=" + buku.getIdBuku();
+        this.selectedBuku = buku;
+        System.out.println("Selected Buku: " + this.selectedBuku.getNamaBuku());  // Debug log
+        this.oldImage = buku.getGambarBuku();
+        return "editBuku.xhtml?faces-redirect=true&id=" + buku.getIdBuku();
 
-}
+    }
 
     // Update Buku logic
     public void updateBuku() throws IOException {
-    if (uploadedFile != null && uploadedFile.getSize() > 0) {
-        selectedBuku.setGambarBuku(convertPartToBytes(uploadedFile));
-        System.out.println("New image uploaded.");
-    } else {
-        selectedBuku.setGambarBuku(oldImage); // Use the old image if no new image is uploaded
-        System.out.println("No new image, using old image.");
-    }
+        if (uploadedFile != null && uploadedFile.getSize() > 0) {
+            selectedBuku.setGambarBuku(convertPartToBytes(uploadedFile));
+            System.out.println("New image uploaded.");
+        } else {
+            selectedBuku.setGambarBuku(oldImage); // Use the old image if no new image is uploaded
+            System.out.println("No new image, using old image.");
+        }
 
-    adminDAO.updateBuku(selectedBuku);
-    FacesContext.getCurrentInstance().getExternalContext().redirect("adminDashboard.xhtml");
-}
+        adminDAO.updateBuku(selectedBuku);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("adminDashboard.xhtml");
+    }
 
     // Delete Buku logic
     public void deleteBuku() {

@@ -64,11 +64,21 @@
                 <p>Genre: #{buku.genreBuku}</p>
                 <p>Stock: #{buku.stockBuku} item</p>
                 <h4>Price: Rp #{buku.hargaBuku}</h4>
+                <!-- Replace dialog with navigation to book details page -->
+<h:commandLink value="View Details"
+                   action="#{viewBookBean.loadBuku(buku.idBuku)}"
+                   rendered="#{loginBean.username != null}"
+                   onclick="window.location.href='bookDetails.xhtml?idBuku=#{buku.idBuku}'; return false;" />
+
+    <!-- If user is not logged in, show login dialog -->
+    <h:commandLink value="View Details"
+                   rendered="#{loginBean.username == null}"
+                   onclick="PF('loginDialog').show(); return false;" />
             </p:panel>
         </p:carousel>
                 
                 <h1 class="heading"><span>Adventure</span></h1>
-                <p:carousel value="#{bukuBean.getBooksByGenre('Adventure')}" var="buku" numVisible="6" circular="true" autoplayInterval="3000" styleClass="carousel-main">
+                <p:carousel value="#{bukuBean.getBooksByGenre('Adventure')}" var="buku" numVisible="3" circular="true" autoplayInterval="3000" styleClass="carousel-main">
                     <p:panel styleClass="card-new">
                         <h:graphicImage value="data:image/jpeg;base64,#{bukuBean.convertToBase64(buku.gambarBuku)}"
                                         alt="#{buku.namaBuku}" style="width: 100%; height: 200px; object-fit: cover;" />
@@ -76,6 +86,16 @@
                         <p>Genre: #{buku.genreBuku}</p>
                         <p>Stock: #{buku.stockBuku} item</p>
                         <h4>Price: Rp #{buku.hargaBuku}</h4>
+                        <!-- Replace dialog with navigation to book details page -->
+<h:commandLink value="View Details"
+                   action="#{viewBookBean.loadBuku(buku.idBuku)}"
+                   rendered="#{loginBean.username != null}"
+                   onclick="window.location.href='bookDetails.xhtml?idBuku=#{buku.idBuku}'; return false;" />
+
+    <!-- If user is not logged in, show login dialog -->
+    <h:commandLink value="View Details"
+                   rendered="#{loginBean.username == null}"
+                   onclick="PF('loginDialog').show(); return false;" />
                     </p:panel>
                 </p:carousel>
                 
@@ -88,6 +108,16 @@
                         <p>Genre: #{buku.genreBuku}</p>
                         <p>Stock: #{buku.stockBuku} item</p>
                         <h4>Price: Rp #{buku.hargaBuku}</h4>
+                        <!-- Replace dialog with navigation to book details page -->
+<h:commandLink value="View Details"
+                   action="#{viewBookBean.loadBuku(buku.idBuku)}"
+                   rendered="#{loginBean.username != null}"
+                   onclick="window.location.href='bookDetails.xhtml?idBuku=#{buku.idBuku}'; return false;" />
+
+    <!-- If user is not logged in, show login dialog -->
+    <h:commandLink value="View Details"
+                   rendered="#{loginBean.username == null}"
+                   onclick="PF('loginDialog').show(); return false;" />
                     </p:panel>
                 </p:carousel>
                 
@@ -100,6 +130,16 @@
                         <p>Genre: #{buku.genreBuku}</p>
                         <p>Stock: #{buku.stockBuku} item</p>
                         <h4>Price: Rp #{buku.hargaBuku}</h4>
+                        <!-- Replace dialog with navigation to book details page -->
+<h:commandLink value="View Details"
+                   action="#{viewBookBean.loadBuku(buku.idBuku)}"
+                   rendered="#{loginBean.username != null}"
+                   onclick="window.location.href='bookDetails.xhtml?idBuku=#{buku.idBuku}'; return false;" />
+
+    <!-- If user is not logged in, show login dialog -->
+    <h:commandLink value="View Details"
+                   rendered="#{loginBean.username == null}"
+                   onclick="PF('loginDialog').show(); return false;" />
                     </p:panel>
                 </p:carousel>
                 
@@ -112,15 +152,33 @@
                         <p>Genre: #{buku.genreBuku}</p>
                         <p>Stock: #{buku.stockBuku} item</p>
                         <h4>Price: Rp #{buku.hargaBuku}</h4>
+                        <!-- Replace dialog with navigation to book details page -->
+<h:commandLink value="View Details"
+                   action="#{viewBookBean.loadBuku(buku.idBuku)}"
+                   rendered="#{loginBean.username != null}"
+                   onclick="window.location.href='bookDetails.xhtml?idBuku=#{buku.idBuku}'; return false;" />
+
+    <!-- If user is not logged in, show login dialog -->
+    <h:commandLink value="View Details"
+                   rendered="#{loginBean.username == null}"
+                   onclick="PF('loginDialog').show(); return false;" />
                     </p:panel>
                 </p:carousel>
-                
                 
             </div>
 
             <!-- PrimeFaces Dialog for Book Details -->
 
         </h:form>
+    <p:dialog header="Login Required" widgetVar="loginDialog" modal="true" closable="false" draggable="false">
+    <h:outputText value="Please log in to view book details." />
+
+    <!-- Separate form for the dialog -->
+    <h:form id="loginFormDialog">
+        <!-- CommandButton with ajax disabled to allow full-page navigation -->
+        <h:commandButton value="Login" action="login.xhtml?faces-redirect=true" styleClass="btn btn-primary" />
+    </h:form>
+</p:dialog>
     
     <ui:include src="footer.xhtml"/>
 
